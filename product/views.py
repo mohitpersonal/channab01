@@ -38,6 +38,7 @@ class ProductList(View):
 
 		try:
 			all_products = Product.objects.all().order_by('-id')
+			all_markets = MarketAddByAdmin.objects.filter(is_active = True)
 			return render(request,'product/all_products.html',locals())
 		
 		except Exception as e:
@@ -101,8 +102,6 @@ class CategoryWiseSearch(View):
 			if self.request.method == 'GET':
 				get_category = self.request.GET.get('cat_id_fil')
 				all_products = Product.objects.filter(category = get_category)
-				print(get_category)
-				print(all_products, type(get_category))
 				
 				return render(request,'product/all_products.html',locals())
 
@@ -141,13 +140,57 @@ class FilterationAnimals(View):
 	def post(self,request):
 		try:
 			context = {}
-			print(self.request.POST)
 			one_star = self.request.POST.get('one_star')
+			if one_star:
+				star_searching_obj  = CommentReviewsStar.objects.filter(stars_counting = int(1))
+				all_products = []
+				for one_object in star_searching_obj:
+					product_instance = one_object.product_instance
+					if product_instance not in all_products:
+						all_products.append(product_instance)
+
+
 			two_star = self.request.POST.get('two_star')
+			if two_star:
+				star_searching_obj  = CommentReviewsStar.objects.filter(stars_counting = int(2)).distinct()
+				all_products = []
+				for one_object in star_searching_obj:
+					product_instance = one_object.product_instance
+					if product_instance not in all_products:
+						all_products.append(product_instance)
+
+
 			three_star = self.request.POST.get('three_star')
+			if three_star:
+				star_searching_obj  = CommentReviewsStar.objects.filter(stars_counting = int(3))
+				all_products = []
+				for one_object in star_searching_obj:
+					product_instance = one_object.product_instance
+					if product_instance not in all_products:
+						all_products.append(product_instance)
+
 
 			four_start = self.request.POST.get('four_start')
-			five_start = self.request.POST.get('five_start')
+			if four_start:
+				star_searching_obj  = CommentReviewsStar.objects.filter(stars_counting = int(4))
+				all_products = []
+				for one_object in star_searching_obj:
+					product_instance = one_object.product_instance
+					if product_instance not in all_products:
+						all_products.append(product_instance)
+
+			five_star = self.request.POST.get('five_start')
+			if five_star:
+				star_searching_obj  = CommentReviewsStar.objects.filter(stars_counting = int(5))
+				all_products = []
+				for one_object in star_searching_obj:
+					product_instance = one_object.product_instance
+					if product_instance not in all_products:
+						all_products.append(product_instance)
+
+			##### age related searchings
+
+
 			more_than_two_year = self.request.POST.get('more_than_two')
 
 			one_to_two_year = self.request.POST.get('one_to_two')
@@ -162,6 +205,8 @@ class FilterationAnimals(View):
 				more_than_two_year_val = 2
 				all_products = Product.objects.filter(Q(age_of_animal__gt = more_than_two_year_val))
 
+			######## milking based
+
 			breader = self.request.POST.get('Breader')
 			if breader:
 				all_products = Product.objects.filter(Q(animal_type = breader))
@@ -173,10 +218,19 @@ class FilterationAnimals(View):
 			milking = self.request.POST.get('Milking')
 			if milking:
 				all_products = Product.objects.filter(Q(animal_type = milking))
-			
-			print(all_products)
 
-			# all_products = Product.objects.filter()
+
+
+			#### market searching
+			market_post = self.request.POST.get('market_added')
+			if market_post:
+				market_added = MarketAddByAdmin.objects.get(id = int(market_post))
+				all_products = Product.objects.filter(market_instance = market_added)
+
+
+			all_markets = MarketAddByAdmin.objects.filter(is_active = True)
+
+			
 			return render(request,'product/all_products.html',locals())
 
 		except:
@@ -187,6 +241,7 @@ class FilterationAnimals(View):
 
 	def get(self,request):
 		try:
+			all_markets = MarketAddByAdmin.objects.filter(is_active = True)
 			all_products = Product.objects.all().order_by('-id')
 			return render(request,'product/all_products.html',locals())
 
@@ -205,33 +260,14 @@ class CommentReviewsView(View):
 	def post(self,request):
 		context = {}
 		try:
-			comment_text = self.request.POST.get('comment')
-			print("\n" * 4)
-			print("request data is --------->", request.POST)
-			print("\n" * 4)
-			stars1 = self.request.POST.get('star')
-			stars2 = self.request.POST.get('star2')
-			stars3 = self.request.POST.get('star3')
-			stars4 = self.request.POST.get('star4')
-			stars5 = self.request.POST.get('star5')
-			stars_total = 0
-			if stars1:
-				stars_total = stars_total + 1
-			if stars2:
-				stars_total = stars_total + 1
-			if stars3:
-				stars_total = stars_total + 1
-			if stars4:
-				stars_total = stars_total + 1
-			if stars5:
-				stars_total = stars_total + 1
-
-
-			post_id = self.request.POST.get('post_id')
+			loads_json = json.loads(request.POST.get('type_dict'))
+			comment_text = loads_json.get('text_area').strip().lower()
+			star_count = loads_json.get('star_count')
+			post_id = loads_json.get('post_id')
 			product_instance = Product.objects.get(id = int(post_id))
-
-			CommentReviewsStar.objects.create(comment_on_post = comment_text, product_instance = product_instance,stars_counting = int(stars))
+			CommentReviewsStar.objects.create(comment_on_post = comment_text, product_instance = product_instance,stars_counting = int(star_count))
 			context['status'] = 'success'
+			context['save_comment'] = 'comment save'
 			return HttpResponse(json.dumps(context))
 		except :
 			context['status'] = 'fail'
@@ -239,3 +275,22 @@ class CommentReviewsView(View):
 
 
 
+
+
+class MarketDetails(View):
+
+	"""Demonstrate docstring for showing that this view based function will used for filtering an market wise product from database """
+
+	def get(self,request):
+		try:
+			context = {}
+			market_id = self.request.GET.get('market_based_id')
+			market_get = MarketAddByAdmin.objects.get(id = int(market_id))
+
+			all_products = Product.objects.filter(market_instance = market_get)
+			return render(request,'product/all_products.html',locals())
+
+		except:
+			print(sys.exc_info())
+			context['status'] = 'fail'
+			return render(request,'product/all_products.html',locals())

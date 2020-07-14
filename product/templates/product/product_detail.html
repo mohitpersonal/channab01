@@ -2,6 +2,14 @@
 {% load static %}
 {% block title %} Chanaab | Product List {% endblock %}
 {% block content %}
+<style type="text/css">
+  .selected{
+    background: #0ff;
+}
+.ratings_over{
+    background: #fcc;
+}
+</style>
 <div class="preloader" id="preloader">
       <div class="spinner-grow text-secondary" role="status">
         <div class="sr-only">Loading...</div>
@@ -115,9 +123,33 @@
                   <div class="user-thumbnail"><img src="img/bg-img/7.jpg" alt=""></div>
                   <div class="rating-comment">
                     <div class="rating">
+                      {% if one_review.stars_counting == 1 %}
+                      <i class="lni-star-filled"></i>
+                      {% elif one_review.stars_counting == 2 %}
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      {% elif one_review.stars_counting == 3 %}
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      {% elif one_review.stars_counting == 4 %}
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      {% elif one_review.stars_counting == 5 %}
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      {% endif %}
 
-                      <i class="lni-star-filled"></i></div>
-                    <p class="comment mb-0">{{one_review.comment_on_post}}</p><span class="name-date">{{one_review.created_on|date:'d-m-y'}}</span>
+
+
+                    </div>
+
+                    <p class="comment mb-0">{{one_review.comment_on_post}}</p><span class="name-date">Chanaab {{one_review.created_on|date:'d-m-y'}}</span>
                   </div>
                 </li>
                 {% endfor %}
@@ -133,24 +165,25 @@
             <h6>Submit A Review</h6>
             <form action="/comment/" method="POST" id = "ajax_comment_form">
               {% csrf_token %}
+              <input type="hidden" name="post_id" id="post_id" value="{{id_of_product}}" >
+              <input type="hidden" name="csrf_middle" id="csrf_middle" value="{{csrf_token}}" >
               <div class="form-group">
                 <div class="stars">
-                  <input class="star-1" type="hidden" name="post_id" id="star1" value="{{id_of_product}}" >
-                  <input class="star-1" type="radio" name="star" id="star1" >
+                  <input class="star-1 set_value" type="radio" name="star" id="star1">
                   <label class="star-1" for="star1"></label>
-                  <input class="star-2" type="radio" name="star2" id="star2">
+                  <input class="star-2 set_value" type="radio" name="star" id="star2">
                   <label class="star-2" for="star2"></label>
-                  <input class="star-3" type="radio" name="star3" id="star3">
+                  <input class="star-3 set_value" type="radio" name="star" id="star3">
                   <label class="star-3" for="star3"></label>
-                  <input class="star-4" type="radio" name="star4" id="star4">
-                  <label class="star-4" for="star"></label>
-                  <input class="star-5" type="radio" name="star5" id="star5">
+                  <input class="star-4 set_value" type="radio" name="star" id="star4">
+                  <label class="star-4" for="star4"></label>
+                  <input class="star-5 set_value" type="radio" name="star" id="star5">
                   <label class="star-5" for="star5"></label><span></span>
                 </div>
               </div>
               <div class="form-group">
-                <textarea class="form-control" id="comments" name="comment" cols="30" rows="10" data-max-length="200"></textarea>
-                <span  class="error-msg" id="comment_text_label" style="display: none" onkeyup="CommentAdd()"></span>
+                <textarea class="form-control" id="comments" name="comment" cols="30" rows="10" data-max-length="200"></textarea onkeyup="CommentAdd()">
+                  <span  class="error-msg" id="comment_text_label" style="display: none" ></span>
               </div>
               <button class="btn btn-sm btn-primary" type="submit">Save Review</button>
             </form>

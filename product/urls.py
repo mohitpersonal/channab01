@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import *
+from django.views.decorators.csrf import csrf_exempt
 
 
 urlpatterns = [
@@ -12,6 +13,7 @@ urlpatterns = [
     path('search_cat/', CategoryWiseSearch.as_view(), name = 'CategoryWiseSearch'),
     path('one_detail/', ProductDetailPage.as_view(), name = 'ProductDetailPage'),
     path('filter_data/', FilterationAnimals.as_view(), name = 'FilterationAnimals'),
-    path('comment/', CommentReviewsView.as_view(), name = 'CommentReviewsView')
+    path('comment/', csrf_exempt(CommentReviewsView.as_view()), name = 'CommentReviewsView'),
+    path('maket_listing/', MarketDetails.as_view(), name = 'MarketDetails')
 
 ]
