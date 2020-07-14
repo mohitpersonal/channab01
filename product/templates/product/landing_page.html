@@ -1,0 +1,151 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block title %} Chanaab | Home Page {% endblock %}
+{% block content %}
+
+ <div class="header-area" id="headerArea">
+      <div class="container h-100 d-flex align-items-center justify-content-between">
+        <!-- Back Button-->
+        <div class="back-button"><a href=""><i class="lni-arrow-left"></i></a></div>
+        <!-- Page Title-->
+        <div class="page-heading">
+          <form action="#" method="POST">
+            <input class="form-control mb-0" type="search" placeholder="Enter your keyword"><button type="submit"><i class="fa fa-search"></i></button>
+          </form>
+        </div>
+        <!-- Navbar Toggler-->
+        <div class="suha-navbar-toggler d-flex justify-content-between flex-wrap" id="suhaNavbarToggler"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+     <div class="sidenav-black-overlay"></div>
+    <!-- Side Nav Wrapper-->
+    <div class="suha-sidenav-wrapper" id="sidenavWrapper">
+      <!-- Sidenav Profile-->
+      {% if request.user.is_authenticated %}
+      <div class="sidenav-profile">
+        <div class="user-profile"><img src="{% static 'img/bg-img/9.jpg' %}" alt=""></div>
+        <div class="user-info">
+          <h6 class="user-name mb-0">Suha Jannat</h6>
+          <p class="available-balance">Balance <span>$<span class="counter">379.23</span></span></p>
+        </div>
+      </div>
+      {% endif %}
+      <!-- Sidenav Nav-->
+      {% if request.user.is_authenticated %}
+      <ul class="sidenav-nav">
+        <li><a href="#"><i class="lni-user"></i>Create New Account</a></li>
+        <li><a href="#"><i class="lni-alarm lni-tada-effect"></i>Notifications<span class="ml-3 badge badge-warning">3</span></a></li>
+        <li><a href="#"><i class="lni-empty-file"></i>All Pages</a></li>
+        <li><a href="#"><i class="lni-heart-filled"></i>My Wishlist</a></li>
+        <li><a href="#"><i class="lni-cog"></i>Settings</a></li>
+        <li><a href="#"><i class="lni-power-switch"></i>Sign Out</a></li>
+      </ul>
+      {% endif %}
+      {% if not request.user.is_authenticated %}
+      <ul class="sidenav-nav">
+        <li><a href="#"><i class="lni-user"></i>Create New Account</a></li>
+        <li><a href="#"><i class="lni-power-switch"></i>Sign In</a></li>
+      </ul>
+      {% endif %}
+    </div>
+    <div class="page-content-wrapper">
+      <!-- Hero Slides-->
+     
+      <!-- Product Catagories-->
+      <div class="product-catagories-wrapper pt-3">
+        <div class="container">
+          <div class="section-heading">
+            <h6 class="ml-1">Product Category</h6>
+          </div>
+          <div class="product-catagory-wrap">
+            <div class="row">
+              <div class="col-4">
+                <div class="card mb-3 catagory-card">
+                  <div class="card-body"><a href="/search_cat/?cat_id_fil=Cow"><i class="lni-apartment filter_by_catg"></i><span class="">Cows</span></a></div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="card mb-3 catagory-card">
+                  <div class="card-body"><a href="/search_cat/?cat_id_fil=Buffalo" class="filter_by_catg"><i class="lni-apartment"></i><span>Buffalo</span></a></div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="card mb-3 catagory-card">
+                  <div class="card-body"><a href="/search_cat/?cat_id_fil=Goat" class="filter_by_catg"><i class="lni-apartment"></i><span>Goat</span></a></div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="card mb-3 catagory-card">
+                  <div class="card-body"><a href="/search_cat/?cat_id_fil=Sheep" class="filter_by_catg"><i class="lni-apartment"></i><span>Sheep</span></a></div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="card mb-3 catagory-card">
+                  <div class="card-body"><a href="/search_cat/?cat_id_fil=Other" class="filter_by_catg"><i class="lni-apartment"></i><span>Other</span></a></div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="card mb-3 catagory-card">
+                  <div class="card-body"><a href="/search_cat/?cat_id_fil=Horse" class="filter_by_catg"><i class="lni-apartment"></i><span>Horses</span></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Flash Sale Slide-->
+      <div class="flash-sale-wrapper pb-3">
+        <div class="container">
+          <div class="col-lg-12 grid-margin stretch-card">
+          <div class="section-heading d-flex align-items-center justify-content-between">
+            <h6 class="ml-1">Cattle Market</h6><a class="btn btn-primary btn-sm" href="/product_list/">View All</a>
+          </div>
+          <!-- Flash Sale Slide-->
+          <div class="flash-sale-slide owl-carousel">
+            <!-- Single Flash Sale Card-->
+            {% for one_market in all_markets %}
+            <div class="card flash-sale-card">
+              <div class="card-body"><a href="#"><img src="/media/{{one_market.market_image}}" alt=""><span class="product-title">{{one_market.market_name}}</span>
+                  <p class="sale-price">{{one_market.location}}<span class="real-price">Animals</span></p><span class="progress-title">{{one_market.date|date:'y-m-d'}}</span>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div></a></div>
+            </div>
+            {% endfor %}
+          
+          </div>
+        </div>
+      </div>
+      <!-- Top Products-->
+     
+    
+      <!-- Weekly Best Sellers-->
+      <div class="weekly-best-seller-area pt-3">
+        <div class="container">
+          <div class="section-heading d-flex align-items-center justify-content-between">
+            <h6 class="pl-1">Top Animals</h6><a class="btn btn-success btn-sm" href="/product_list/">View All</a>
+          </div>
+          {% for one_product in all_top_product %}
+          <div class="row">
+           
+            <!-- Single Weekly Product Card-->
+            <div class="col-12">
+              <div class="card weekly-product-card mb-3">
+                <div class="card-body d-flex align-items-center">
+                  <div class="product-thumbnail-side"><span class="badge badge-success ">{{one_product.category}}</span><a class="wishlist-btn" href="."><i class="lni-heart-filled"></i></a><a class="product-thumbnail d-block" href="/one_detail/?id={{one_product.id}}"><img src="/media/{{one_product.image}}" alt=""></a></div>
+                  <div class="product-description"><a class="product-title d-block" href="single-product.html">{{one_product.name}}</a>
+                    <p class="sale-price"><i>Rs.</i>{{one_product.price}}</p>
+                    <div class="product-rating"><i class="lni-star-filled"></i>Mobile Number -: {{one_product.mobilenumber}}</div><div class="product-rating"><i class="lni-map-marker"></i>City - : {{one_product.city}}</div><a class="btn btn-success btn-sm add2cart-notify" href="#"><i class="mr-1 lni-cart"></i>Buy</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+ <div class="loader">
+            <em class="fa fa-spinner fa-spin"></em>
+        </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+    <div class="footer-nav-area" id="footerNav">
+      <div class="suha-footer-nav h-100">
+        <ul class="h-100 d-flex align-items-center justify-content-between">
+          <li {% if request.resolver_match.url_name == 'LandingPageOfSite' %} class="" {% else %} class="" {% endif %} ><a href="{% url 'LandingPageOfSite' %}"><i class="lni-home"></i>Support</a></li>
+          <li{% if request.resolver_match.url_name == 'LandingPageOfSite' %} class="" {% else %} class="" {% endif %} ><a href="{% url 'LandingPageOfSite' %}"><i class="lni-support"></i>My Selection</a></li>
+          <li {% if request.resolver_match.url_name == 'LandingPageOfSite' %} class="active" {% else %} class="" {% endif %} ><a href="{% url 'LandingPageOfSite' %}"><i class="lni-cart"></i>Home</a></li>
+          <li {% if request.resolver_match.url_name == 'ProductList' %} class="active" {% else %} class="" {% endif %} ><a href="{% url 'ProductList' %}"><i class="lni-heart"></i>Animal List</a></li>
+          <li {% if request.resolver_match.url_name == 'LandingPageOfSite' %} class="" {% else %} class="" {% endif %} ><a href="{% url 'LandingPageOfSite' %}"><i class="lni-cog"></i>Settings</a></li>
+        </ul>
+      </div>
+    </div>

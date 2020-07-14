@@ -1,0 +1,165 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block title %} Chanaab | Product List {% endblock %}
+{% block content %}
+<div class="preloader" id="preloader">
+      <div class="spinner-grow text-secondary" role="status">
+        <div class="sr-only">Loading...</div>
+      </div>
+    </div>
+    <!-- Header Area-->
+    <div class="header-area" id="headerArea">
+      <div class="container h-100 d-flex align-items-center justify-content-between">
+        <!-- Back Button-->
+        <div class="back-button"><a href="{% url 'LandingPageOfSite' %}"><i class="lni-arrow-left"></i></a></div>
+        <!-- Page Title-->
+        <div class="page-heading">
+          <h6 class="mb-0">Product Details</h6>
+        </div>
+        <!-- Navbar Toggler-->
+        <div class="suha-navbar-toggler d-flex justify-content-between flex-wrap" id="suhaNavbarToggler"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+    <!-- Sidenav Black Overlay-->
+    <div class="sidenav-black-overlay"></div>
+    <!-- Side Nav Wrapper-->
+    <div class="suha-sidenav-wrapper" id="sidenavWrapper">
+      <!-- Sidenav Profile-->
+     
+      <!-- Sidenav Nav-->
+      {% if request.user.is_authenticated %}
+      <div class="sidenav-profile">
+        <div class="user-profile"><img src="{% static 'img/bg-img/9.jpg' %}" alt=""></div>
+        <div class="user-info">
+          <h6 class="user-name mb-0">Suha Jannat</h6>
+          <p class="available-balance">Balance <span>$<span class="counter">379.23</span></span></p>
+        </div>
+      </div>
+      {% endif %}
+      <!-- Sidenav Nav-->
+      {% if request.user.is_authenticated %}
+      <ul class="sidenav-nav">
+        <li><a href="#"><i class="lni-user"></i>Create New Account</a></li>
+        <li><a href="#"><i class="lni-alarm lni-tada-effect"></i>Notifications<span class="ml-3 badge badge-warning">3</span></a></li>
+        <li><a href="#"><i class="lni-empty-file"></i>All Pages</a></li>
+        <li><a href="#"><i class="lni-heart-filled"></i>My Wishlist</a></li>
+        <li><a href="#"><i class="lni-cog"></i>Settings</a></li>
+        <li><a href="#"><i class="lni-power-switch"></i>Sign Out</a></li>
+      </ul>
+      {% endif %}
+      {% if not request.user.is_authenticated %}
+      <ul class="sidenav-nav">
+        <li><a href="#"><i class="lni-user"></i>Create New Account</a></li>
+        <li><a href="#"><i class="lni-power-switch"></i>Sign In</a></li>
+      </ul>
+      {% endif %}
+      <!-- Go Back Button-->
+      <div class="go-home-btn" id="goHomeBtn"><i class="lni-arrow-left"></i></div>
+    </div>
+    <div class="page-content-wrapper">
+      <!-- Product Slides-->
+      <div class="product-slides owl-carousel">
+        <!-- Single Hero Slide-->
+        <div class="single-product-slide"><img src="/media/{{product_record.image}}" alt=""></div>
+      </div>
+      <div class="product-description pb-3">
+        <!-- Product Title & Meta Data-->
+        <div class="product-title-meta-data bg-white mb-3 py-3">
+          <div class="container d-flex justify-content-between">
+            <div class="p-title-price">
+              <h6 class="mb-1">{{product_record.name}}</h6>
+              <p class="sale-price mb-0">{{product_record.price}}<span>Rs.0.00</span></p>
+            </div>
+            <div class="p-wishlist-share"></div>
+          </div>
+          <!-- Ratings-->
+          <div class="product-ratings">
+            <div class="container d-flex align-items-center justify-content-between">
+              <div class="ratings"><i class="lni-star-filled"></i><i class="lni-star-filled"></i><i class="lni-star-filled"></i><i class="lni-star-filled"></i><i class="lni-star-filled"></i></div>
+              <div class="total-result-of-ratings"><span>4.96</span><span>Very Good</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- Selection Panel-->
+     
+        <!-- Add To Cart-->
+        <div class="cart-form-wrapper bg-white mb-3 py-3">
+          <div class="container">
+            <form class="cart-form" action="#" method="post">
+             <a class="btn btn-warning mr-2" href="checkout.html">City</a>
+              <button class="btn btn-success" type="submit">Mobile Number -: {{product_record.mobilenumber}}</button>
+            </form>
+          </div>
+        </div>
+        <!-- Product Specification-->
+        <div class="p-specification bg-white mb-3 py-3">
+          <div class="container">
+            <h6>Specifications</h6>
+            <p>{{product_record.description}}</p>
+            <ul>
+              <li>100% good reviews</li>
+              <li>7 days returns</li>
+              <li>Warranty not aplicable</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Rating & Review Wrapper-->
+        {% if rating_reviews %}
+        <div class="rating-and-review-wrapper bg-white py-3 mb-3">
+          <div class="container">
+            <h6>Ratings &amp; Reviews</h6>
+            <div class="rating-review-content">
+              <ul>
+                {% for one_review in rating_reviews %}
+                <li class="single-user-review d-flex">
+                  <div class="user-thumbnail"><img src="img/bg-img/7.jpg" alt=""></div>
+                  <div class="rating-comment">
+                    <div class="rating">
+
+                      <i class="lni-star-filled"></i></div>
+                    <p class="comment mb-0">{{one_review.comment_on_post}}</p><span class="name-date">{{one_review.created_on|date:'d-m-y'}}</span>
+                  </div>
+                </li>
+                {% endfor %}
+                
+              </ul>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <!-- Ratings Submit Form-->
+        <div class="ratings-submit-form bg-white py-3">
+          <div class="container">
+            <h6>Submit A Review</h6>
+            <form action="/comment/" method="POST" id = "ajax_comment_form">
+              {% csrf_token %}
+              <div class="form-group">
+                <div class="stars">
+                  <input class="star-1" type="hidden" name="post_id" id="star1" value="{{id_of_product}}" >
+                  <input class="star-1" type="radio" name="star" id="star1" >
+                  <label class="star-1" for="star1"></label>
+                  <input class="star-2" type="radio" name="star2" id="star2">
+                  <label class="star-2" for="star2"></label>
+                  <input class="star-3" type="radio" name="star3" id="star3">
+                  <label class="star-3" for="star3"></label>
+                  <input class="star-4" type="radio" name="star4" id="star4">
+                  <label class="star-4" for="star"></label>
+                  <input class="star-5" type="radio" name="star5" id="star5">
+                  <label class="star-5" for="star5"></label><span></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" id="comments" name="comment" cols="30" rows="10" data-max-length="200"></textarea>
+                <span  class="error-msg" id="comment_text_label" style="display: none" onkeyup="CommentAdd()"></span>
+              </div>
+              <button class="btn btn-sm btn-primary" type="submit">Save Review</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="loader">
+            <em class="fa fa-spinner fa-spin"></em>
+        </div>
+
+{% endblock %}
