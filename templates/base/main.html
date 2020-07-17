@@ -12,12 +12,34 @@
     <!-- Title-->
     <title></title>
     <!-- Favicon-->
-    <link rel="icon" href="{% static 'img/bg-img/Channab Logo.png' %}">
+    <link rel="icon" href="{% static 'img/bg-img/Channab Logo.jpeg' %}">
     <!-- Stylesheet-->
     <link rel="stylesheet" href="{% static 'style.css' %}">
+	<link rel="stylesheet" href="{% static 'custom.css' %}">
+
+    <link rel="stylesheet" href="{% static '/css/custom/style_custom.css' %}">
   </head>
 <body>   
+<style type="text/css">
+    .notfound .notfound-404 h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 230px;
+  margin: 0px;
+  font-weight: 900;
+  position: absolute;
+  left: 50%;
 
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+  background: url('{% static "img/bg.jpg" %}')
+  no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: cover;
+  background-position: center;
+}
+</style>
   
       
 {% block content %}
@@ -42,6 +64,21 @@
     <script src="{% static 'js/default/active.js' %}"></script>
     <script src="{% static 'js/detail_product.js' %}"></script>
     <script src="{% static 'js/add_product.js' %}"></script>
+  <script src="{% static 'js/multiselect/bootstrap3-typeahead.min.js' %}"></script>
+  <script src="{% static 'js/multiselect/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/multiselect/bootstrap-multiselect.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/multiselect/bootstrap-multiselect.css' %}" />
+  <script type="text/javascript">
+$(document).ready(function() {
+    $('#marketplace').multiselect({
+        nonSelectedText: 'No Market Selected',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true,
+        buttonWidth:'400px',
+        checkboxName:'categories_name',
 
+    });
+});
+</script>
     
 </html>

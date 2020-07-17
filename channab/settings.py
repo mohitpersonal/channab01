@@ -30,14 +30,17 @@ ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
+
 INSTALLED_APPS = [
     'product',
+    'mobileApi',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -85,11 +88,14 @@ WSGI_APPLICATION = 'channab.wsgi.application'
 #     }
 # }
 
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'channab',
+        'USER': 'channabuser',
+        'PASSWORD': 'Ch@nn@b0183',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -137,3 +143,8 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+#### Geo location api key
+
+GEO_API_KEY = 'aed9d8f5366c64a8e388ecf0d04a4104'

@@ -1,7 +1,19 @@
 {% extends 'base/main.html' %}
 {% load static %}
-{% block title %} Chanaab | Product List {% endblock %}
 {% block content %}
+{% block title %} <title>Channab | Add Animal</title> {% endblock %}
+<style type="text/css">
+  .btn-group {
+    width: 344px !important;
+    background-color: whitesmoke;
+}
+ 
+ul.multiselect-container.dropdown-menu.show {
+    
+    background-color: #00b894;
+}
+
+</style>
     <div class="header-area" id="headerArea">
       <div class="container h-100 d-flex align-items-center justify-content-between">
         <!-- Back Button-->
@@ -57,7 +69,7 @@
 
               <div class="user-info">
 
-                <h3 class="text-center">Cow For Sale</h3>
+                <h3 class="text-center">Animal Detail</h3>
               </div>
             </div>
           </div>
@@ -91,21 +103,17 @@
                   <div class="title mb-2"><i class="lni-user"></i><span>Animal Category</span></div>
                   <select name="category" id = "countary_check_text_found" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
                     <option value="Select">Please Select</option>
-                    <option value="Cow">Cow</option>
-                    <option value="Buffalo">Buffalo</option>
-                    <option value="Goat">Goat</option>
-                    <option value="Sheep">Sheep</option>
-                    <option value="Other">Other</option>
-                    <option value="Horse">Horses</option>
+                    {% for one in all_category %}
+                    <option value="{{one}}">{{one}}</option>
+                    {% endfor %}
                   </select>
                   <span class="error-msg" id="label_your_account" style="display: none">This Field is required</span>                               
                 </div>
                 <div class="form-group col-md-4">
                   <div class="title mb-2"><i class="lni-user"></i><span>Market Address</span></div>
-                  <select name="marketplace" id = "marketplace" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
-                    <option value="---">---</option>
+                  <select name="marketplace[]" id = "marketplace" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" multiple="multiple">
                     {% for one in all_markets %}
-                    <option value="{{one.market_name}}">{{one.market_name}}</option>
+                    <option value="{{one.id}}">{{one.market_name}}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -144,7 +152,7 @@
              
               <div class="row">              
            
-                <div class="form-group col-md-6 image_section_upload">
+                <div class="form-group col-md-2 image_section_upload">
                   <!-- div class="title mb-2"><i class="lni lni-camera"></i><span>Image</span></div -->
                   <button  class="btn btn-success" type="button" style="display:block;" onclick="document.getElementById('getFile1_found').click()"><i class="lni lni-camera"></i>Image Upload</button>
                   <input type='file' id="getFile1_found" class="images first_step_cls" ngf-select="" ng-model="new_files" accept="image/*" name="main_image" style="display:none"onchange="readURLMySecond_Found(this)">
@@ -153,7 +161,54 @@
                     <img id="blah2_found" src="./img/bg-img/11.jpg" alt="your image" style="display: none;" />
                   </div>
                 </div>
-                <div class="form-group col-md-6 button_submit">
+				<div class="form-group col-md-2 image_section_upload">
+                  <!-- div class="title mb-2"><i class="lni lni-camera"></i><span>Image</span></div -->
+                  <button  class="btn btn-success" type="button" style="display:block;" onclick="document.getElementById('getFile2_found').click()"><i class="lni lni-camera"></i>Image Upload</button>
+                  <input type='file' id="getFile2_found" class="images first_step_cls" ngf-select="" ng-model="new_files" accept="image/*" name="ist_image" style="display:none"onchange="readURLMySecond1_Found(this)">
+                  <br>
+                  <div class="col-md-12 text-center">
+                    <img id="blah3_found" src="./img/bg-img/11.jpg" alt="your image" style="display: none;" />
+                  </div>
+                </div>
+				<div class="form-group col-md-2 image_section_upload">
+                  <!-- div class="title mb-2"><i class="lni lni-camera"></i><span>Image</span></div -->
+                  <button  class="btn btn-success" type="button" style="display:block;" onclick="document.getElementById('getFile4_found').click()"><i class="lni lni-camera"></i>Image Upload</button>
+                  <input type='file' id="getFile4_found" class="images first_step_cls" ngf-select="" ng-model="new_files" accept="image/*" name="sec_image" style="display:none"onchange="readURLMySecond4_Found(this)">
+                  <br>
+                  <div class="col-md-12 text-center">
+                    <img id="blah4_found" src="./img/bg-img/11.jpg" alt="your image" style="display: none;" />
+                  </div>
+                </div>
+				<div class="form-group col-md-2 image_section_upload">
+                  <!-- div class="title mb-2"><i class="lni lni-camera"></i><span>Image</span></div -->
+                  <button  class="btn btn-success" type="button" style="display:block;" onclick="document.getElementById('getFile5_found').click()"><i class="lni lni-camera"></i>Image Upload</button>
+                  <input type='file' id="getFile5_found" class="images first_step_cls" ngf-select="" ng-model="new_files" accept="image/*" name="iiird_image" style="display:none"onchange="MyreadURLSecond4_Found(this)">
+                   <br>
+                  <div class="col-md-12 text-center">
+                    <img id="blah5_found" src="./img/bg-img/11.jpg" alt="your image" style="display: none;" />
+                  </div>
+                </div>
+				<div class="form-group col-md-2 image_section_upload">
+                  <!-- div class="title mb-2"><i class="lni lni-camera"></i><span>Image</span></div -->
+                  <button  class="btn btn-success" type="button" style="display:block;" onclick="document.getElementById('getFile6_found').click()"><i class="lni lni-camera"></i>Image Upload</button>
+                  <input type='file' id="getFile6_found" class="images first_step_cls" ngf-select="" ng-model="new_files" accept="image/*" name="fourth_image" style="display:none"onchange="MyfourthImage(this)">
+                   <br>
+                  <div class="col-md-12 text-center">
+                    <img id="fourth_image_show" src="./img/bg-img/11.jpg" alt="your image" style="display: none;" />
+                  </div>
+                </div>
+				<div class="form-group col-md-2 image_section_upload">
+                  <!-- div class="title mb-2"><i class="lni lni-camera"></i><span>Image</span></div -->
+                  <button  class="btn btn-success" type="button" style="display:block;" onclick="document.getElementById('fifth_image_id').click()"><i class="lni lni-camera"></i>Image Upload</button>
+                  <input type='file' id="fifth_image_id" class="images first_step_cls" ngf-select="" ng-model="new_files" accept="image/*" name="fifth_image" style="display:none"onchange="fifth_imageCheck(this)">
+                   <br>
+                  <div class="col-md-12 text-center">
+                    <img id="fifth_show" src="./img/bg-img/11.jpg" alt="your image" style="display: none;" />
+                  </div>
+                </div>
+			
+				
+                <div class="form-group col-md-12 button_submit text-center">
                   <button class="btn btn-success w-100" type="submit">Submit</button>
                 </div>
             
@@ -167,4 +222,5 @@
         </div>
       </div>
     </div>
+
 {%endblock%}

@@ -14,6 +14,8 @@ urlpatterns = [
     path('one_detail/', ProductDetailPage.as_view(), name = 'ProductDetailPage'),
     path('filter_data/', FilterationAnimals.as_view(), name = 'FilterationAnimals'),
     path('comment/', csrf_exempt(CommentReviewsView.as_view()), name = 'CommentReviewsView'),
-    path('maket_listing/', MarketDetails.as_view(), name = 'MarketDetails')
+    path('maket_listing/', MarketDetails.as_view(), name = 'MarketDetails'),
+    path('all_markets/', AllMandies.as_view(), name 
+    	 = 'AllMandies')
 
 ]

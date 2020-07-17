@@ -26,13 +26,11 @@ class Product(models.Model):
 	name = models.CharField(max_length=200)
 	description = models.CharField(max_length=1000)
 	mobilenumber = models.CharField(max_length=100)
-	category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
+	category_instance = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
 	price = models.DecimalField(max_digits=9, decimal_places=2)
 	image = models.ImageField(upload_to='main_img/', blank=True, null=True)
 	created = models.DateTimeField(default=timezone.now)
 	city = models.CharField(max_length=200, blank=True, null=True)
-	category = models.CharField(max_length = 10, null= True, blank = True)
-	market_instance = models.ForeignKey(MarketAddByAdmin,on_delete =  models.CASCADE, null = True, blank = True)
 	slug = models.SlugField(blank=True, null=True)
 	animal_type = models.CharField(max_length = 15, null = True, blank = True)
 	age_of_animal = models.CharField(max_length = 10, null = True, blank = True)
@@ -88,7 +86,12 @@ class Category(models.Model):
 
 
 
+class ProductMarket(models.Model):
 
+	''' Demonstrate docstring for confirming this table is used for all markets of current product'''
+
+	market_instance = models.ForeignKey(MarketAddByAdmin, on_delete = models.CASCADE, null = True, blank = True)
+	product_instance = models.ForeignKey(Product, on_delete = models.CASCADE, null = True, blank = True)
 
 
 
