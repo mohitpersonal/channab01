@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'tp7xq$ybjw&os8*dt3utqqscni7#ka$%2xm=d87f_sf9*cz42w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -70,28 +71,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'channab.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'ChanaabOfficial',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': '',
-#         'PORT': 3306,
-#     }
-# }
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'channab',
+        'USER': 'channabuser',
+        'PASSWORD': 'Ch@nn@b0183',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
+
+#DATABASES = {
+#   'default': {
+#       'ENGINE': 'django.db.backends.sqlite3',
+#       'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#   }
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
