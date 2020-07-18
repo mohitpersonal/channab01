@@ -104,6 +104,8 @@ class CommentReviewsStar(models.Model):
 	product_instance = models.ForeignKey(Product, on_delete = models.CASCADE, null = True, blank = True)
 	stars_counting = models.IntegerField(null = True, blank = True)
 	created_on = models.DateTimeField(auto_now_add = True)
+	mobile_number = models.CharField(max_length = 25, null = True, blank = True)
+	name = models.CharField(max_length = 25, null = True, blank = True)
 	
 
 
