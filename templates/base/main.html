@@ -66,6 +66,15 @@
     <script src="{% static 'js/default/active.js' %}"></script>
     <script src="{% static 'js/detail_product.js' %}"></script>
     <script src="{% static 'js/add_product.js' %}"></script>
+    <script src="{% static 'js/register/register.js' %}">
+      
+    </script>
+    <script src="{% static 'js/register/login.js' %}">
+      
+    </script>
+    <script src="{% static 'js/library/sweetalert.min.js' %}">
+      
+    </script>
   <script src="{% static 'js/multiselect/bootstrap3-typeahead.min.js' %}"></script>
   <script src="{% static 'js/multiselect/bootstrap.min.js' %}"></script>
   <script src="{% static 'js/multiselect/bootstrap-multiselect.js' %}"></script>
@@ -82,5 +91,34 @@ $(document).ready(function() {
     });
 });
 </script>
-    
+    <script type="text/javascript">
+    $('#logout_popup').click(function(){
+      swal({
+   
+         title : "Confirmation",
+         text : "Are you sure you want to Logout ?",
+         buttons : {
+            cancel : true,
+            confirm : "Confirm"
+         }
+   
+   
+      }).then(val =>{
+         
+         if (val){
+          var url = "/accounts/logout/";
+
+            window.location.href = url
+            swal({
+               title : "Thanks !",
+               text : "You have Sucessfully Logout Your Account",
+               icon : "success"
+   
+            })
+         }
+      })
+
+   })
+</script>
+
 </html>

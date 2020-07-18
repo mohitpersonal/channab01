@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.views.generic import View
-from .models import Product,Category,MarketAddByAdmin,CommentReviewsStar,ProductMarket, ProductImage
+from .models import Product,PriceFilter,Category,MarketAddByAdmin,CommentReviewsStar,ProductMarket, ProductImage
 import sys,json,requests
 from django.conf import settings
 from django.http import HttpResponse
@@ -64,6 +64,7 @@ class ProductList(View):
 	def get(self,request):
 
 		try:
+			price_filtering = PriceFilter.objects.filter(is_active = True)
 			all_category = Category.objects.values_list('category_name', flat = True)
 			all_products = Product.objects.all().order_by('-id')
 			all_markets = MarketAddByAdmin.objects.filter(is_active = True)
@@ -324,9 +325,19 @@ class FilterationAnimals(View):
 						all_products.append(one.product_instance)
 
 
-			price_fift = self.request.POST.get('price_fift')
+			price_fift = self.request.POST.get('price_fift[]')
+
+			
+
 			if price_fift:
-				all_products = Product.objects.filter(price__gte = 150, price__lte = 500)
+				split_into_list = price_fift.split()
+				min_val = split_into_list[0]
+				max_val = split_into_list[1]
+				print("min max is ------>", min_val)
+				print(max_val)
+
+
+				all_products = Product.objects.filter(price__gte = int(min_val), price__lte = int(max_val))
 
 			category_search = self.request.POST.get('category')
 			if category_search:
@@ -336,6 +347,7 @@ class FilterationAnimals(View):
 
 
 			all_markets = MarketAddByAdmin.objects.filter(is_active = True)
+			price_filtering = PriceFilter.objects.filter(is_active = True)
 			all_category = Category.objects.values_list('category_name', flat = True)
 
 			
@@ -350,6 +362,7 @@ class FilterationAnimals(View):
 	def get(self,request):
 		try:
 			all_category = Category.objects.values_list('category_name', flat = True)
+			price_filtering = PriceFilter.objects.filter(is_active = True)
 			all_markets = MarketAddByAdmin.objects.filter(is_active = True)
 			all_products = Product.objects.all().order_by('-id')
 			return render(request,'product/all_products.html',locals())

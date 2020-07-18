@@ -1,0 +1,86 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+
+{% block title %} <title>Channab | Registeration</title> {% endblock %}
+
+<style type="text/css">
+  .error-msg {
+color: red;
+font-size: 13px;
+margin: 3px;
+}
+span#mobile_reg_label {
+    color: red;
+}
+span#email_check_label {
+    color: red;
+}
+span#password_label {
+    color: red;
+}
+span#confirm_password_label {
+    color: red;
+}
+</style>
+<div class="login-wrapper d-flex align-items-center justify-content-center text-center">
+      <!-- Background Shape-->
+      <div class="background-shape"></div>
+      <div class="container"><img class="big-logo" src="{% static 'img/bg-img/chnaab.png' %}" alt="">
+        {% if messages %}
+        {% for message in messages %}
+        {% if 'success' in message.tags %}
+        <div class="alert alert-success">
+          {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% if messages %}
+        {% for message in messages %}
+        {% if 'error' in message.tags %}
+        <div class="alert alert-danger">
+          {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        <!-- Register Form-->
+        <div class="register-form mt-5 px-4">
+          <form action="{% url 'RegisterView' %}" method="post" id = "registerViewIdForm">
+            {% csrf_token %}
+            <div class="form-group text-left mb-4"><span>Mobile Number</span>
+              <label for="mobile"><i class="fa fa-mobile" aria-hidden="true"></i></label>
+              <input class="form-control" id="mobile_number" type="text" placeholder="Mobile Number" onkeyup="MobileNumberCheckRegister()" name="mobile_number">
+              <span  class="error-msg" id="mobile_reg_label" style="display: none"></span>
+            </div>
+            <div class="form-group text-left mb-4"><span>Email</span>
+              <label for="email"><i class="lni-envelope"></i></label>
+              <input class="form-control" id="email_reg" type="text" placeholder="Enter Your Email" onkeyup="Email_valid_check()" name="email">
+              <span  class="error-msg" id="email_check_label" style="display: none"></span>
+
+            </div>
+            <div class="form-group text-left mb-4"><span>Password</span>
+              <label for="password"><i class="lni-lock"></i></label>
+              <input class="input-psswd form-control" id="registerPassword" type="password" placeholder="Enter Your Paswword" onkeyup="Password_Register()" name="password">
+              <span  class="error-msg" id="password_label" style="display: none"></span>
+            </div>
+            <div class="form-group text-left mb-4"><span>Confirm Password</span>
+              <label for="password"><i class="lni-lock"></i></label>
+              <input class="input-psswd form-control" id="confirmpasswordReg" type="password" placeholder="Confirm Your Paswword" onkeyup="PasswordConfirmCheck()">
+              <span  class="error-msg" id="confirm_password_label" style="display: none"></span>
+            </div>
+            <button class="btn btn-success btn-lg w-100" type="submit">Register Now</button>
+          </form>
+        </div>
+        <!-- Login Meta-->
+        <div class="login-meta-data">
+          <p class="text-white mt-3 mb-0">Already have an account?<a class="ml-2" href="{% url 'LoginView' %}">Login</a></p>
+        </div>
+      </div>
+    </div>
+   
+
+
+
+{% endblock %}
