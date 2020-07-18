@@ -21,7 +21,7 @@
         <div class="back-button"><a href="{% url 'LandingPageOfSite' %}"><i class="lni-arrow-left"></i></a></div>
         <!-- Page Title-->
         <div class="page-heading">
-          <h6 class="mb-0">Shop List</h6>
+          <h6 class="mb-0">Animal List</h6>
         </div>
         <!-- Filter Option-->
         <div class="filter-option" id="suhaNavbarToggler"><i class="lni-cog"></i></div>
@@ -179,12 +179,12 @@
         <div class="container">
           <div class="section-heading d-flex align-items-center justify-content-between">
             {% if all_products %}
-            <h6 class="ml-1">All Products</h6>
+            <h6 class="ml-1">All Animals</h6>
             {% else %}
-            <h6 class="ml-1">Add Products</h6>
+            <h6 class="ml-1">Add Animals</h6>
             {% endif %}
             <!-- Layout Options-->
-            <div class="layout-options">{% if all_products %}<a class="active" href=""><i class="lni-radio-button"></i></a>{% endif %}
+            <div class="layout-options">
 
             <a class="btn btn-success btn-sm add2cart-notify" href="{% url 'ProductAdd' %}"><i class="lni-plus"></i></a></div>
           </div>
@@ -195,10 +195,10 @@
     <div class="card weekly-product-card mb-3">
       <div class="card-body d-flex align-items-center">
         <div class="product-thumbnail-side"><span class="badge badge-success">{{product.category_instance.category_name}}</span><a class="wishlist-btn" href="#"><i class="lni-heart-filled"></i></a><a class="product-thumbnail d-block" href="/one_detail/?id={{product.id}}"><img src="{{product.image.url}}" alt=""></a></div>
-        <div class="product-description"><a class="product-title d-block" href="#">{{product.name}}</a>
+        <div class="product-description"><a class="product-title d-block" href="/one_detail/?id={{product.id}}">{{product.name}}</a>
           <p class="sale-price"><i class="lni-dollar"></i>{{product.price}}</span></p>
           <div class="product-rating"><i class="fa fa-phone" aria-hidden="true"></i>{{product.mobilenumber}}</div>
-          <div class="product-rating"><i class="lni-map-marker"></i>{{product.city}}</div><a class="btn btn-success btn-sm add2cart-notify" href="#">More Info</a>
+          <div class="product-rating"><i class="lni-map-marker"></i>{{product.city}}</div><a class="btn btn-success btn-sm add2cart-notify" href="/one_detail/?id={{product.id}}">More Info</a>
         </div>
       </div>
     </div>

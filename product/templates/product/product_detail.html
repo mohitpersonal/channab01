@@ -26,6 +26,11 @@
     top: 50%;
     left: 50%;
 }
+
+.form-control {
+    height: 38px;
+}
+
 </style>
 <div class="preloader" id="preloader">
       <div class="spinner-grow text-secondary" role="status">
@@ -39,7 +44,7 @@
         <div class="back-button"><a href="{% url 'LandingPageOfSite' %}"><i class="lni-arrow-left"></i></a></div>
         <!-- Page Title-->
         <div class="page-heading">
-          <h6 class="mb-0">Product Details</h6>
+          <h6 class="mb-0">Animal Detail</h6>
         </div>
         <!-- Navbar Toggler-->
         <div class="suha-navbar-toggler d-flex justify-content-between flex-wrap" id="suhaNavbarToggler"><span></span><span></span><span></span></div>
@@ -99,15 +104,57 @@
           <div class="container d-flex justify-content-between">
             <div class="p-title-price">
               <h6 class="mb-1">{{product_record.name}}</h6>
-              <p class="sale-price mb-0">{{product_record.price}}<span>Rs.0.00</span></p>
+              <p class="sale-price mb-0">{{product_record.price}}</p>
             </div>
             <div class="p-wishlist-share"></div>
           </div>
           <!-- Ratings-->
           <div class="product-ratings">
             <div class="container d-flex align-items-center justify-content-between">
-              <div class="ratings"><i class="lni-star-filled"></i><i class="lni-star-filled"></i><i class="lni-star-filled"></i><i class="lni-star-filled"></i><i class="lni-star-filled"></i></div>
-              <div class="total-result-of-ratings"><span>4.96</span><span>Very Good</span></div>
+              <div class="ratings">{% if average_by_divide > 4 %}
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      {% elif average_by_divide <= 4 and  average_by_divide > 3 %}
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      {% elif average_by_divide <= 3 and  average_by_divide > 2 %}
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      {% elif average_by_divide <= 2 and  average_by_divide > 1 %}
+                      <i class="lni-star-filled"></i>
+                      <i class="lni-star-filled"></i>
+                      {% elif average_by_divide <= 1  %}
+                      <i class="lni-star-filled"></i>
+                      {% endif %}
+                    </div>
+              <div class="total-result-of-ratings">
+                {% if not average_by_divide == 'no_rat' %}
+                <span>{{average_by_divide}}</span>
+                {% else %}
+                <span style="display: none">{{average_by_divide}}</span>
+                {% endif %}
+                {% if average_by_divide > 4 %}
+
+                <span>Very Good</span>
+                {% elif average_by_divide <= 4 and  average_by_divide > 3 %}
+                <span>Good</span>
+                {% elif average_by_divide <= 3 and  average_by_divide > 2 %}
+                <span>Average</span>
+                {% elif average_by_divide <= 2 and  average_by_divide > 1 %}
+                <span>Poor</span>
+                {% elif average_by_divide <= 1 %}
+                <span>Very Poor</span>
+                {% else %}
+                <span>Normal</span>
+                {% endif %}
+
+              </div>
             </div>
           </div>
         </div>
@@ -117,7 +164,7 @@
         <div class="cart-form-wrapper bg-white mb-3 py-3">
           <div class="container">
             <form class="cart-form" action="#" method="post">
-             <a class="btn btn-warning mr-2" href="checkout.html">City</a>
+             <a class="btn btn-warning mr-2" href="checkout.html">City -: {{product_record.city}}</a>
               <button class="btn btn-success" type="submit">Mobile Number -: {{product_record.mobilenumber}}</button>
             </form>
           </div>
@@ -127,11 +174,11 @@
           <div class="container">
             <h6>Specifications</h6>
             <p>{{product_record.description}}</p>
-            <ul>
+            <!-- <ul>
               <li>100% good reviews</li>
               <li>7 days returns</li>
               <li>Warranty not aplicable</li>
-            </ul>
+            </ul> -->
           </div>
         </div>
         <!-- Rating & Review Wrapper-->
@@ -172,7 +219,14 @@
 
                     </div>
 
-                    <p class="comment mb-0">{{one_review.comment_on_post}}</p><span class="name-date">Chanaab {{one_review.created_on|date:'d-m-y'}}</span>
+                    <p class="comment mb-0">{{one_review.comment_on_post}}</p>
+
+                    <span class="name-date">
+                      {% if one_review.name %}
+                    {{one_review.name}} 
+                  {% endif %}
+                   
+              {{one_review.created_on|date:'d-m-y'}}</span>
                   </div>
                 </li>
                 {% endfor %}
@@ -207,6 +261,18 @@
               <div class="form-group">
                 <textarea class="form-control" id="comments" name="comment" cols="30" rows="10" data-max-length="200"></textarea onkeyup="CommentAdd()">
                   <span  class="error-msg" id="comment_text_label" style="display: none" ></span>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputFirstName">Name</label>
+                  <input type="text" class="form-control" id="name_comment" placeholder="Enter Your Name" onkeyup="NameCheckComment()" maxlength="20" name="mobile_number">
+                  <span  class="error-msg"
+                  id="streetcheck_label_found"></span>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputLastName">Email or Mobile Number</label>
+                  <input type="text" class="form-control" id="email_check_comment" placeholder="Email or Mobile Number" minlength="8" maxlength="15" name="email_or_phone">
+                </div>
               </div>
               <button class="btn btn-sm btn-primary" type="submit">Save Review</button>
             </form>

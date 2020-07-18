@@ -18,23 +18,31 @@ class LandingPageOfSite(View):
 			all_products = Product.objects.all().order_by('-id')
 			categorylist = Category.objects.all().order_by('-id')
 			all_top_product_list = []
-			filter_product = CommentReviewsStar.objects.filter(stars_counting = 5)[:10]
-			for one_object in filter_product:
-				if one_object.product_instance not in all_top_product_list:
-						all_top_product_list.append(one_object.product_instance)
-			if len(all_top_product_list) < 10:
-				filter_product = CommentReviewsStar.objects.filter(stars_counting = 4)
-				for one_object in filter_product:
-					if one_object.product_instance not in all_top_product_list:
-						all_top_product_list.append(one_object.product_instance)
 
-			if len(all_top_product_list) < 10:
-				filter_product = CommentReviewsStar.objects.filter(stars_counting = 3)
-				for one_object in filter_product:
-					if one_object.product_instance not in all_top_product_list:
-						all_top_product_list.append(one_object.product_instance)
+			for product_record in all_products:
+				five_star_person = CommentReviewsStar.objects.filter(product_instance = product_record,stars_counting = 5).count()
+				four_star_person = CommentReviewsStar.objects.filter(product_instance = product_record,stars_counting = 4).count()
+				three_star_person = CommentReviewsStar.objects.filter(product_instance = product_record,stars_counting = 3).count()
+				two_star_person = CommentReviewsStar.objects.filter(product_instance = product_record,stars_counting = 2).count()
+				one_star_person = CommentReviewsStar.objects.filter(product_instance = product_record,stars_counting = 1).count()
 
-				
+				multiply_with_stars = (5*int(five_star_person) + 4*int(four_star_person) + 3*int(three_star_person) + 2*int(two_star_person) + 1*int(one_star_person))
+
+				count_of_peoples = int(five_star_person) + int(four_star_person) + int(three_star_person) + int(two_star_person) + int(one_star_person)
+				if not count_of_peoples == 0:
+					average_by_divide = multiply_with_stars/count_of_peoples
+					if average_by_divide > 4 :
+						if len(all_top_product_list) < 10:
+							all_top_product_list.append(product_record)
+							
+						else:
+							break
+
+					elif average_by_divide >= 3 :
+						if len(all_top_product_list) < 10:
+							all_top_product_list.append(product_record)
+						else:
+							break
 
 			all_markets = MarketAddByAdmin.objects.filter(is_active = True)
 
@@ -151,7 +159,8 @@ class CategoryWiseSearch(View):
 			context = {}
 			if self.request.method == 'GET':
 				get_category = self.request.GET.get('cat_id_fil')
-				all_products = Product.objects.filter(category = get_category)
+				category_instance = Category.objects.get(category_name = get_category)
+				all_products = Product.objects.filter(category_instance = category_instance)
 				
 				return render(request,'product/all_products.html',locals())
 
@@ -171,9 +180,40 @@ class ProductDetailPage(View):
 
 	def get(self,request):
 		try:
-			context = {}
+			
+
+
+
+			#######
 			id_of_product = self.request.GET.get('id')
+
+
+
 			product_record = Product.objects.get(id = int(id_of_product))
+
+
+			five_star_person = CommentReviewsStar.objects.filter(product_instance = product_record,stars_counting = 5).count()
+			four_star_person = CommentReviewsStar.objects.filter(product_instance = product_record,stars_counting = 4).count()
+			three_star_person = CommentReviewsStar.objects.filter(product_instance = product_record,stars_counting = 3).count()
+			two_star_person = CommentReviewsStar.objects.filter(product_instance = product_record,stars_counting = 2).count()
+			one_star_person = CommentReviewsStar.objects.filter(product_instance = product_record,stars_counting = 1).count()
+
+
+			multiply_with_stars = (5*int(five_star_person) + 4*int(four_star_person) + 3*int(three_star_person) + 2*int(two_star_person) + 1*int(one_star_person))
+			count_of_peoples = int(five_star_person) + int(four_star_person) + int(three_star_person) + int(two_star_person) + int(one_star_person)
+			print(multiply_with_stars)
+			if count_of_peoples == 0:
+				average_by_divide = 'no_rat'
+			else:
+				average_by_divide = multiply_with_stars/count_of_peoples
+				if average_by_divide:
+					average_by_divide =int(average_by_divide)
+
+			print("\n" * 3)
+			print("average_by_divide is ----->", average_by_divide)
+
+
+
 			products_other_images = ProductImage.objects.filter(product = product_record)
 
 			rating_reviews = CommentReviewsStar.objects.filter(product_instance = product_record)
@@ -332,9 +372,11 @@ class CommentReviewsView(View):
 			loads_json = json.loads(request.POST.get('type_dict'))
 			comment_text = loads_json.get('text_area').strip().lower()
 			star_count = loads_json.get('star_count')
+			mobile_number = loads_json.get('mobile_number')
+			name = loads_json.get('name')
 			post_id = loads_json.get('post_id')
 			product_instance = Product.objects.get(id = int(post_id))
-			CommentReviewsStar.objects.create(comment_on_post = comment_text, product_instance = product_instance,stars_counting = int(star_count))
+			CommentReviewsStar.objects.create(comment_on_post = comment_text, product_instance = product_instance,mobile_number = mobile_number,name = name,stars_counting = int(star_count))
 			context['status'] = 'success'
 			context['save_comment'] = 'comment save'
 			return HttpResponse(json.dumps(context))
