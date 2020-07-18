@@ -30,8 +30,10 @@ ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
+
 INSTALLED_APPS = [
     'product',
+    'mobileApi',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'storages',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +73,21 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'channab.wsgi.application'
+
+
+# Database
+# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'ChanaabOfficial',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': '',
+#         'PORT': 3306,
+#     }
+# }
 
 DATABASES = {
     'default': {
@@ -133,3 +151,8 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+#### Geo location api key
+
+GEO_API_KEY = 'aed9d8f5366c64a8e388ecf0d04a4104'

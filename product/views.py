@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.generic import View
-from .models import Product,Category,MarketAddByAdmin,CommentReviewsStar
-import sys, geocoder,json
+from .models import Product,Category,MarketAddByAdmin,CommentReviewsStar,ProductMarket, ProductImage
+import sys,json,requests
+from django.conf import settings
 from django.http import HttpResponse
 from django.db.models import Q
 
@@ -16,7 +17,25 @@ class LandingPageOfSite(View):
 		try:
 			all_products = Product.objects.all().order_by('-id')
 			categorylist = Category.objects.all().order_by('-id')
-			all_top_product = Product.objects.filter(id__gte =1)
+			all_top_product_list = []
+			filter_product = CommentReviewsStar.objects.filter(stars_counting = 5)[:10]
+			for one_object in filter_product:
+				if one_object.product_instance not in all_top_product_list:
+						all_top_product_list.append(one_object.product_instance)
+			if len(all_top_product_list) < 10:
+				filter_product = CommentReviewsStar.objects.filter(stars_counting = 4)
+				for one_object in filter_product:
+					if one_object.product_instance not in all_top_product_list:
+						all_top_product_list.append(one_object.product_instance)
+
+			if len(all_top_product_list) < 10:
+				filter_product = CommentReviewsStar.objects.filter(stars_counting = 3)
+				for one_object in filter_product:
+					if one_object.product_instance not in all_top_product_list:
+						all_top_product_list.append(one_object.product_instance)
+
+				
+
 			all_markets = MarketAddByAdmin.objects.filter(is_active = True)
 
 			return render(request,'product/landing_page.html',locals())
@@ -37,6 +56,7 @@ class ProductList(View):
 	def get(self,request):
 
 		try:
+			all_category = Category.objects.values_list('category_name', flat = True)
 			all_products = Product.objects.all().order_by('-id')
 			all_markets = MarketAddByAdmin.objects.filter(is_active = True)
 			return render(request,'product/all_products.html',locals())
@@ -55,9 +75,12 @@ class ProductAdd(View):
 	def get(self,request):
 
 		try:
-			all_lat_lang = geocoder.ip('me')
 			all_markets = MarketAddByAdmin.objects.filter(is_active = True)
-			city =  all_lat_lang.city
+			location_api ="http://api.ipstack.com/check?access_key={}".format(settings.GEO_API_KEY)
+			geo_req = requests.get(location_api)
+			geo_json = json.loads(geo_req.text)
+			city = geo_json['city']
+			all_category = Category.objects.values_list('category_name', flat = True)
 			return render(request,'product/product_add.html',locals())
 		
 
@@ -74,15 +97,42 @@ class ProductAdd(View):
 			city = request.POST.get('city')
 			mobilenumber = request.POST.get('mobilenumber')
 			category = self.request.POST.get('category')
-			marketplace = self.request.POST.get('marketplace')
+			marketplace = self.request.POST.getlist('marketplace[]')
 			animal_type = self.request.POST.get('animal_type')
 			age_of_animal = self.request.POST.get('age')
-			market_instance = MarketAddByAdmin.objects.get(market_name = marketplace)
+			category_instance = Category.objects.get(category_name = category)
 
 			image = request.FILES.get('main_image')
-			Product.objects.create(name = name, description=description, price=price, city=city,market_instance = market_instance,category = category,  image = image, mobilenumber=mobilenumber, animal_type = animal_type, age_of_animal = age_of_animal)
+
+
+			product_obj = Product.objects.create(name = name, description=description, price=price, city=city,category_instance = category_instance,  image = image, mobilenumber=mobilenumber, animal_type = animal_type, age_of_animal = age_of_animal)
+			ist_image = request.FILES.get('ist_image')
+			sec_image = request.FILES.get('sec_image')
+			iiird_image = request.FILES.get('iiird_image')
+			fourth_image = request.FILES.get('fourth_image')
+			fifth_image = request.FILES.get('fifth_image')
+
+			if ist_image:
+				ProductImage.objects.create(product = product_obj,image = ist_image)
+			if sec_image:
+				ProductImage.objects.create(product = product_obj,image = sec_image)
+			if iiird_image:
+				ProductImage.objects.create(product = product_obj,image = iiird_image)
+			if fourth_image:
+				ProductImage.objects.create(product = product_obj,image = fourth_image)
+			if fifth_image:
+				ProductImage.objects.create(product = product_obj,image = fifth_image)
+
+
+
+			for one_market in marketplace:
+				market_instance = MarketAddByAdmin.objects.get(id = int(one_market))
+
+				ProductMarket.objects.create(market_instance = market_instance,product_instance = product_obj)
+
+
 			message = 'An animal has been successfully registered for sale purpose.'
-			return render(request,'product/product_add.html',locals())
+			return redirect('/product_list/')
 		except:
 			print(sys.exc_info())
 			error = 'Something went wrong, Please try again later'
@@ -124,6 +174,8 @@ class ProductDetailPage(View):
 			context = {}
 			id_of_product = self.request.GET.get('id')
 			product_record = Product.objects.get(id = int(id_of_product))
+			products_other_images = ProductImage.objects.filter(product = product_record)
+
 			rating_reviews = CommentReviewsStar.objects.filter(product_instance = product_record)
 			return render(request,'product/product_detail.html',locals())
 
@@ -200,7 +252,7 @@ class FilterationAnimals(View):
 				all_products = Product.objects.filter(Q(age_of_animal__lt = less_one_year_value))
 			if one_to_two_year:
 				one_to_two_year_value  = 2
-				all_products = Product.objects.filter(Q(age_of_animal__lte = one_to_two_year_value))
+				all_products = Product.objects.filter(age_of_animal__lte = one_to_two_year_value, age_of_animal__gte = 1)
 			if more_than_two_year:
 				more_than_two_year_val = 2
 				all_products = Product.objects.filter(Q(age_of_animal__gt = more_than_two_year_val))
@@ -224,11 +276,27 @@ class FilterationAnimals(View):
 			#### market searching
 			market_post = self.request.POST.get('market_added')
 			if market_post:
+				all_products = []
 				market_added = MarketAddByAdmin.objects.get(id = int(market_post))
-				all_products = Product.objects.filter(market_instance = market_added)
+				product_market = ProductMarket.objects.filter(market_instance = market_added)
+				for one in product_market:
+					if one.product_instance not in all_products:
+						all_products.append(one.product_instance)
+
+
+			price_fift = self.request.POST.get('price_fift')
+			if price_fift:
+				all_products = Product.objects.filter(price__gte = 150, price__lte = 500)
+
+			category_search = self.request.POST.get('category')
+			if category_search:
+				get_obj = Category.objects.get(category_name = category_search)
+				all_products = Product.objects.filter(category_instance = get_obj)
+
 
 
 			all_markets = MarketAddByAdmin.objects.filter(is_active = True)
+			all_category = Category.objects.values_list('category_name', flat = True)
 
 			
 			return render(request,'product/all_products.html',locals())
@@ -241,6 +309,7 @@ class FilterationAnimals(View):
 
 	def get(self,request):
 		try:
+			all_category = Category.objects.values_list('category_name', flat = True)
 			all_markets = MarketAddByAdmin.objects.filter(is_active = True)
 			all_products = Product.objects.all().order_by('-id')
 			return render(request,'product/all_products.html',locals())
@@ -287,10 +356,36 @@ class MarketDetails(View):
 			market_id = self.request.GET.get('market_based_id')
 			market_get = MarketAddByAdmin.objects.get(id = int(market_id))
 
-			all_products = Product.objects.filter(market_instance = market_get)
+			product_market = ProductMarket.objects.filter(market_instance = market_get)
+			all_products = []
+			for one in product_market:
+				if one.product_instance not in all_products:
+					all_products.append(one.product_instance)
+
+			
 			return render(request,'product/all_products.html',locals())
 
 		except:
 			print(sys.exc_info())
 			context['status'] = 'fail'
 			return render(request,'product/all_products.html',locals())
+
+
+
+
+class AllMandies(View):
+
+	"""Demonstrate docstring for showing that this view based function will used for filtering an market  """
+
+	def get(self,request):
+
+		try:
+			all_markets = MarketAddByAdmin.objects.filter(is_active = True)
+			return render(request,'product/all_market.html',locals())
+		except:
+			print(sys.exc_info())
+			context['status'] = 'fail'
+			return render(request,'product/all_market.html',locals())
+
+
+
