@@ -110,7 +110,11 @@ class CommentReviewsStar(models.Model):
 
 
 
+class PriceFilter(models.Model):
 
+	min_val = models.CharField(max_length = 10,null = True, blank = True)
+	max_val = models.CharField(max_length = 10,null = True, blank = True)
+	is_active = models.BooleanField(default = True)
 
 
 

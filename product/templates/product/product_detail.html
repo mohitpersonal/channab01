@@ -69,17 +69,16 @@
       <!-- Sidenav Nav-->
       {% if request.user.is_authenticated %}
       <ul class="sidenav-nav">
-        <li><a href="#"><i class="lni-user"></i>Create New Account</a></li>
         <li><a href="#"><i class="lni-alarm lni-tada-effect"></i>Notifications<span class="ml-3 badge badge-warning">3</span></a></li>
         <li><a href="#"><i class="lni-empty-file"></i>All Pages</a></li>
         <li><a href="#"><i class="lni-heart-filled"></i>My Wishlist</a></li>
         <li><a href="#"><i class="lni-cog"></i>Settings</a></li>
-        <li><a href="#"><i class="lni-power-switch"></i>Sign Out</a></li>
+        <li><a href="#" id="logout_popup"><i class="lni-power-switch"></i>Sign Out</a></li>
       </ul>
       {% endif %}
       {% if not request.user.is_authenticated %}
       <ul class="sidenav-nav">
-        <li><a href="#"><i class="lni-user"></i>Create New Account</a></li>
+        <li><a href="{% url 'RegisterView' %}"><i class="lni-user"></i>Create New Account</a></li>
         <li><a href="#"><i class="lni-power-switch"></i>Sign In</a></li>
       </ul>
       {% endif %}

@@ -1266,15 +1266,17 @@ textarea:invalid {
   position: relative;
   z-index: 1; }
   .layout-options a {
-    display: inline-block;
-    width: 36px;
-    height: 30px;
+       width: auto;
+    height: auto;
     background-color: #ffffff;
     border-radius: 0.25rem;
     margin-left: .5rem;
-    text-align: center;
     font-size: 1rem;
-    color: #747794; }
+    color: #747794;
+    padding: 11px 8px;
+    line-height: 0;
+    text-align: center;
+    display: inline-block; }
     .layout-options a i {
       line-height: 30px; }
     .layout-options a:hover, .layout-options a:focus, .layout-options a.active {
