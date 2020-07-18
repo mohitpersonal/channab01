@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'tp7xq$ybjw&os8*dt3utqqscni7#ka$%2xm=d87f_sf9*cz42w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ["*"]
 
 
 INSTALLED_APPS = [
+    'accounts',
     'product',
     'mobileApi',
     'django.contrib.admin',
@@ -40,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'storages',
     'rest_framework',
 ]
 
@@ -99,13 +99,6 @@ DATABASES = {
         'PORT': '',
     }
 }
-
-#DATABASES = {
-#   'default': {
-#       'ENGINE': 'django.db.backends.sqlite3',
-#       'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#   }
-#}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

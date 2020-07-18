@@ -64,10 +64,12 @@
           <h6 class="widget-title mb-3">Price Searching</h6>
           <div class="widget-desc">
             <!-- Single Checkbox-->
+            {% for one_price in price_filtering %}
             <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-              <input class="custom-control-input" id="customCheck21price_fift" type="checkbox" name="price_fift" value="price_fift">
-              <label class="custom-control-label" for="customCheck21price_fift">$150 - $500</label>
+              <input class="custom-control-input" id="customCheck21price_fift{{one_price.min_val}}{{one_price.max_val}}" type="checkbox" name="price_fift[]" value="{{one_price.min_val}}  {{one_price.max_val}} ">
+              <label class="custom-control-label" for="customCheck21price_fift{{one_price.min_val}}{{one_price.max_val}}">Rs.{{one_price.min_val}} - Rs.{{one_price.max_val}}</label>
             </div>
+            {% endfor %}
             
             <!-- Single Checkbox-->
           </div>
@@ -187,7 +189,6 @@
             <div class="layout-options">
 
             <a class="btn btn-success btn-sm add2cart-notify" href="{% url 'ProductAdd' %}"><i class="lni-plus"></i></a></div>
-
           </div>
           {% if all_products %}
           
@@ -204,7 +205,6 @@
       </div>
     </div>
   </div>
-  
 {% endfor %}
 {% else %}
 <div id="notfound">
@@ -219,11 +219,6 @@
   </div>
 
 
-  <div class="col-12">
-  <div class="section_not_found">
-  <h1></h1>
-  </div>
-  </div>
 
        
         
