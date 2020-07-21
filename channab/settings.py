@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken'
+
 ]
 
 MIDDLEWARE = [
@@ -117,6 +119,10 @@ DATABASES = {
     }
 }
 
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -166,3 +172,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #### Geo location api key
 
 GEO_API_KEY = 'aed9d8f5366c64a8e388ecf0d04a4104'
+
+API_KEY_FOR_SECURITY = '9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b'
