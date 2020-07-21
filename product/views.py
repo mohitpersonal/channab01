@@ -100,6 +100,7 @@ class ProductAdd(View):
 
 	def post(self,request):
 		try:
+			print(request.POST)
 			name = request.POST.get('name')
 			description = request.POST.get('description')
 			price = request.POST.get('price')

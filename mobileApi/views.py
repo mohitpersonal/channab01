@@ -1,16 +1,22 @@
-from django.shortcuts import render,redirect
-import sys
+from django.http import HttpResponse
+from product.models import Product,PriceFilter,Category,MarketAddByAdmin,CommentReviewsStar,ProductMarket, ProductImage
+from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser, FormParser
+import ast
+
+import sys,json
 from django.views import View
 # Create your views here.
 
 
 
-class ProductPageApi(View):
+class ProductPageApi(APIView):
 
 	''' Demonstrate docstring for add an product with category by any user'''
+	parser_classes = (MultiPartParser, FormParser)
 
 
-	def post(self,request):
+	def post(self,request,*args, **kwargs):
 		try:
 			name = request.POST.get('name')
 			description = request.POST.get('description')
@@ -18,7 +24,7 @@ class ProductPageApi(View):
 			city = request.POST.get('city')
 			mobilenumber = request.POST.get('mobilenumber')
 			category = self.request.POST.get('category')
-			marketplace = self.request.POST.getlist('marketplace[]')
+			marketplace = self.request.POST.get('marketplace[]')
 			animal_type = self.request.POST.get('animal_type')
 			age_of_animal = self.request.POST.get('age')
 			category_instance = Category.objects.get(category_name = category)
@@ -44,18 +50,21 @@ class ProductPageApi(View):
 			if fifth_image:
 				ProductImage.objects.create(product = product_obj,image = fifth_image)
 
+			x = ast.literal_eval(marketplace)
+			make_list = [n.strip() for n in x]
 
-
-			for one_market in marketplace:
+			for one_market in make_list:
 				market_instance = MarketAddByAdmin.objects.get(id = int(one_market))
 
 				ProductMarket.objects.create(market_instance = market_instance,product_instance = product_obj)
 
-
-			message = 'An animal has been successfully registered for sale purpose.'
-			return redirect('/product_list/')
+			context = {}
+			context['message'] = 'An animal has been successfully registered for sale purpose.'
+			context['status'] = 'success'
+			return HttpResponse(json.dumps(context))
 		except:
+			context = {}
 			print(sys.exc_info())
-			error = 'Something went wrong, Please try again later'
-			return render(request,'product/product_add.html',locals())
-
+			context['error'] = 'Something went wrong, Please try again later'
+			context['status'] = 'fail'
+			return HttpResponse(json.dumps(context))

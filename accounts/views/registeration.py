@@ -2,7 +2,8 @@ from django.views.generic import View
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib import messages
-
+import string,random
+from accounts.models import UserProfileInfo
 
 
 
@@ -13,6 +14,9 @@ class RegisterView(View):
 	def get(self,request):
 
 		try:
+			if request.user.is_authenticated:
+				return redirect('/')
+
 			return render(request, 'accounts/register.html', locals())
 		except Exception as e:
 			print(e)
@@ -36,10 +40,9 @@ class RegisterView(View):
 				user_obj = User.objects.create(email=mobile_number, username = mobile_number)
 				user_obj.set_password(password)
 				user_obj.save()
-                   
-				# letters = string.ascii_lowercase + string.ascii_uppercase +  string.digits 
-				# user_token = ''.join(random.choice(letters) for _ in range(35))
-				# create_rest_info = RegisteredUser.objects.create(user_instance = user_obj, number = phone, idCard = id_card, token = user_token)
+				letters = string.ascii_lowercase + string.ascii_uppercase +  string.digits 
+				user_token = ''.join(random.choice(letters) for _ in range(35))
+				UserProfileInfo.objects.create(user = user_obj,token_for_user = user_token, active = True)
 				messages.success(request,'Thank you for your registration! Your account has been successfully created. An Verification Code has been sent to you with detailed instructions on how to activate it')
 				return render(request, 'accounts/register.html', locals())
 		except :

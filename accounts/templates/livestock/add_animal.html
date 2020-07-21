@@ -1,0 +1,232 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+{% block title %} <title>Channab | Add Animal</title> 
+{% endblock %}
+<style type="text/css">
+  .btn-group {
+    width: 344px !important;
+    background-color: whitesmoke;
+}
+ 
+ul.multiselect-container.dropdown-menu.show {
+    
+    background-color: #00b894;
+}
+
+</style>
+    <div class="header-area" id="headerArea">
+      <div class="container h-100 d-flex align-items-center justify-content-between">
+        <!-- Back Button-->
+        <div class="back-button"><a href="{% url 'LandingPageOfSite' %}"><i class="lni-arrow-left"></i></a></div>
+        <!-- Page Title-->
+        <div class="page-heading">
+          <h6 class="mb-0">Sell your Animal</h6>
+        </div>
+        <!-- Navbar Toggler-->
+        <div class="suha-navbar-toggler d-flex justify-content-between flex-wrap" id="suhaNavbarToggler"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+    <!-- Sidenav Black Overlay-->
+    <div class="sidenav-black-overlay"></div>
+    <!-- Side Nav Wrapper-->
+    <div class="suha-sidenav-wrapper" id="sidenavWrapper">
+      <!-- Sidenav Profile-->
+      {% if request.user.is_authenticated %}
+      <div class="sidenav-profile">
+        <div class="user-profile"><img src="{% static 'img/bg-img/9.jpg' %}" alt=""></div>
+        <div class="user-info">
+          <h6 class="user-name mb-0">Suha Jannat</h6>
+          <p class="available-balance">Balance <span>$<span class="counter">379.23</span></span></p>
+        </div>
+      </div>
+      {% endif %}
+      <!-- Sidenav Nav-->
+      {% if request.user.is_authenticated %}
+      <ul class="sidenav-nav">
+        <li><a href="#"><i class="lni-alarm lni-tada-effect"></i>Notifications<span class="ml-3 badge badge-warning">3</span></a></li>
+        <li><a href="#"><i class="lni-empty-file"></i>All Pages</a></li>
+        <li><a href="#"><i class="lni-heart-filled"></i>My Wishlist</a></li>
+        <li><a href="#"><i class="lni-cog"></i>Settings</a></li>
+        <li><a href="#" id="logout_popup"><i class="lni-power-switch"></i>Sign Out</a></li>
+      </ul>
+      {% endif %}
+      {% if not request.user.is_authenticated %}
+      <ul class="sidenav-nav">
+        <li><a href="{% url 'RegisterView' %}"><i class="lni-user"></i>Create New Account</a></li>
+        <li><a href="{% url 'LoginView' %}"><i class="lni-power-switch"></i>Sign In</a></li>
+      </ul>
+      {% endif %}
+      <!-- Go Back Button-->
+      <div class="go-home-btn" id="goHomeBtn"><i class="lni-arrow-left"></i></div>
+    </div>
+<div class="page-content-wrapper">
+      <div class="container">
+        <!-- Profile Wrapper-->
+        <div class="profile-wrapper-area py-3">
+          <!-- User Information-->
+          <div class="card user-info-card">
+
+              <div class="user-info">
+
+                <h3 class="text-center">Animal Detail</h3>
+              </div>
+            </div>
+          </div>
+          <!-- User Meta Data-->
+          <div class="card user-data-card">
+            {% if message %}
+                       
+                              <div class="alert alert-success" id="msg_Sucess_log">
+                                 {{ message }}
+                              </div>
+                        {% endif %}
+                        {% if error %}
+                              <div class="alert alert-danger" id="msg_err_log">
+                                 {{ error }}
+                              </div>
+                        {% endif %}
+            <div class="card-body">
+              <form action="" method="POST" enctype="multipart/form-data" id = "live_Stock_add_animal_js">
+                {% csrf_token %}
+                <div class="row">
+                <div class="form-group col-md-4">
+                  <div class="title mb-2"><i class="fa fa-header" aria-hidden="true"></i><span>Animal Tag</span></div>
+                  <input class="form-control" id="tag_name_live" name = "name" type="text" value="" placeholder="Animal Tag" onkeyup="TagAnimalLive()" minlength="3" maxlength="16" >
+                  <span  class="error-msg" id="tag_animal_live_label" style="display: none"></span>
+                </div>
+                <div class="form-group col-md-4">
+                  <div class="title mb-2"><i class="fa fa-birthday-cake" aria-hidden="true"></i><span>DOB</span></div>
+                  <input class="form-control" id="age_Check" type="date" name = "age" accept="" value=""placeholder="DOB" >
+                </div>
+                <div class="form-group col-md-4">
+                  <div class="title mb-2"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>Animal Breed</span></div>
+                  <select name="category" id = "countary_check_text_found" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
+                    <option value="Select">Please Select</option>
+                    <option value="Automatic">Automatic</option>
+                    <option value="Manual">Manual</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <div class="title mb-2"><i class="fa fa-caret-down" aria-hidden="true"></i><span>Animal Category</span></div>
+                  <select name="category" id = "countary_check_text_found" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
+                    <option value="Select">Please Select</option>
+                    {% for one in all_category %}
+                    <option value="{{one}}">{{one}}</option>
+                    {% endfor %}
+                  </select>
+                  <span class="error-msg" id="label_your_account" style="display: none">This Field is required</span>                               
+                </div>
+                
+                <div class="form-group col-md-4">
+                  <div class="title mb-2"><i class="fa fa-money" aria-hidden="true"></i><span>Gender</span></div>
+                  <select name="category" id = "countary_check_text_found" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
+                    <option value="Select">Please Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+
+                  <span  class="error-msg" id="price_check_label" style="display: none"></span>
+                </div>
+                <div class="form-group col-md-4">
+                  <div class="title mb-2"><i class="lni-phone-handset"></i><span>Male Parent</span></div>
+                  <input class="form-control" id="mobilenumber" name = "male_parent" type="text" value="" placeholder="Male Parent" minlength="6" maxlength="15" onkeyup="PhoneCheck()">
+                  <span  class="error-msg" id="mobile_label" style="display: none"></span>
+                </div>
+                <div class="form-group col-md-4">
+                  <div class="title mb-2"><i class="lni-map-marker"></i><span>Female Parent</span></div>
+                  <input class="form-control" type="text" id="female_parent" name = "female_parent" placeholder="Female Parent">
+                </div>
+                <div class="form-group col-md-4">
+                  <div class="title mb-2"><i class="fa fa-paw" aria-hidden="true"></i><span>Animal Type</span></div>
+                  <select name="animal_type" id = "countary_check_text_found" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
+                    <option value="---">---</option>
+                    <option value="Dry">Dry</option>
+                    <option value="Milking">Milking</option>
+                  </select>                               
+                </div>
+                <div class="form-group col-md-4 col-sm-12">
+                  <div class="title mb-2"><i class="lni-envelope"></i><span>Description/Notes</span></div>
+                  <input class="form-control" id="textarea_Desc" type="text" name = "description" accept="" value=""placeholder="Description" >
+
+                  <span  class="error-msg" id="description_label" style="display: none"></span>
+                </div>
+
+                </div>
+                
+             
+              <div class="row">              
+           
+                <div class="form-group col-md-2 image_section_upload">
+                  <!-- div class="title mb-2"><i class="lni lni-camera"></i><span>Image</span></div -->
+                  <button  class="btn btn-success" type="button" style="display:block;" onclick="document.getElementById('Livestock_getFile1_found').click()"><i class="lni lni-camera"></i>Image Upload</button>
+                  <input type='file' id="Livestock_getFile1_found" class="images first_step_cls" ngf-select="" ng-model="new_files" accept="image/*" name="main_image" style="display:none"onchange="Livestock_readURLMySecond_Found(this)">
+                  <span class="error-msg"id="Livestock_images_sec_check_label_found" style="display: none"></span>
+                  <br>
+                  <div class="col-md-12 text-center">
+                    <img id="Livestock_blah2_found" src="./img/bg-img/11.jpg" alt="your image" style="display: none;" />
+                  </div>
+                </div>
+				<div class="form-group col-md-2 image_section_upload">
+                  <!-- div class="title mb-2"><i class="lni lni-camera"></i><span>Image</span></div -->
+                  <button  class="btn btn-success" type="button" style="display:block;" onclick="document.getElementById('Livestock_getFile2_found').click()"><i class="lni lni-camera"></i>Image Upload</button>
+                  <input type='file' id="Livestock_getFile2_found" class="images first_step_cls" ngf-select="" ng-model="new_files" accept="image/*" name="ist_image" style="display:none"onchange="Livestock_readURLMySecond1_Found(this)">
+                  <br>
+                  <div class="col-md-12 text-center">
+                    <img id="Livestock_blah3_found" src="./img/bg-img/11.jpg" alt="your image" style="display: none;" />
+                  </div>
+                </div>
+				<div class="form-group col-md-2 image_section_upload">
+                  <!-- div class="title mb-2"><i class="lni lni-camera"></i><span>Image</span></div -->
+                  <button  class="btn btn-success" type="button" style="display:block;" onclick="document.getElementById('Livestock_getFile4_found').click()"><i class="lni lni-camera"></i>Image Upload</button>
+                  <input type='file' id="Livestock_getFile4_found" class="images first_step_cls" ngf-select="" ng-model="new_files" accept="image/*" name="sec_image" style="display:none"onchange="Livestock_readURLMySecond4_Found(this)">
+                  <br>
+                  <div class="col-md-12 text-center">
+                    <img id="Livestock_blah4_found" src="./img/bg-img/11.jpg" alt="your image" style="display: none;" />
+                  </div>
+                </div>
+				<div class="form-group col-md-2 image_section_upload">
+                  <!-- div class="title mb-2"><i class="lni lni-camera"></i><span>Image</span></div -->
+                  <button  class="btn btn-success" type="button" style="display:block;" onclick="document.getElementById('Livestock_getFile5_found').click()"><i class="lni lni-camera"></i>Image Upload</button>
+                  <input type='file' id="Livestock_getFile5_found" class="images first_step_cls" ngf-select="" ng-model="new_files" accept="image/*" name="iiird_image" style="display:none"onchange="Livestock_MyreadURLSecond4_Found(this)">
+                   <br>
+                  <div class="col-md-12 text-center">
+                    <img id="Livestock_blah5_found" src="./img/bg-img/11.jpg" alt="your image" style="display: none;" />
+                  </div>
+                </div>
+				<div class="form-group col-md-2 image_section_upload">
+                  <!-- div class="title mb-2"><i class="lni lni-camera"></i><span>Image</span></div -->
+                  <button  class="btn btn-success" type="button" style="display:block;" onclick="document.getElementById('Livestock_getFile6_found').click()"><i class="lni lni-camera"></i>Image Upload</button>
+                  <input type='file' id="Livestock_getFile6_found" class="images first_step_cls" ngf-select="" ng-model="new_files" accept="image/*" name="fourth_image" style="display:none"onchange="Livestock_MyfourthImage(this)">
+                   <br>
+                  <div class="col-md-12 text-center">
+                    <img id="Livestock_fourth_image_show" src="./img/bg-img/11.jpg" alt="your image" style="display: none;" />
+                  </div>
+                </div>
+				<div class="form-group col-md-2 image_section_upload">
+                  <!-- div class="title mb-2"><i class="lni lni-camera"></i><span>Image</span></div -->
+                  <button  class="btn btn-success" type="button" style="display:block;" onclick="document.getElementById('Livestock_fifth_image_id').click()"><i class="lni lni-camera"></i>Image Upload</button>
+                  <input type='file' id="Livestock_fifth_image_id" class="images first_step_cls" ngf-select="" ng-model="new_files" accept="image/*" name="fifth_image" style="display:none"onchange="Livestock_fifth_imageCheck(this)">
+                   <br>
+                  <div class="col-md-12 text-center">
+                    <img id="Livestock_fifth_show" src="./img/bg-img/11.jpg" alt="your image" style="display: none;" />
+                  </div>
+                </div>
+			
+				
+                <div class="form-group col-md-12 button_submit text-center">
+                  <button class="btn btn-success w-100" type="submit">Submit</button>
+                </div>
+            
+              </div>
+            </div>
+
+                
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{%endblock%}
