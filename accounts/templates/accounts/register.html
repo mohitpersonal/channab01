@@ -30,7 +30,7 @@ span#confirm_password_label {
         {% if messages %}
         {% for message in messages %}
         {% if 'success' in message.tags %}
-        <div class="alert alert-success">
+        <div class="alert alert-success" id = "msg_Sucess">
           {{ message }}
         </div>
         {% endif %}
@@ -39,7 +39,7 @@ span#confirm_password_label {
         {% if messages %}
         {% for message in messages %}
         {% if 'error' in message.tags %}
-        <div class="alert alert-danger">
+        <div class="alert alert-danger" id="msg_sign_err">
           {{ message }}
         </div>
         {% endif %}

@@ -44,7 +44,7 @@
       {% if not request.user.is_authenticated %}
       <ul class="sidenav-nav">
         <li><a href="{% url 'RegisterView' %}"><i class="lni-user"></i>Create New Account</a></li>
-        <li><a href="#"><i class="lni-power-switch"></i>Sign In</a></li>
+        <li><a href="{% url 'LoginView' %}"><i class="lni-power-switch"></i>Sign In</a></li>
       </ul>
       {% endif %}
     </div>
