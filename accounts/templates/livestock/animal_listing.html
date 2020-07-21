@@ -1,0 +1,231 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+
+{% block title %} <title>Channab | Animals Listing</title> {% endblock %}
+<style type="text/css">
+  .layout-options a i {
+    line-height: 23px;
+}
+
+</style>
+    <div class="preloader" id="preloader">
+      <div class="spinner-grow text-secondary" role="status">
+        <div class="sr-only">Loading...</div>
+      </div>
+    </div>
+    <!-- Header Area-->
+    <div class="header-area" id="headerArea">
+      <div class="container h-100 d-flex align-items-center justify-content-between">
+        <!-- Back Button-->
+        <div class="back-button"><a href="{% url 'LandingPageOfSite' %}"><i class="lni-arrow-left"></i></a></div>
+        <!-- Page Title-->
+        <div class="page-heading">
+          <h6 class="mb-0">Animal List</h6>
+        </div>
+        <!-- Filter Option-->
+        <div class="filter-option" id="suhaNavbarToggler"><i class="lni-cog"></i></div>
+      </div>
+    </div>
+    <!-- Sidenav Black Overlay-->
+    <div class="sidenav-black-overlay"></div>
+    <!-- Side Nav Wrapper-->
+   <div class="suha-sidenav-wrapper filter-nav" id="sidenavWrapper">
+      <!-- Catagory Sidebar Area-->
+      <div class="catagory-sidebar-area">
+        <!-- Filter Title-->
+        <h5 class="mb-3">Filter</h5>
+        <!-- Catagory-->
+        <div class="widget catagory mb-4">
+          <h6 class="widget-title mb-3">Animal Type</h6>
+          <div class="widget-desc">
+            <!-- Single Checkbox-->
+            <form action="/filter_data/" method="post" >
+              {% csrf_token %}
+            <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+              <input class="custom-control-input" id="customCheck1" type="checkbox" name="dry" value="Dry">
+              <label class="custom-control-label" for="customCheck1">Dry</label>
+            </div>
+            <!-- Single Checkbox-->
+            <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+              <input class="custom-control-input" id="customCheck2" type="checkbox" name="Milking" value="Milking">
+              <label class="custom-control-label" for="customCheck2">Milking</label>
+            </div>
+            <!-- Single Checkbox-->
+            <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+              <input class="custom-control-input" id="customCheck3" type="checkbox" name="Breader" value="Breader">
+              <label class="custom-control-label" for="customCheck3">Breader</label>
+            </div>
+          </div>
+        </div>
+        <!-- Color-->
+        <!-- Price Searching -->
+        <div class="widget size mb-4">
+          <h6 class="widget-title mb-3">Price Searching</h6>
+          <div class="widget-desc">
+            <!-- Single Checkbox-->
+            {% for one_price in price_filtering %}
+            <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+              <input class="custom-control-input" id="customCheck21price_fift{{one_price.min_val}}{{one_price.max_val}}" type="checkbox" name="price_fift[]" value="{{one_price.min_val}}  {{one_price.max_val}} ">
+              <label class="custom-control-label" for="customCheck21price_fift{{one_price.min_val}}{{one_price.max_val}}">Rs.{{one_price.min_val}} - Rs.{{one_price.max_val}}</label>
+            </div>
+            {% endfor %}
+            
+            <!-- Single Checkbox-->
+          </div>
+        </div>
+
+        <!--  -->
+
+        <!-- category -->
+        <div class="widget size mb-4">
+          <h6 class="widget-title mb-3">Category</h6>
+          <div class="widget-desc">
+            <!-- Single Checkbox-->
+            {% for one in all_category %}
+            <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+              <input class="custom-control-input" id="customCheck218{{one}}" type="checkbox" name="category" value="{{one}}">
+              <label class="custom-control-label" for="customCheck218{{one}}">{{one}}</label>
+            </div>
+            {% endfor %}
+            <!-- Single Checkbox-->
+            
+          </div>
+        </div>
+
+        <!-- end category here -->
+
+        <!-- Size-->
+        <div class="widget size mb-4">
+          <h6 class="widget-title mb-3">Animal Age</h6>
+          <div class="widget-desc">
+            <!-- Single Checkbox-->
+            <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+              <input class="custom-control-input" id="customCheck21" type="checkbox" name="less_one_year" value="less_one_year">
+              <label class="custom-control-label" for="customCheck21">Less > 1 Year</label>
+            </div>
+            <!-- Single Checkbox-->
+            <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+              <input class="custom-control-input" id="customCheck22" type="checkbox" name="one_to_two" value="one_to_two">
+              <label class="custom-control-label" for="customCheck22"> 1 Year - 2 Year</label>
+            </div>
+            <!-- Single Checkbox-->
+            <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+              <input class="custom-control-input" id="customCheck23" type="checkbox" name="more_than_two" value="more_than_two">
+              <label class="custom-control-label" for="customCheck23">More then < 2 Year </label>
+            </div>
+            <!-- Single Checkbox-->
+          </div>
+        </div>
+        <!-- Ratings-->
+
+        <!-- Market Searching -->
+
+         <div class="widget size mb-4">
+          <h6 class="widget-title mb-3">Search By Market </h6>
+          <div class="widget-desc">
+            <!-- Single Checkbox-->
+            {% for one_market in all_markets %}
+            <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+              <input class="custom-control-input" id="customCheck231{{one_market}}" type="checkbox" name="market_added" value="{{one_market.id}}">
+              <label class="custom-control-label" for="customCheck231{{one_market}}">{{one_market.market_name}}</label>
+            </div>
+            {% endfor %}
+           
+          </div>
+        </div>
+
+        <!--  End MARKET Searchings -->
+        <div class="widget ratings mb-4">
+          <h6 class="widget-title mb-3">Ratings</h6>
+          <div class="widget-desc">
+            <!-- Single Checkbox-->
+            <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+              <input class="custom-control-input" id="customCheck11" type="checkbox" name="five_start" value="five_start">
+              <label class="custom-control-label" for="customCheck11">5 star</label>
+            </div>
+            <!-- Single Checkbox-->
+            <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+              <input class="custom-control-input" id="customCheck12" type="checkbox" name="four_start" value="four_start">
+              <label class="custom-control-label" for="customCheck12">4 star</label>
+            </div>
+            <!-- Single Checkbox-->
+            <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+              <input class="custom-control-input" id="customCheck13" type="checkbox" name="three_star" value="three_star">
+              <label class="custom-control-label" for="customCheck13">3 star</label>
+            </div>
+            <!-- Single Checkbox-->
+            <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+              <input class="custom-control-input" id="customCheck14" type="checkbox" name="two_star" value="two_star">
+              <label class="custom-control-label" for="customCheck14">2 star</label>
+            </div>
+            <!-- Single Checkbox-->
+            <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+              <input class="custom-control-input" id="customCheck15" type="checkbox" name="one_star" value="one_star">
+              <label class="custom-control-label" for="customCheck15">1 star</label>
+            </div>
+          </div>
+        </div>
+        <!-- Payment Type-->
+
+        <!-- Apply Filter-->
+        <div class="apply-filter-btn"><button class="btn btn-success" type="submit">Apply Filter</button></div>
+      </form>
+      </div>
+      <!-- Go Back Button-->
+      <div class="go-home-btn" id="goHomeBtn"><i class="lni-arrow-left"></i></div>
+    </div>
+    <div class="page-content-wrapper">
+      <!-- Top Products-->
+      <div class="top-products-area pt-3">
+        <div class="container">
+          <div class="section-heading d-flex align-items-center justify-content-between">
+            {% if all_products %}
+            <h6 class="ml-1">All Animals</h6>
+            {% else %}
+            <h6 class="ml-1">Add Animals</h6>
+            {% endif %}
+            <!-- Layout Options-->
+            <div class="layout-options">
+
+            <a class="btn btn-success btn-sm add2cart-notify" href="{% url 'AddAnimalLivestock' %}"><i class="lni-plus"></i></a></div>
+          </div>
+          {% if all_products %}
+          
+          {% for product in all_products %}
+  <div class="col-12">
+    <div class="card weekly-product-card mb-3">
+      <div class="card-body d-flex align-items-center">
+        <div class="product-thumbnail-side"><span class="badge badge-success">{{product.category_instance.category_name}}</span><a class="wishlist-btn" href="#"><i class="lni-heart-filled"></i></a><a class="product-thumbnail d-block" href="/one_detail/?id={{product.id}}"><img src="{{product.image.url}}" alt=""></a></div>
+        <div class="product-description"><a class="product-title d-block" href="/one_detail/?id={{product.id}}">{{product.name}}</a>
+          <p class="sale-price"><i class="lni-dollar"></i>{{product.price}}</span></p>
+          <div class="product-rating"><i class="fa fa-phone" aria-hidden="true"></i>{{product.mobilenumber}}</div>
+          <div class="product-rating"><i class="lni-map-marker"></i>{{product.city}}</div><a class="btn btn-success btn-sm add2cart-notify" href="/one_detail/?id={{product.id}}">More Info</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+{% else %}
+<div id="notfound">
+    <div class="notfound">
+      <div class="notfound-404">
+        <h1>Oops!</h1>
+      </div>
+      <h2>No Product found</h2>
+      <p>The page you are looking for might have been removed had its name changed or is temporarily unavailable.</p>
+      <a href="/">Back To Homepage</a>
+    </div>
+  </div>
+
+
+
+       
+        
+        
+  {% endif %}
+   </div>
+      </div>
+    </div>
+
+{% endblock %}

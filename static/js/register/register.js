@@ -17,7 +17,7 @@ function Password_Register(){
         }
         else{
         
-        $("#registerPassword").removeClass("has-success");
+        $("#registerPassword").removeClass("has-error");
         $("#password_label").hide();
         $("#password_label").text("");
         return true;

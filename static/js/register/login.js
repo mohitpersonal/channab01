@@ -51,7 +51,7 @@ function MobileLoginCheck(){
                 return false;
             }
             else{
-                $("#mobile_login_label").removeClass("has-error");
+                $("#login_mobile_number").removeClass("has-error");
 
                 $("#mobile_login_label").hide();
                 $("#mobile_login_label").text("");

@@ -1,24 +1,34 @@
-from django.shortcuts import render,redirect
-import sys
+from django.http import HttpResponse
+from product.models import Product,PriceFilter,Category,MarketAddByAdmin,CommentReviewsStar,ProductMarket, ProductImage
+from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser, FormParser
+import ast
+
+import sys,json
 from django.views import View
 # Create your views here.
 
 
 
-class ProductPageApi(View):
+class ProductPageApi(APIView):
 
 	''' Demonstrate docstring for add an product with category by any user'''
+	parser_classes = (MultiPartParser, FormParser)
 
 
-	def post(self,request):
+	def post(self,request,*args, **kwargs):
+		print("hhhhhhhhhhhhhhhhhhhhhh")
 		try:
+			print("hhhhhhhhhhhhhhhhhhhhhh",self.request.POST)
 			name = request.POST.get('name')
+			print("hhhhhhhhhhhhhhhhhhhhhh")
 			description = request.POST.get('description')
 			price = request.POST.get('price')
 			city = request.POST.get('city')
 			mobilenumber = request.POST.get('mobilenumber')
 			category = self.request.POST.get('category')
-			marketplace = self.request.POST.getlist('marketplace[]')
+			marketplace = self.request.POST.get('marketplace[]')
+			print(marketplace)
 			animal_type = self.request.POST.get('animal_type')
 			age_of_animal = self.request.POST.get('age')
 			category_instance = Category.objects.get(category_name = category)
@@ -32,6 +42,7 @@ class ProductPageApi(View):
 			iiird_image = request.FILES.get('iiird_image')
 			fourth_image = request.FILES.get('fourth_image')
 			fifth_image = request.FILES.get('fifth_image')
+			print("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj", fifth_image)
 
 			if ist_image:
 				ProductImage.objects.create(product = product_obj,image = ist_image)
@@ -44,18 +55,22 @@ class ProductPageApi(View):
 			if fifth_image:
 				ProductImage.objects.create(product = product_obj,image = fifth_image)
 
+			x = ast.literal_eval(marketplace)
+			make_list = [n.strip() for n in x]
 
-
-			for one_market in marketplace:
+			for one_market in make_list:
+				print("one_market is -------->", type(one_market),one_market)
 				market_instance = MarketAddByAdmin.objects.get(id = int(one_market))
 
 				ProductMarket.objects.create(market_instance = market_instance,product_instance = product_obj)
 
-
-			message = 'An animal has been successfully registered for sale purpose.'
-			return redirect('/product_list/')
+			context = {}
+			context['message'] = 'An animal has been successfully registered for sale purpose.'
+			context['status'] = 'success'
+			return HttpResponse(json.dumps(context))
 		except:
+			context = {}
 			print(sys.exc_info())
-			error = 'Something went wrong, Please try again later'
-			return render(request,'product/product_add.html',locals())
-
+			context['error'] = 'Something went wrong, Please try again later'
+			context['status'] = 'fail'
+			return HttpResponse(json.dumps(context))

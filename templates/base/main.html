@@ -1,124 +1,112 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  
-<!-- Mirrored from demo.designing-world.com/suha-v1.3.0/home.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 30 Apr 2020 13:28:55 GMT -->
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags-->
-    <!-- Title-->
-    {% block title %} 
-    <title></title> 
-    {% endblock %}
-    <!-- Favicon-->
-    <link rel="icon" href="{% static 'img/bg-img/Channab Logo.jpeg' %}">
-    <!-- Stylesheet-->
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-	<link rel="stylesheet" href="{% static 'custom.css' %}">
-
-    <link rel="stylesheet" href="{% static '/css/custom/style_custom.css' %}">
-  </head>
-<body>   
-<style type="text/css">
-    .notfound .notfound-404 h1 {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 230px;
-  margin: 0px;
-  font-weight: 900;
-  position: absolute;
-  left: 50%;
-
-  -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
-  background: url('{% static "img/bg.jpg" %}')
-  no-repeat;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-size: cover;
-  background-position: center;
-}
-</style>
-  
-      
-{% block content %}
-
-
-{% endblock %}
-{% include 'base/footer.html' %}
-
-<script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/waypoints.min.js' %}"></script>
-    <script src="{% static 'js/jquery.easing.min.js' %}"></script>
-    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'js/jquery.animatedheadline.min.js' %}"></script>
-    <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
-    <script src="{% static 'js/wow.min.js' %}"></script>
-    <script src="{% static 'js/jarallax.min.js' %}"></script>
-    <script src="{% static 'js/jarallax-video.min.js' %}"></script>
-    <script src="{% static 'js/default/jquery.passwordstrength.js' %}"></script>
-    <script src="{% static 'js/default/dark-mode-switch.js' %}"></script>
-    <script src="{% static 'js/default/active.js' %}"></script>
-    <script src="{% static 'js/detail_product.js' %}"></script>
-    <script src="{% static 'js/add_product.js' %}"></script>
-    <script src="{% static 'js/register/register.js' %}">
-      
-    </script>
-    <script src="{% static 'js/register/login.js' %}">
-      
-    </script>
-    <script src="{% static 'js/library/sweetalert.min.js' %}">
-      
-    </script>
-  <script src="{% static 'js/multiselect/bootstrap3-typeahead.min.js' %}"></script>
-  <script src="{% static 'js/multiselect/bootstrap.min.js' %}"></script>
-  <script src="{% static 'js/multiselect/bootstrap-multiselect.js' %}"></script>
-  <link rel="stylesheet" href="{% static 'css/multiselect/bootstrap-multiselect.css' %}" />
-  <script type="text/javascript">
-$(document).ready(function() {
-    $('#marketplace').multiselect({
-        nonSelectedText: 'No Market Selected',
-        enableFiltering: true,
-        enableCaseInsensitiveFiltering: true,
-        buttonWidth:'400px',
-        checkboxName:'categories_name',
-
-    });
-});
-</script>
-    <script type="text/javascript">
-    $('#logout_popup').click(function(){
-      swal({
-   
-         title : "Confirmation",
-         text : "Are you sure you want to Logout ?",
-         buttons : {
-            cancel : true,
-            confirm : "Confirm"
+   <!-- Mirrored from demo.designing-world.com/suha-v1.3.0/home.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 30 Apr 2020 13:28:55 GMT -->
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags-->
+      <!-- Title-->
+      {% block title %} 
+      <title></title>
+      {% endblock %}
+      <!-- Favicon-->
+      <link rel="icon" href="{% static 'img/bg-img/Channab Logo.jpeg' %}">
+      <!-- Stylesheet-->
+      <link rel="stylesheet" href="{% static 'style.css' %}">
+      <link rel="stylesheet" href="{% static 'custom.css' %}">
+      <link rel="stylesheet" href="{% static '/css/custom/style_custom.css' %}">
+   </head>
+   <body>
+      <style type="text/css">
+         .notfound .notfound-404 h1 {
+         font-family: 'Montserrat', sans-serif;
+         font-size: 230px;
+         margin: 0px;
+         font-weight: 900;
+         position: absolute;
+         left: 50%;
+         -webkit-transform: translateX(-50%);
+         -ms-transform: translateX(-50%);
+         transform: translateX(-50%);
+         background: url('{% static "img/bg.jpg" %}')
+         no-repeat;
+         -webkit-background-clip: text;
+         -webkit-text-fill-color: transparent;
+         background-size: cover;
+         background-position: center;
          }
-   
-   
-      }).then(val =>{
+      </style>
+      {% block content %}
+      {% endblock %}
+      {% include 'base/footer.html' %}
+      <script src="{% static 'js/jquery.min.js' %}"></script>
+      <script src="{% static 'js/popper.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap.min.js' %}"></script>
+      <script src="{% static 'js/waypoints.min.js' %}"></script>
+      <script src="{% static 'js/jquery.easing.min.js' %}"></script>
+      <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+      <script src="{% static 'js/jquery.animatedheadline.min.js' %}"></script>
+      <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+      <script src="{% static 'js/wow.min.js' %}"></script>
+      <script src="{% static 'js/jarallax.min.js' %}"></script>
+      <script src="{% static 'js/jarallax-video.min.js' %}"></script>
+      <script src="{% static 'js/default/jquery.passwordstrength.js' %}"></script>
+      <script src="{% static 'js/default/dark-mode-switch.js' %}"></script>
+      <script src="{% static 'js/default/active.js' %}"></script>
+      <script src="{% static 'js/detail_product.js' %}"></script>
+      <script src="{% static 'js/add_product.js' %}"></script>
+      <script src="{% static 'js/register/register.js' %}"></script>
+      <script src="{% static 'js/register/login.js' %}"></script>
+      <script src="{% static 'js/library/sweetalert.min.js' %}"
+         ></script>
+      <script src="{% static 'js/livestock/add_animal.js' %}"
+         ></script>
+      <script src="{% static 'js/multiselect/bootstrap3-typeahead.min.js' %}"></script>
+      <script src="{% static 'js/multiselect/bootstrap.min.js' %}"></script>
+      <script src="{% static 'js/multiselect/bootstrap-multiselect.js' %}"></script>
+      <link rel="stylesheet" href="{% static 'css/multiselect/bootstrap-multiselect.css' %}" />
+      <script type="text/javascript">
+         $(document).ready(function() {
+             $('#marketplace').multiselect({
+                 nonSelectedText: 'No Market Selected',
+                 enableFiltering: true,
+                 enableCaseInsensitiveFiltering: true,
+                 buttonWidth:'400px',
+                 checkboxName:'categories_name',
          
-         if (val){
-          var url = "/accounts/logout/";
-
-            window.location.href = url
-            swal({
-               title : "Thanks !",
-               text : "You have Sucessfully Logout Your Account",
-               icon : "success"
-   
-            })
-         }
-      })
-
-   })
-</script>
-
+             });
+         });
+      </script>
+      <script type="text/javascript">
+         $('#logout_popup').click(function(){
+           swal({
+         
+              title : "Confirmation",
+              text : "Are you sure you want to Logout ?",
+              buttons : {
+                 cancel : true,
+                 confirm : "Confirm"
+              }
+         
+         
+           }).then(val =>{
+              
+              if (val){
+               var url = "/accounts/logout/";
+         
+                 window.location.href = url
+                 swal({
+                    title : "Thanks !",
+                    text : "You have Sucessfully Logout Your Account",
+                    icon : "success"
+         
+                 })
+              }
+           })
+         
+         })
+      </script>
 </html>
