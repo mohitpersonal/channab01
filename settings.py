@@ -80,16 +80,16 @@ WSGI_APPLICATION = 'channab.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ChanaabOfficial',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': 3306,
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'ChanaabOfficial',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': '',
+#         'PORT': 3306,
+#     }
+# }
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -105,6 +105,9 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.FileUploadParser',
     )
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
+
 
 
 
