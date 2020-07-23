@@ -106,9 +106,6 @@ REST_FRAMEWORK = {
     )
 }
 
-CORS_ORIGIN_ALLOW_ALL = True
-
-
 
 
 DATABASES = {

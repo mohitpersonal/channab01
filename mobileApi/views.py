@@ -31,13 +31,6 @@ class ProductPageApi(APIView):
 			price = request.POST.get('price')
 			city = request.POST.get('city')
 			mobilenumber = request.POST.get('mobilenumber')
-			if not mobilenumber:
-				context = {}
-				context['message'] = 'Please Fill out Your Mobile Number'
-				context['status'] = 200
-				return HttpResponse(json.dumps(context))
-
-
 			category = self.request.POST.get('category')
 			marketplace = self.request.POST.get('marketplace[]')
 			print(marketplace)
@@ -46,6 +39,37 @@ class ProductPageApi(APIView):
 			category_instance = Category.objects.get(category_name = category)
 
 			image = request.FILES.get('main_image')
+
+			if not name:
+				context = {}
+				context['message'] = 'Please Fill out Your Animal Name'
+				context['status'] = 200
+				return HttpResponse(json.dumps(context))
+
+			if not price:
+				context = {}
+				context['message'] = 'Please Fill out Price of your animal'
+				context['status'] = 200
+				return HttpResponse(json.dumps(context))
+
+			if not mobilenumber:
+				context = {}
+				context['message'] = 'Please Fill out Your Mobile Number'
+				context['status'] = 200
+				return HttpResponse(json.dumps(context))
+
+			if not category:
+				context = {}
+				context['message'] = 'Please Fill out Category of Animal'
+				context['status'] = 200
+				return HttpResponse(json.dumps(context))
+
+			if not image:
+				context = {}
+				context['message'] = 'Please Fill out Main Image of your animal'
+				context['status'] = 200
+				return HttpResponse(json.dumps(context))
+
 
 
 			product_obj = Product.objects.create(name = name, description=description, price=price, city=city,category_instance = category_instance,  image = image, mobilenumber=mobilenumber, animal_type = animal_type, age_of_animal = age_of_animal)
@@ -466,9 +490,30 @@ class ApiCommentReviewsView(APIView):
 				context['status'] = 403
 				return HttpResponse(json.dumps(context))
 			comment_text = request.POST.get('text_area').strip().lower()
+			if not comment_text:
+				context = {}
+				context['message'] = 'Please Fill out Your Comment Text'
+				context['status'] = 200
+				return HttpResponse(json.dumps(context))
+
+
+
+
 			star_count = request.POST.get('star_count')
+			if not star_count:
+				context = {}
+				context['message'] = 'Please provide any rating to this product'
+				context['status'] = 200
+				return HttpResponse(json.dumps(context))
+
 			mobile_number = request.POST.get('mobile_number')
 			name = request.POST.get('name')
+			if not name:
+				context = {}
+				context['message'] = 'Please Fill out your name'
+				context['status'] = 200
+				return HttpResponse(json.dumps(context))
+
 			post_id = request.POST.get('post_id')
 			product_instance = Product.objects.get(id = int(post_id))
 			CommentReviewsStar.objects.create(comment_on_post = comment_text, product_instance = product_instance,mobile_number = mobile_number,name = name,stars_counting = int(star_count))
