@@ -22,8 +22,8 @@ class ProductPageApi(APIView):
 			if api_key != token_From_request:
 				context = {}
 				print(sys.exc_info())
-				context['error'] = 'Bad Request,Token Not Found!'
-				context['status'] = 500
+				context['message'] = 'Bad Request,Token Not Found!'
+				context['status'] = 403
 				return HttpResponse(json.dumps(context))
 
 			name = request.POST.get('name')
@@ -31,6 +31,13 @@ class ProductPageApi(APIView):
 			price = request.POST.get('price')
 			city = request.POST.get('city')
 			mobilenumber = request.POST.get('mobilenumber')
+			if not mobilenumber:
+				context = {}
+				context['message'] = 'Please Fill out Your Mobile Number'
+				context['status'] = 200
+				return HttpResponse(json.dumps(context))
+
+
 			category = self.request.POST.get('category')
 			marketplace = self.request.POST.get('marketplace[]')
 			print(marketplace)
@@ -44,7 +51,7 @@ class ProductPageApi(APIView):
 			product_obj = Product.objects.create(name = name, description=description, price=price, city=city,category_instance = category_instance,  image = image, mobilenumber=mobilenumber, animal_type = animal_type, age_of_animal = age_of_animal)
 			ist_image = request.FILES.get('ist_image')
 			sec_image = request.FILES.get('sec_image')
-			iiird_image = request.FILES.get('iiird_image')
+			iiird_image = request.FILES.get('third_image')
 			fourth_image = request.FILES.get('fourth_image')
 			fifth_image = request.FILES.get('fifth_image')
 			if ist_image:
@@ -73,8 +80,9 @@ class ProductPageApi(APIView):
 		except:
 			context = {}
 			print(sys.exc_info())
-			context['error'] = 'Something went wrong, Please try again later'
 			context['status'] = 500
+			context['message'] = 'Something went wrong,Please try again later'
+
 			return HttpResponse(json.dumps(context))
 
 
@@ -88,8 +96,8 @@ class HomePageApi(APIView):
 			if api_key != token_From_request:
 				context = {}
 				print(sys.exc_info())
-				context['error'] = 'Bad Request,Token Not Found!'
-				context['status'] = 500
+				context['message'] = 'Bad Request,Token Not Found!'
+				context['status'] = 403
 				return HttpResponse(json.dumps(context))
 			all_product = Product.objects.all().order_by('-id')
 			categorylist = Category.objects.all().order_by('-id')
@@ -145,8 +153,25 @@ class HomePageApi(APIView):
 				top_product_dict['product_main_image'] = str(one_top.image)
 				top_10_product.append(top_product_dict)
 
-			context['all_market_list'] = all_market_list
-			context['all_market_list'] = top_10_product
+			category_list = []
+
+			for one_category in categorylist:
+				category_dict = {}
+				category_dict['name_of_category'] = one_category.category_name
+				category_dict['id'] = one_category.id
+				category_dict['image'] = str(one_category.image)
+				category_dict['description'] = one_category.description
+				category_list.append(category_dict)
+
+
+
+
+
+
+			context['cattle_market_list'] = all_market_list
+			context['top_10_product'] = top_10_product
+			context['all_categories'] = category_list
+			context['message'] = 'Data Found'
 			context['status'] = 200
 			return HttpResponse(json.dumps(context))
 
@@ -154,8 +179,8 @@ class HomePageApi(APIView):
 		except Exception as e:
 			context = {}
 			print(sys.exc_info())
-			context['error'] = 'Something went wrong, Please try again later'
 			context['status'] = 500
+			context['message'] = 'Something went wrong,Please try again later'
 			return HttpResponse(json.dumps(context))
 			
 
@@ -186,8 +211,8 @@ class MobileProductListApi(APIView):
 			if api_key != token_From_request:
 				context = {}
 				print(sys.exc_info())
-				context['error'] = 'Bad Request,Token Not Found!'
-				context['status'] = 500
+				context['message'] = 'Bad Request,Token Not Found!'
+				context['status'] = 403
 				return HttpResponse(json.dumps(context))
 
 
@@ -243,6 +268,7 @@ class MobileProductListApi(APIView):
 				all_market_list.append(market_dict)
 
 
+			context['message'] = 'Data Found'
 			context['status'] = 200
 			context['all_market_list'] = all_market_list
 			context['all_products_list'] = all_products_list
@@ -254,8 +280,8 @@ class MobileProductListApi(APIView):
 		except Exception as e:
 			print(e)
 			context = {}
-			context['error'] = 'Something went wrong, Please try again later'
 			context['status'] = 500
+			context['message'] = 'Something went wrong,Please try again later'
 			return HttpResponse(json.dumps(context))
 			
 
@@ -273,8 +299,8 @@ class MobileApiCategoryWiseSearch(APIView):
 			if api_key != token_From_request:
 				context = {}
 				print(sys.exc_info())
-				context['error'] = 'Bad Request,Token Not Found!'
-				context['status'] = 500
+				context['message'] = 'Bad Request,Token Not Found!'
+				context['status'] = 403
 				return HttpResponse(json.dumps(context))
 
 			get_category = self.request.GET.get('cat_id_fil')
@@ -293,6 +319,7 @@ class MobileApiCategoryWiseSearch(APIView):
 				top_product_dict['product_main_image'] = str(one_top.image)
 				all_products_list.append(top_product_dict)
 
+			context['message'] = 'Data Found'
 			context['status'] = 200
 			context['category_name'] = category_instance.category_name
 			context['all_products_list'] = all_products_list
@@ -304,8 +331,8 @@ class MobileApiCategoryWiseSearch(APIView):
 			print(e)
 			context = {}
 			print(sys.exc_info())
-			context['error'] = 'Something went wrong, Please try again later'
 			context['status'] = 500
+			context['message'] = 'Something went wrong,Please try again later'
 			return HttpResponse(json.dumps(context))
 			
 
@@ -328,8 +355,8 @@ class MobileProductDetailPage(APIView):
 			if api_key != token_From_request:
 				context = {}
 				print(sys.exc_info())
-				context['error'] = 'Bad Request,Token Not Found!'
-				context['status'] = 500
+				context['message'] = 'Bad Request,Token Not Found!'
+				context['status'] = 403
 				return HttpResponse(json.dumps(context))
 
 			id_of_product = self.request.GET.get('id')
@@ -391,6 +418,7 @@ class MobileProductDetailPage(APIView):
 				all_rates_and_comments.append(rate_dict)
 
 
+			context['message'] = 'Data Found'
 			context['status'] = 200
 			context['all_rates_and_comments'] = all_rates_and_comments
 			context['list_of_images'] = list_of_images
@@ -401,8 +429,8 @@ class MobileProductDetailPage(APIView):
 			print(sys.exc_info())
 			context = {}
 			print(sys.exc_info())
-			context['error'] = 'Something went wrong, Please try again later'
 			context['status'] = 500
+			context['message'] = 'Something went wrong,Please try again later'
 			return HttpResponse(json.dumps(context))
 			
 
@@ -434,8 +462,8 @@ class ApiCommentReviewsView(APIView):
 			if api_key != token_From_request:
 				context = {}
 				print(sys.exc_info())
-				context['error'] = 'Bad Request,Token Not Found!'
-				context['status'] = 500
+				context['message'] = 'Bad Request,Token Not Found!'
+				context['status'] = 403
 				return HttpResponse(json.dumps(context))
 			comment_text = request.POST.get('text_area').strip().lower()
 			star_count = request.POST.get('star_count')
@@ -444,11 +472,12 @@ class ApiCommentReviewsView(APIView):
 			post_id = request.POST.get('post_id')
 			product_instance = Product.objects.get(id = int(post_id))
 			CommentReviewsStar.objects.create(comment_on_post = comment_text, product_instance = product_instance,mobile_number = mobile_number,name = name,stars_counting = int(star_count))
+			context['message'] = 'Data has been saved successfully'
 			context['status'] = 200
-			context['save_comment'] = 'comment save successfully'
 			return HttpResponse(json.dumps(context))
 		except :
 			context['status'] = 500
+			context['message'] = 'Something went wrong,Please try again later'
 			return HttpResponse(json.dumps(context))
 
 
@@ -467,8 +496,8 @@ class ApiMarketDetails(APIView):
 			if api_key != token_From_request:
 				context = {}
 				print(sys.exc_info())
-				context['error'] = 'Bad Request,Token Not Found!'
-				context['status'] = 500
+				context['message'] = 'Bad Request,Token Not Found!'
+				context['status'] = 403
 				return HttpResponse(json.dumps(context))
 			context = {}
 			market_id = self.request.GET.get('market_based_id')
@@ -494,6 +523,7 @@ class ApiMarketDetails(APIView):
 				top_product_dict['product_main_image'] = str(one_top.image)
 				all_products_list.append(top_product_dict)
 
+			context['message'] = 'Data Found'
 			context['status'] = 200
 			context['market_name'] = market_get.market_name
 			context['all_products_list'] = all_products_list
@@ -503,8 +533,8 @@ class ApiMarketDetails(APIView):
 		except:
 			context = {}
 			print(sys.exc_info())
-			context['error'] = 'Something went wrong, Please try again later'
 			context['status'] = 500
+			context['message'] = 'Something went wrong,Please try again later'
 			return HttpResponse(json.dumps(context))
 			
 
@@ -523,8 +553,8 @@ class AllMandiesApi(APIView):
 			if api_key != token_From_request:
 				context = {}
 				print(sys.exc_info())
-				context['error'] = 'Bad Request,Token Not Found!'
-				context['status'] = 500
+				context['message'] = 'Bad Request,Token Not Found!'
+				context['status'] = 403
 				return HttpResponse(json.dumps(context))
 			all_markets = MarketAddByAdmin.objects.filter(is_active = True)
 			all_mandis_list = []
@@ -538,14 +568,16 @@ class AllMandiesApi(APIView):
 				top_product_dict['market_image'] = str(one_top.market_image)
 				all_mandis_list.append(top_product_dict)
 
+			context['message'] = 'Data Found'
 			context['status'] = 200
-			context['all_products_list'] = all_mandis_list
+			context['all_market_list'] = all_mandis_list
 			return HttpResponse(json.dumps(context))
 
 
 		except:
 			print(sys.exc_info())
-			context['status'] = 'fail'
+			context['status'] = 500
+			context['message'] = 'Something went wrong,Please try again later'
 			return render(request,'product/all_market.html',locals())
 
 
