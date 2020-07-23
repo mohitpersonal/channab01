@@ -1,34 +1,34 @@
-function NameAnimal(){
+function TagAnimalLive(){
     var letternumber = /^[a-zA-Z]+$/;
     console.log("hhh")
-    var first_name=$("#name_animal").val();
+    var first_name=$("#tag_name_live").val();
     if(first_name.length == '' || first_name.length == null) {
-        $("#name_animal").removeClass("has-success");
-        $("#name_animal").addClass("has-error");
-        $("#name_animal_label").show();
-        $("#name_animal_label").text("This Field is required");
+        $("#tag_name_live").removeClass("has-success");
+        $("#tag_name_live").addClass("has-error");
+        $("#tag_animal_live_label").show();
+        $("#tag_animal_live_label").text("This Field is required");
         
         return false;
     }
     else{
         if (first_name.length >15 || first_name.length <3){
-            $("#name_animal").removeClass("has-success");
-            $("#name_animal").addClass("has-error");
-            $("#name_animal_label").text("It only contains 3 to 15 characters");
-            $("#name_animal_label").show();
+            $("#tag_name_live").removeClass("has-success");
+            $("#tag_name_live").addClass("has-error");
+            $("#tag_animal_live_label").text("It only contains 3 to 15 characters");
+            $("#tag_animal_live_label").show();
             return false;
         }
         else{
-            $("#name_animal").addClass("has-success");
-            $("#name_animal_label").text("");
+            $("#tag_name_live").addClass("has-success");
+            $("#tag_animal_live_label").text("");
             
-            $("#name_animal_label").hide();
+            $("#tag_animal_live_label").hide();
             return true;
            
         }
     }
 }
-$("#name_animal").focusout(function () {
+$("#tag_name_live").focusout(function () {
     if ($(this).hasClass("has-success")) {
         $(this).removeClass("has-success");
         $(this).removeClass("has-error");
@@ -134,7 +134,7 @@ function checkImage(){
     }
 }
 ////////
-$("#add_animal_js").on('submit', function(){
+$("#live_Stock_add_animal_js").on('submit', function(){
     if (NameAnimal() && PhoneCheck() && PriceCheck() && checkImage() && checkforblank() == true){
         return true;
     }
@@ -186,15 +186,15 @@ setTimeout(function () {
 
 /////
 
-function readURLMySecond_Found(input) {
+function Livestock_readURLMySecond_Found(input) {
    if (input.files && input.files[0]) {
       var reader = new FileReader();
       var getimgfield = $(input).closest('div').
       next('div').find('img');
-      $("#display_none_found").hide();
+      $("#Livestock_display_none_found").hide();
       reader.onload = function(e) {
-         $("#blah2_found").show();
-         $('#blah2_found').attr('src', e.target.result).width(130).height(100);
+         $("#Livestock_blah2_found").show();
+         $('#Livestock_blah2_found').attr('src', e.target.result).width(130).height(100);
       }
       reader.readAsDataURL(input.files[0]);
    }
@@ -215,15 +215,15 @@ function readURLMySecond_Found(input) {
 
 
 
-function readURLMySecond1_Found(input) {
+function Livestock_readURLMySecond1_Found(input) {
    if (input.files && input.files[0]) {
       var reader = new FileReader();
       var getimgfield = $(input).closest('div').
       next('div').find('img');
-      $("#display_none_found").hide();
+      $("#Livestock_display_none_found").hide();
       reader.onload = function(e) {
-         $("#blah3_found").show();
-         $('#blah3_found').attr('src', e.target.result).width(130).height(100);
+         $("#Livestock_blah3_found").show();
+         $('#Livestock_blah3_found').attr('src', e.target.result).width(130).height(100);
       }
       reader.readAsDataURL(input.files[0]);
    }
@@ -235,14 +235,14 @@ function readURLMySecond1_Found(input) {
 
 
 
-function readURLMySecond4_Found(input) {
+function Livestock_readURLMySecond4_Found(input) {
    if (input.files && input.files[0]) {
       var reader = new FileReader();
       var getimgfield = $(input).closest('div').
       next('div').find('img');
       reader.onload = function(e) {
-         $("#blah4_found").show();
-         $('#blah4_found').attr('src', e.target.result).width(130).height(100);
+         $("#Livestock_blah4_found").show();
+         $('#Livestock_blah4_found').attr('src', e.target.result).width(130).height(100);
       }
       reader.readAsDataURL(input.files[0]);
    }
@@ -256,14 +256,14 @@ function readURLMySecond4_Found(input) {
 
 
 
-function MyreadURLSecond4_Found(input) {
+function Livestock_MyreadURLSecond4_Found(input) {
    if (input.files && input.files[0]) {
       var reader = new FileReader();
       var getimgfield = $(input).closest('div').
       next('div').find('img');
       reader.onload = function(e) {
-         $("#blah5_found").show();
-         $('#blah5_found').attr('src', e.target.result).width(130).height(100);
+         $("#Livestock_blah5_found").show();
+         $('#Livestock_blah5_found').attr('src', e.target.result).width(130).height(100);
       }
       reader.readAsDataURL(input.files[0]);
    }
@@ -280,14 +280,14 @@ function MyreadURLSecond4_Found(input) {
 
 
 ///////////
-function MyfourthImage(input) {
+function Livestock_MyfourthImage(input) {
    if (input.files && input.files[0]) {
       var reader = new FileReader();
       var getimgfield = $(input).closest('div').
       next('div').find('img');
       reader.onload = function(e) {
-         $("#fourth_image_show").show();
-         $('#fourth_image_show').attr('src', e.target.result).width(130).height(100);
+         $("#Livestock_fourth_image_show").show();
+         $('#Livestock_fourth_image_show').attr('src', e.target.result).width(130).height(100);
       }
       reader.readAsDataURL(input.files[0]);
    }
@@ -300,14 +300,14 @@ function MyfourthImage(input) {
 //////////
 
 
-function MyfourthImage(input) {
+function Livestock_MyfourthImage(input) {
    if (input.files && input.files[0]) {
       var reader = new FileReader();
       var getimgfield = $(input).closest('div').
       next('div').find('img');
       reader.onload = function(e) {
-         $("#fourth_image_show").show();
-         $('#fourth_image_show').attr('src', e.target.result).width(130).height(100);
+         $("#Livestock_fourth_image_show").show();
+         $('#Livestock_fourth_image_show').attr('src', e.target.result).width(130).height(100);
       }
       reader.readAsDataURL(input.files[0]);
    }
@@ -327,14 +327,14 @@ function MyfourthImage(input) {
 
 
 
-function fifth_imageCheck(input) {
+function Livestock_fifth_imageCheck(input) {
    if (input.files && input.files[0]) {
       var reader = new FileReader();
       var getimgfield = $(input).closest('div').
       next('div').find('img');
       reader.onload = function(e) {
-         $("#fifth_show").show();
-         $('#fifth_show').attr('src', e.target.result).width(130).height(100);
+         $("#Livestock_fifth_show").show();
+         $('#Livestock_fifth_show').attr('src', e.target.result).width(130).height(100);
       }
       reader.readAsDataURL(input.files[0]);
    }
