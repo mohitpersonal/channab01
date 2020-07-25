@@ -5,6 +5,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 import ast,sys,json
 from rest_framework.authtoken.models import Token
 from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
 
 
 class ProductPageApi(APIView):
@@ -161,7 +162,13 @@ class HomePageApi(APIView):
 				market_dict['description'] = one_market.description
 				market_dict['is_active'] = one_market.is_active
 				market_dict['location'] = one_market.location
-				market_dict['market_image'] = str(one_market.market_image)
+				site_url = get_current_site(request)
+				site_url = str(site_url)
+				make_full_path = site_url + '/media/' + str(one_market.market_image)
+
+
+
+				market_dict['market_image'] = make_full_path
 				all_market_list.append(market_dict)
 
 			top_10_product = []
@@ -174,7 +181,10 @@ class HomePageApi(APIView):
 				top_product_dict['product_price'] = str(one_top.price)
 				top_product_dict['seller_mobilenumber'] = one_top.mobilenumber
 				top_product_dict['seller_city'] = one_top.city
-				top_product_dict['product_main_image'] = str(one_top.image)
+				site_url = get_current_site(request)
+				site_url = str(site_url)
+				make_full_path = site_url + '/media/' + str(one_top.image)
+				top_product_dict['product_main_image'] = make_full_path
 				top_10_product.append(top_product_dict)
 
 			category_list = []
@@ -183,7 +193,11 @@ class HomePageApi(APIView):
 				category_dict = {}
 				category_dict['name_of_category'] = one_category.category_name
 				category_dict['id'] = one_category.id
-				category_dict['image'] = str(one_category.image)
+				site_url = get_current_site(request)
+				site_url = str(site_url)
+				make_full_path = site_url + '/media/' + str(one_category.image)
+
+				category_dict['image'] = make_full_path
 				category_dict['description'] = one_category.description
 				category_list.append(category_dict)
 
@@ -272,7 +286,11 @@ class MobileProductListApi(APIView):
 				top_product_dict['product_price'] = str(one_top.price)
 				top_product_dict['seller_mobilenumber'] = one_top.mobilenumber
 				top_product_dict['seller_city'] = one_top.city
-				top_product_dict['product_main_image'] = str(one_top.image)
+				site_url = get_current_site(request)
+				site_url = str(site_url)
+				make_full_path = site_url + '/media/' + str(one_top.image)
+
+				top_product_dict['product_main_image'] = make_full_path
 				all_products_list.append(top_product_dict)
 
 
@@ -340,7 +358,12 @@ class MobileApiCategoryWiseSearch(APIView):
 				top_product_dict['product_price'] = str(one_top.price)
 				top_product_dict['seller_mobilenumber'] = one_top.mobilenumber
 				top_product_dict['seller_city'] = one_top.city
-				top_product_dict['product_main_image'] = str(one_top.image)
+				site_url = get_current_site(request)
+				site_url = str(site_url)
+				make_full_path = site_url + '/media/' + str(one_top.image)
+
+
+				top_product_dict['product_main_image'] = make_full_path
 				all_products_list.append(top_product_dict)
 
 			context['message'] = 'Data Found'
@@ -423,7 +446,11 @@ class MobileProductDetailPage(APIView):
 			list_of_images = []
 			for one_image in products_other_images:
 				images_dict = []
-				images_dict['image'] = one_image.image
+				site_url = get_current_site(request)
+				site_url = str(site_url)
+				make_full_path = site_url + '/media/' + str(one_image.image)
+
+				images_dict['image'] = make_full_path
 				list_of_images.append(images_dict)
 
 
@@ -565,7 +592,11 @@ class ApiMarketDetails(APIView):
 				top_product_dict['product_price'] = str(one_top.price)
 				top_product_dict['seller_mobilenumber'] = one_top.mobilenumber
 				top_product_dict['seller_city'] = one_top.city
-				top_product_dict['product_main_image'] = str(one_top.image)
+				site_url = get_current_site(request)
+				site_url = str(site_url)
+				make_full_path = site_url + '/media/' + str(one_top.image)
+
+				top_product_dict['product_main_image'] = make_full_path
 				all_products_list.append(top_product_dict)
 
 			context['message'] = 'Data Found'
@@ -610,7 +641,11 @@ class AllMandiesApi(APIView):
 				top_product_dict['description'] = one_top.description
 				top_product_dict['market_name'] = one_top.market_name
 				top_product_dict['location'] = one_top.location
-				top_product_dict['market_image'] = str(one_top.market_image)
+				site_url = get_current_site(request)
+				site_url = str(site_url)
+				make_full_path = site_url + '/media/' + str(one_top.market_image)
+
+				top_product_dict['market_image'] = make_full_path
 				all_mandis_list.append(top_product_dict)
 
 			context['message'] = 'Data Found'
