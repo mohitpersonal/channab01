@@ -72,7 +72,7 @@ class LogoutView(View):
 class ForgetView(View):
     def post(self, request):
         try :
-            mobile_number = request.POST.get('mobile_number').strip()
+            mobile_number = request.POST.get('mobile_number')
             check_exist = User.objects.filter(email = mobile_number)
             if check_exist :
                 random_otp = ''.join(random.choice("1234567890") for _ in range(6))
@@ -131,4 +131,5 @@ class ResetPassword(View):
             messages.error(request,'Something went wrong, Please try again later')
         return render(request, 'accounts/reset_password.html',locals())
 
-	 
+######
+

@@ -6,7 +6,7 @@ import ast,sys,json
 from rest_framework.authtoken.models import Token
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
-
+from django.db.models import Q
 
 class ProductPageApi(APIView):
 
@@ -221,12 +221,6 @@ class HomePageApi(APIView):
 			context['message'] = 'Something went wrong,Please try again later'
 			return HttpResponse(json.dumps(context))
 			
-
-
-
-
-
-
 
 
 
@@ -562,7 +556,6 @@ class ApiMarketDetails(APIView):
 
 	def get(self,request):
 		try:
-			context = {}
 			api_key = settings.API_KEY_FOR_SECURITY
 			token_From_request = request.META.get('HTTP_X_API_KEY')
 			if api_key != token_From_request:
@@ -658,6 +651,208 @@ class AllMandiesApi(APIView):
 			print(sys.exc_info())
 			context['status'] = 500
 			context['message'] = 'Something went wrong,Please try again later'
-			return render(request,'product/all_market.html',locals())
+			return HttpResponse(json.dumps(context))
 
 
+
+class MobileFilterApi(APIView):
+
+	"""Demonstrate docstring for showing that this view based function will used for filtering the animals on listing page """
+
+	def post(self,request):
+		try:
+			api_key = settings.API_KEY_FOR_SECURITY
+			token_From_request = request.META.get('HTTP_X_API_KEY')
+			if api_key != token_From_request:
+				context = {}
+				print(sys.exc_info())
+				context['message'] = 'Bad Request,Token Not Found!'
+				context['status'] = 403
+				return HttpResponse(json.dumps(context))
+
+			context = {}
+			one_star = self.request.POST.get('one_star')
+
+			if one_star:
+				star_searching_obj  = CommentReviewsStar.objects.filter(stars_counting = int(1))
+				all_products = []
+				for one_object in star_searching_obj:
+					product_instance = one_object.product_instance
+					if product_instance not in all_products:
+						all_products.append(product_instance)
+
+
+			two_star = self.request.POST.get('two_star')
+			if two_star:
+				star_searching_obj  = CommentReviewsStar.objects.filter(stars_counting = int(2)).distinct()
+				all_products = []
+				for one_object in star_searching_obj:
+					product_instance = one_object.product_instance
+					if product_instance not in all_products:
+						all_products.append(product_instance)
+
+
+			three_star = self.request.POST.get('three_star')
+			if three_star:
+				star_searching_obj  = CommentReviewsStar.objects.filter(stars_counting = int(3))
+				all_products = []
+				for one_object in star_searching_obj:
+					product_instance = one_object.product_instance
+					if product_instance not in all_products:
+						all_products.append(product_instance)
+
+
+			four_start = self.request.POST.get('four_start')
+			if four_start:
+				star_searching_obj  = CommentReviewsStar.objects.filter(stars_counting = int(4))
+				all_products = []
+				for one_object in star_searching_obj:
+					product_instance = one_object.product_instance
+					if product_instance not in all_products:
+						all_products.append(product_instance)
+
+			five_star = self.request.POST.get('five_start')
+			if five_star:
+				star_searching_obj  = CommentReviewsStar.objects.filter(stars_counting = int(5))
+				all_products = []
+				for one_object in star_searching_obj:
+					product_instance = one_object.product_instance
+					if product_instance not in all_products:
+						all_products.append(product_instance)
+
+			##### age related searchings
+
+
+			more_than_two_year = self.request.POST.get('more_than_two')
+
+			one_to_two_year = self.request.POST.get('one_to_two')
+			less_one_year = self.request.POST.get('less_one_year')
+			if less_one_year:
+				less_one_year_value = 1
+				all_products = Product.objects.filter(Q(age_of_animal__lt = less_one_year_value))
+			if one_to_two_year:
+				one_to_two_year_value  = 2
+				all_products = Product.objects.filter(age_of_animal__lte = one_to_two_year_value, age_of_animal__gte = 1)
+			if more_than_two_year:
+				more_than_two_year_val = 2
+				all_products = Product.objects.filter(Q(age_of_animal__gt = more_than_two_year_val))
+
+			######## milking based
+
+			breader = self.request.POST.get('Breader')
+			if breader:
+				all_products = Product.objects.filter(Q(animal_type = breader))
+
+			dry = self.request.POST.get('dry')
+			if dry:
+				all_products = Product.objects.filter(Q(animal_type = dry))
+
+			milking = self.request.POST.get('Milking')
+			if milking:
+				all_products = Product.objects.filter(Q(animal_type = milking))
+
+
+
+			#### market searching
+			market_post = self.request.POST.get('market_added')
+			if market_post:
+				all_products = []
+				market_added = MarketAddByAdmin.objects.get(id = int(market_post))
+				product_market = ProductMarket.objects.filter(market_instance = market_added)
+				for one in product_market:
+					if one.product_instance not in all_products:
+						all_products.append(one.product_instance)
+
+
+			price_fift = self.request.POST.get('price_fift[]')
+
+			
+
+			if price_fift:
+				split_into_list = price_fift.split()
+				min_val = split_into_list[0]
+				max_val = split_into_list[1]
+				print("min max is ------>", min_val)
+				print(max_val)
+
+
+				all_products = Product.objects.filter(price__gte = int(min_val), price__lte = int(max_val))
+
+			category_search = self.request.POST.get('category')
+			if category_search:
+				get_obj = Category.objects.get(category_name = category_search)
+				all_products = Product.objects.filter(category_instance = get_obj)
+
+
+
+
+			price_filtering = PriceFilter.objects.filter(is_active = True)
+			price_filtering_list = []
+			for one_price in price_filtering:
+				price_dict = {}
+				price_dict['min_val'] = one_price.min_val
+				price_dict['max_val'] = one_price.max_val
+				price_filtering_list.append(price_dict)
+
+
+
+			all_category = Category.objects.values_list('category_name', flat = True)
+			all_category_list = []
+			for one_category in all_category:
+				category_dict = {}
+				category_dict['category_name'] = one_category
+				all_category_list.append(category_dict)
+
+
+
+
+
+
+			all_products_list = []
+			for one_top in all_products:
+				top_product_dict = {}
+				top_product_dict['product_category_name'] = one_top.category_instance.category_name
+				top_product_dict['id_of_product'] = one_top.id
+				top_product_dict['product_name'] = one_top.name
+				top_product_dict['product_price'] = str(one_top.price)
+				top_product_dict['seller_mobilenumber'] = one_top.mobilenumber
+				top_product_dict['seller_city'] = one_top.city
+				site_url = get_current_site(request)
+				site_url = str(site_url)
+				make_full_path = site_url + '/media/' + str(one_top.image)
+
+				top_product_dict['product_main_image'] = make_full_path
+				all_products_list.append(top_product_dict)
+
+
+			all_markets = MarketAddByAdmin.objects.filter(is_active = True)
+
+			all_market_list = []
+			for one_market in all_markets:
+				market_dict = {}
+				market_dict['market_name'] = one_market.market_name
+				date = one_market.date
+				str_date = date.strftime("%d-%m-%Y %H:%M:%S")
+				market_dict['date'] = str_date
+				market_dict['description'] = one_market.description
+				market_dict['is_active'] = one_market.is_active
+				market_dict['location'] = one_market.location
+				market_dict['market_image'] = str(one_market.market_image)
+				all_market_list.append(market_dict)
+
+
+			context['message'] = 'Data Found'
+			context['status'] = 200
+			# context['all_market_list'] = all_market_list
+			context['all_products_list'] = all_products_list
+			# context['all_category_list'] = all_category_list
+			# context['price_filtering_list'] = price_filtering_list
+			return HttpResponse(json.dumps(context))
+
+
+		except:
+			print(sys.exc_info())
+			context = {}
+			context['status'] = 500
+			context['message'] = 'Something went wrong,Please try again later'
+			return HttpResponse(json.dumps(context))

@@ -1,4 +1,4 @@
-from .views import RegisterView,AddAnimalLivestock,ListingAnimalLiveStock,LoginView,LogoutView,ForgetView,ResetPassword
+from .views import RegisterView,AddAnimalLivestock,ViewParticluarAnimal,ListingAnimalLiveStock,LoginView,LogoutView,ForgetView,ResetPassword
 from django.urls import path
 from django.contrib.auth.decorators import login_required
 
@@ -20,8 +20,7 @@ urlpatterns = [
 
 	path('add_animal/', login_required(AddAnimalLivestock.as_view()), name = 'AddAnimalLivestock'),
 	path('animal_list/', login_required(ListingAnimalLiveStock.as_view()), name = 'ListingAnimalLiveStock'),
-
-
+	path('view_animal/', login_required(ViewParticluarAnimal.as_view()), name = 'ViewParticluarAnimal')
 
 
 ]

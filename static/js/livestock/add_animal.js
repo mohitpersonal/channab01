@@ -11,10 +11,10 @@ function TagAnimalLive(){
         return false;
     }
     else{
-        if (first_name.length >15 || first_name.length <3){
+        if (first_name.length >50 || first_name.length <3){
             $("#tag_name_live").removeClass("has-success");
             $("#tag_name_live").addClass("has-error");
-            $("#tag_animal_live_label").text("It only contains 3 to 15 characters");
+            $("#tag_animal_live_label").text("It only contains 3 to 50 characters");
             $("#tag_animal_live_label").show();
             return false;
         }
@@ -38,75 +38,153 @@ $("#tag_name_live").focusout(function () {
 
 ////
 
-function PriceCheck(){
-    var letternumber = /^[a-zA-Z]+$/;
-    console.log("hhh")
-    var first_name=$("#price_text").val();
-    if(first_name.length == '' || first_name.length == null) {
-        $("#price_text").removeClass("has-success");
-        $("#price_text").addClass("has-error");
-        $("#price_check_label").show();
-        $("#price_check_label").text("This Field is required");
-        
+
+
+
+
+
+$("#animal_bread_live").on('change', function(){
+
+    var check_type = $("#animal_bread_live").val();
+    if (check_type == 'Select') {
+        document.getElementById("animal_bread_live").classList.remove("has-success");
+        document.getElementById("animal_bread_live").classList.add("has-error");
+        document.getElementById('animal_bread_label_text').style.display = 'block';
         return false;
-    }
-    else{
-        $("#price_text").addClass("has-success");
-        $("#price_check_label").text("");
-        $("#price_check_label").hide();
+    } else {
+        document.getElementById("animal_bread_live").classList.add("has-success");
+        document.getElementById('animal_bread_label_text').style.display = 'none';
         return true;
     }
-
-}
-$("#price_text").focusout(function () {
-    if ($(this).hasClass("has-success")) {
-        $(this).removeClass("has-success");
-        $(this).removeClass("has-error");
-    }
 })
-///
-function PhoneCheck(){
-    var letternumber = /^[a-zA-Z]+$/;
-    console.log("hhh")
-    var first_name=$("#mobilenumber").val();
-    if(first_name.length == '' || first_name.length == null) {
-        $("#mobilenumber").removeClass("has-success");
-        $("#mobilenumber").addClass("has-error");
-        $("#mobile_label").show();
-        $("#mobile_label").text("This Field is required");
-        
+
+
+
+
+
+
+
+///////
+
+
+function CheckLabelAnimalBreed(){
+
+    var check_type = $("#animal_bread_live").val();
+    if (check_type == 'Select') {
+        document.getElementById("animal_bread_live").classList.remove("has-success");
+        document.getElementById("animal_bread_live").classList.add("has-error");
+        document.getElementById('animal_bread_label_text').style.display = 'block';
         return false;
-    }
-    else{
-        $("#mobilenumber").addClass("has-success");
-        $("#mobile_label").text("");
-        $("#mobile_label").hide();
+    } else {
+        document.getElementById("animal_bread_live").classList.add("has-success");
+        document.getElementById('animal_bread_label_text').style.display = 'none';
         return true;
     }
-
 }
-$("#mobilenumber").focusout(function () {
-    if ($(this).hasClass("has-success")) {
-        $(this).removeClass("has-success");
-        $(this).removeClass("has-error");
+//////
+$("#category_live_Animal").on('change', function(){
+
+    var check_type = $("#category_live_Animal").val();
+    if (check_type == 'Select') {
+        document.getElementById("category_live_Animal").classList.remove("has-success");
+        document.getElementById("category_live_Animal").classList.add("has-error");
+        document.getElementById('Category_live_Animal_label').style.display = 'block';
+        return false;
+    } else {
+        document.getElementById("category_live_Animal").classList.add("has-success");
+        document.getElementById('Category_live_Animal_label').style.display = 'none';
+        return true;
     }
 })
+
+
+
+
+
+
+
+///////
+
+function MaleAnimalCheckLiveStock(){
+
+    var check_type = $("#mail_gendercheck_live").val();
+    if (check_type == 'Select') {
+        document.getElementById("mail_gendercheck_live").classList.remove("has-success");
+        document.getElementById("mail_gendercheck_live").classList.add("has-error");
+        document.getElementById('gender_live_label').style.display = 'block';
+        return false;
+    } else {
+        document.getElementById("mail_gendercheck_live").classList.add("has-success");
+        document.getElementById('gender_live_label').style.display = 'none';
+        return true;
+    }
+}
+//////
+$("#mail_gendercheck_live").on('change', function(){
+
+    var check_type = $("#mail_gendercheck_live").val();
+    if (check_type == 'Select') {
+        document.getElementById("mail_gendercheck_live").classList.remove("has-success");
+        document.getElementById("mail_gendercheck_live").classList.add("has-error");
+        document.getElementById('gender_live_label').style.display = 'block';
+        return false;
+    } else {
+        document.getElementById("mail_gendercheck_live").classList.add("has-success");
+        document.getElementById('gender_live_label').style.display = 'none';
+        return true;
+    }
+})
+
+
+/////////////
+function CheckCategoryLiveAnimal(){
+
+    var new_check = $("#category_live_Animal").val();
+    if (new_check == 'Select') {
+        document.getElementById("category_live_Animal").classList.remove("has-success");
+        document.getElementById("category_live_Animal").classList.add("has-error");
+        document.getElementById('Category_live_Animal_label').style.display = 'block';
+        return false;
+    } else {
+        document.getElementById("category_live_Animal").classList.add("has-success");
+        document.getElementById('Category_live_Animal_label').style.display = 'none';
+        return true;
+    }
+}
 
 //
 
 
 /////////
 
-function checkforblank() {
-    var check_type = $("#countary_check_text_found").val();
+
+$("#animal_type_live_stock").on('change', function(){
+
+    var check_type = $("#animal_type_live_stock").val();
     if (check_type == 'Select') {
-        document.getElementById("countary_check_text_found").classList.remove("has-success");
-        document.getElementById("countary_check_text_found").classList.add("has-error");
-        document.getElementById('label_your_account').style.display = 'block';
+        document.getElementById("animal_type_live_stock").classList.remove("has-success");
+        document.getElementById("animal_type_live_stock").classList.add("has-error");
+        document.getElementById('animal_type_label').style.display = 'block';
         return false;
     } else {
-        document.getElementById("countary_check_text_found").classList.add("has-success");
-        document.getElementById('label_your_account').style.display = 'none';
+        document.getElementById("animal_type_live_stock").classList.add("has-success");
+        document.getElementById('animal_type_label').style.display = 'none';
+        return true;
+    }
+})
+
+
+//////
+function AnimalTableLiveType() {
+    var check_type = $("#animal_type_live_stock").val();
+    if (check_type == 'Select') {
+        document.getElementById("animal_type_live_stock").classList.remove("has-success");
+        document.getElementById("animal_type_live_stock").classList.add("has-error");
+        document.getElementById('animal_type_label').style.display = 'block';
+        return false;
+    } else {
+        document.getElementById("animal_type_live_stock").classList.add("has-success");
+        document.getElementById('animal_type_label').style.display = 'none';
         return true;
     }
 }
@@ -119,53 +197,35 @@ $("#countary_check_text_found").focusout(function () {
 })
 ////
 
-function checkImage(){
-    var image_val = $("#getFile1_found").val();
+function checkImageLivestock(){
+    var image_val = $("#Livestock_getFile1_found").val();
     if (image_val == '' || image_val == null){
-        $("#images_sec_check_label_found").show();
-        $("#images_sec_check_label_found").text("required");
+        $("#Livestock_images_sec_check_label_found").show();
+        $("#Livestock_images_sec_check_label_found").text("required");
         return false;
     }
     else{
-        $("#images_sec_check_label_found").hide();
+        $("#Livestock_images_sec_check_label_found").hide();
 
-        $("#images_sec_check_label_found").text("")
+        $("#Livestock_images_sec_check_label_found").text("")
         return true;
     }
 }
 ////////
 $("#live_Stock_add_animal_js").on('submit', function(){
-    if (NameAnimal() && PhoneCheck() && PriceCheck() && checkImage() && checkforblank() == true){
+    if (TagAnimalLive() && checkImageLivestock() && CheckLabelAnimalBreed() && CheckCategoryLiveAnimal() && MaleAnimalCheckLiveStock() && AnimalTableLiveType() == true){
         return true;
     }
     else{
-        NameAnimal();
-        PhoneCheck();
-        PriceCheck();
-        checkImage();
-        checkforblank();
+        TagAnimalLive();
+        checkImageLivestock();
+        CheckLabelAnimalBreed();
+        CheckCategoryLiveAnimal();
+        MaleAnimalCheckLiveStock();
+        AnimalTableLiveType();
         return false;
     }
 })
-
-
-
-///
-$("#countary_check_text_found").on('change', function(){
-
-    var check_type = $("#countary_check_text_found").val();
-    if (check_type == 'Select') {
-        document.getElementById("countary_check_text_found").classList.remove("has-success");
-        document.getElementById("countary_check_text_found").classList.add("has-error");
-        document.getElementById('label_your_account').style.display = 'block';
-        return false;
-    } else {
-        document.getElementById("countary_check_text_found").classList.add("has-success");
-        document.getElementById('label_your_account').style.display = 'none';
-        return true;
-    }
-})
-    
 
 /////////////
 
