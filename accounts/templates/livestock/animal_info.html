@@ -1,0 +1,134 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+{% block title %} <title>Channab | View Animal</title> 
+{% endblock %}
+
+<!--css end tab fuction-->
+
+<link rel="stylesheet" href="{% static '/css/livestock/details_animal.css' %}">
+
+    <div class="header-area" id="headerArea">
+      <div class="container h-100 d-flex align-items-center justify-content-between">
+        <!-- Back Button-->
+        <div class="back-button"><a href="{% url 'LandingPageOfSite' %}"><i class="lni-arrow-left"></i></a></div>
+        <!-- Page Title-->
+        <div class="page-heading">
+          <h6 class="mb-0">View Animal</h6>
+        </div>
+        <!-- Navbar Toggler-->
+        <div class="suha-navbar-toggler d-flex justify-content-between flex-wrap" id="suhaNavbarToggler"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+    <!-- Sidenav Black Overlay-->
+    <div class="sidenav-black-overlay"></div>
+    <!-- Side Nav Wrapper-->
+    <div class="suha-sidenav-wrapper" id="sidenavWrapper">
+      <!-- Sidenav Profile-->
+      {% if request.user.is_authenticated %}
+      <div class="sidenav-profile">
+        <div class="user-profile"><img src="{% static 'img/bg-img/9.jpg' %}" alt=""></div>
+        <div class="user-info">
+          <h6 class="user-name mb-0">Suha Jannat</h6>
+          <p class="available-balance">Balance <span>$<span class="counter">379.23</span></span></p>
+        </div>
+      </div>
+      {% endif %}
+      <!-- Sidenav Nav-->
+      {% if request.user.is_authenticated %}
+      <ul class="sidenav-nav">
+        <li><a href="#"><i class="lni-alarm lni-tada-effect"></i>Notifications<span class="ml-3 badge badge-warning">3</span></a></li>
+        <li><a href="#"><i class="lni-empty-file"></i>All Pages</a></li>
+        <li><a href="#"><i class="lni-heart-filled"></i>My Wishlist</a></li>
+        <li><a href="#"><i class="lni-cog"></i>Settings</a></li>
+        <li><a href="#" id="logout_popup"><i class="lni-power-switch"></i>Sign Out</a></li>
+      </ul>
+      {% endif %}
+      {% if not request.user.is_authenticated %}
+      <ul class="sidenav-nav">
+        <li><a href="{% url 'RegisterView' %}"><i class="lni-user"></i>Create New Account</a></li>
+        <li><a href="{% url 'LoginView' %}"><i class="lni-power-switch"></i>Sign In</a></li>
+      </ul>
+      {% endif %}
+
+      <div class="go-home-btn" id="goHomeBtn"><i class="lni-arrow-left"></i></div>
+    </div>
+<div class="page-content-wrapper">
+
+<!--tabing start -->
+<div class="section_tab">
+			<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+					<div class="section_tbb">
+						<div class="col-lg-12 inner_top_section">
+						<div class="row">
+							<div class="img_setion col-md-3">
+								<div class="img_section">
+									<img src="/media/main_img/new_cow_WiFd0Vh.jpg" alt="">
+								</div>
+								<div class="name_tab">	
+									<a herf="#">Animal Tag/Name</a>
+								</div>
+								</div>
+							<div class="button_section col-md-9">
+								<ul>
+									<li><a herf="#">Age 1 year</a></li>
+									<li><a herf="#">Male</a></li>
+									<li><a herf="#">Dry</a></li>
+									<li><a herf="#">Breed</a></li>
+									<li><a herf="#">Status</a></li>
+									<li>
+										<label class="switch">
+										  <input type="checkbox" checked>
+										  <span class="slider round"></span>
+										</label>
+									</li>
+								</ul>
+								<div class="bell_icon">
+									<i class="fa fa-bell" aria-hidden="true"></i>
+								</div>
+							</div>
+							</div>
+						</div>
+						<div class="col-md-12 nav_section">
+							<div class="tab_list">
+														
+								
+								<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Health</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Family</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Milking</a>
+  </li>
+   <li class="nav-item">
+    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Gallery</a>
+  </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum"
+
+</div>
+  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum"
+
+</div>
+  <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum"
+
+</div>
+</div>
+							
+							
+							
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				</div>
+				</div>
+				</div>
+{%endblock%}

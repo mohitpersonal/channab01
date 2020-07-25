@@ -10,15 +10,20 @@ class AddedAnimalLiveStock(models.Model):
 
 	'''Demonstrate docstring for confirming that this class will store all product added by logged in user'''
 
+	choices=(
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+    )
 	animal_tag = models.CharField(max_length=200)
 	date_of_birth = models.DateTimeField(auto_now_add = True)
 	animal_breed = models.CharField(max_length = 100, null = True, blank = True)
 	category_instance = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
 
-	gender = models.CharField(max_length=1000, null = True, blank = True)
+	gender = models.CharField(max_length=1000,choices = choices, null = True, blank = True)
 	male_parent = models.CharField(max_length=100,null = True, blank = True)
 	female_parent = models.CharField(max_length=100,null = True, blank = True)
 	animal_type = models.CharField(max_length = 15, null = True, blank = True)
+	description = models.TextField(null = True, blank = True)
 
 	image = models.ImageField(upload_to='main_img/', blank=True, null=True)
 	created_on = models.DateTimeField(auto_now_add = True)
