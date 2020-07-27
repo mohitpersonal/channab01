@@ -340,6 +340,7 @@ class MobileApiCategoryWiseSearch(APIView):
 				context['message'] = 'Bad Request,Token Not Found!'
 				context['status'] = 403
 				return HttpResponse(json.dumps(context))
+			
 
 			get_category = self.request.GET.get('cat_id_fil')
 			category_instance = Category.objects.get(category_name = get_category)
@@ -821,7 +822,7 @@ class MobileFilterApi(APIView):
 				top_product_dict['seller_city'] = one_top.city
 				site_url = get_current_site(request)
 				site_url = str(site_url)
-				make_full_path =  site_url + '/media/' + str(one_top.image)
+				make_full_path = 'https://' + site_url + '/media/' + str(one_top.image)
 
 				top_product_dict['product_main_image'] = make_full_path
 				all_products_list.append(top_product_dict)
