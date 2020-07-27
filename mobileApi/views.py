@@ -155,6 +155,7 @@ class HomePageApi(APIView):
 
 			for one_market in all_markets:
 				market_dict = {}
+				market_dict['market_id'] = one_market.id
 				market_dict['market_name'] = one_market.market_name
 				date = one_market.date
 				str_date = date.strftime("%d-%m-%Y %H:%M:%S")
@@ -164,7 +165,8 @@ class HomePageApi(APIView):
 				market_dict['location'] = one_market.location
 				site_url = get_current_site(request)
 				site_url = str(site_url)
-				make_full_path = site_url + '/media/' + str(one_market.market_image)
+
+				make_full_path = 'https://'+ site_url + '/media/' + str(one_market.market_image)
 
 
 
@@ -183,7 +185,7 @@ class HomePageApi(APIView):
 				top_product_dict['seller_city'] = one_top.city
 				site_url = get_current_site(request)
 				site_url = str(site_url)
-				make_full_path = site_url + '/media/' + str(one_top.image)
+				make_full_path = 'https://' + site_url + '/media/' + str(one_top.image)
 				top_product_dict['product_main_image'] = make_full_path
 				top_10_product.append(top_product_dict)
 
@@ -195,7 +197,7 @@ class HomePageApi(APIView):
 				category_dict['id'] = one_category.id
 				site_url = get_current_site(request)
 				site_url = str(site_url)
-				make_full_path = site_url + '/media/' + str(one_category.image)
+				make_full_path = 'https://' + site_url + '/media/' + str(one_category.image)
 
 				category_dict['image'] = make_full_path
 				category_dict['description'] = one_category.description
@@ -282,7 +284,7 @@ class MobileProductListApi(APIView):
 				top_product_dict['seller_city'] = one_top.city
 				site_url = get_current_site(request)
 				site_url = str(site_url)
-				make_full_path = site_url + '/media/' + str(one_top.image)
+				make_full_path = 'https://'+ site_url + '/media/' + str(one_top.image)
 
 				top_product_dict['product_main_image'] = make_full_path
 				all_products_list.append(top_product_dict)
@@ -354,7 +356,7 @@ class MobileApiCategoryWiseSearch(APIView):
 				top_product_dict['seller_city'] = one_top.city
 				site_url = get_current_site(request)
 				site_url = str(site_url)
-				make_full_path = site_url + '/media/' + str(one_top.image)
+				make_full_path = 'https://'+ site_url + '/media/' + str(one_top.image)
 
 
 				top_product_dict['product_main_image'] = make_full_path
@@ -442,7 +444,7 @@ class MobileProductDetailPage(APIView):
 				images_dict = []
 				site_url = get_current_site(request)
 				site_url = str(site_url)
-				make_full_path = site_url + '/media/' + str(one_image.image)
+				make_full_path = 'https://' + site_url + '/media/' + str(one_image.image)
 
 				images_dict['image'] = make_full_path
 				list_of_images.append(images_dict)
@@ -587,7 +589,7 @@ class ApiMarketDetails(APIView):
 				top_product_dict['seller_city'] = one_top.city
 				site_url = get_current_site(request)
 				site_url = str(site_url)
-				make_full_path = site_url + '/media/' + str(one_top.image)
+				make_full_path = 'https://' + site_url + '/media/' + str(one_top.image)
 
 				top_product_dict['product_main_image'] = make_full_path
 				all_products_list.append(top_product_dict)
@@ -636,7 +638,7 @@ class AllMandiesApi(APIView):
 				top_product_dict['location'] = one_top.location
 				site_url = get_current_site(request)
 				site_url = str(site_url)
-				make_full_path = site_url + '/media/' + str(one_top.market_image)
+				make_full_path =  'https://'+ site_url + '/media/' + str(one_top.market_image)
 
 				top_product_dict['market_image'] = make_full_path
 				all_mandis_list.append(top_product_dict)
@@ -819,7 +821,7 @@ class MobileFilterApi(APIView):
 				top_product_dict['seller_city'] = one_top.city
 				site_url = get_current_site(request)
 				site_url = str(site_url)
-				make_full_path = site_url + '/media/' + str(one_top.image)
+				make_full_path =  site_url + '/media/' + str(one_top.image)
 
 				top_product_dict['product_main_image'] = make_full_path
 				all_products_list.append(top_product_dict)
