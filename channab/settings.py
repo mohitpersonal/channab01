@@ -83,13 +83,22 @@ WSGI_APPLICATION = 'channab.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'ChanaabOfficial',
+#         'NAME': 'ChanaabOfficial1',
 #         'USER': 'root',
 #         'PASSWORD': '',
 #         'HOST': '',
 #         'PORT': 3306,
 #     }
 # }
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -108,16 +117,16 @@ REST_FRAMEWORK = {
 
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'channab',
-        'USER': 'channabuser',
-        'PASSWORD': 'Ch@nn@b0183',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'channab',
+#         'USER': 'channabuser',
+#         'PASSWORD': 'Ch@nn@b0183',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
 
 
 CORS_ORIGIN_ALLOW_ALL = True

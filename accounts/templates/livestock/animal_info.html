@@ -1,134 +1,934 @@
 {% extends 'base/main.html' %}
 {% load static %}
 {% block content %}
-{% block title %} <title>Channab | View Animal</title> 
+{% load title %}
+{% block title %} 
+<title>Channab | View Animal</title>
 {% endblock %}
-
 <!--css end tab fuction-->
 
 <link rel="stylesheet" href="{% static '/css/livestock/details_animal.css' %}">
 
-    <div class="header-area" id="headerArea">
-      <div class="container h-100 d-flex align-items-center justify-content-between">
-        <!-- Back Button-->
-        <div class="back-button"><a href="{% url 'LandingPageOfSite' %}"><i class="lni-arrow-left"></i></a></div>
-        <!-- Page Title-->
-        <div class="page-heading">
-          <h6 class="mb-0">View Animal</h6>
-        </div>
-        <!-- Navbar Toggler-->
-        <div class="suha-navbar-toggler d-flex justify-content-between flex-wrap" id="suhaNavbarToggler"><span></span><span></span><span></span></div>
-      </div>
-    </div>
-    <!-- Sidenav Black Overlay-->
-    <div class="sidenav-black-overlay"></div>
-    <!-- Side Nav Wrapper-->
-    <div class="suha-sidenav-wrapper" id="sidenavWrapper">
-      <!-- Sidenav Profile-->
-      {% if request.user.is_authenticated %}
-      <div class="sidenav-profile">
-        <div class="user-profile"><img src="{% static 'img/bg-img/9.jpg' %}" alt=""></div>
-        <div class="user-info">
-          <h6 class="user-name mb-0">Suha Jannat</h6>
-          <p class="available-balance">Balance <span>$<span class="counter">379.23</span></span></p>
-        </div>
-      </div>
-      {% endif %}
-      <!-- Sidenav Nav-->
-      {% if request.user.is_authenticated %}
-      <ul class="sidenav-nav">
-        <li><a href="#"><i class="lni-alarm lni-tada-effect"></i>Notifications<span class="ml-3 badge badge-warning">3</span></a></li>
-        <li><a href="#"><i class="lni-empty-file"></i>All Pages</a></li>
-        <li><a href="#"><i class="lni-heart-filled"></i>My Wishlist</a></li>
-        <li><a href="#"><i class="lni-cog"></i>Settings</a></li>
-        <li><a href="#" id="logout_popup"><i class="lni-power-switch"></i>Sign Out</a></li>
-      </ul>
-      {% endif %}
-      {% if not request.user.is_authenticated %}
-      <ul class="sidenav-nav">
-        <li><a href="{% url 'RegisterView' %}"><i class="lni-user"></i>Create New Account</a></li>
-        <li><a href="{% url 'LoginView' %}"><i class="lni-power-switch"></i>Sign In</a></li>
-      </ul>
-      {% endif %}
 
-      <div class="go-home-btn" id="goHomeBtn"><i class="lni-arrow-left"></i></div>
-    </div>
+
+
+<!-- starting of ist exact info popup -->
+
+<input type="hidden" id = "session_destroy" value="sess">
+<div class="modal fade bd-example-modal-lg" id="edit_exact_information_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog pt-0">
+      <div class="modal-content">
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title mt-0 w-100">Edit Animal</h4>
+            <button type="button" class="close danger text-dark" data-dismiss="modal">
+            &times;
+            </button>
+         </div>
+         <div class="modal-body">
+            <div class="card card-body">
+
+               <div class="alert alert-success" id = "msg_edit_sucess_animal" style="display: none"></div>
+
+               <div class="msg alert  alert-danger" style="display:none" id="msg_edit_error_animal"></div>
+               <form method="POST" action='/accounts/update_animal_detail/'
+                  name="popup_form" id="update_exact_live_popup">
+                  {% csrf_token %}
+                  <div class="form-group">
+                     <input type="hidden" name="animal_particular_id" id = "animal_particular_id" value="{{animal_detail.id}}">
+                     <label for="company_id_super_Admin">Animal Tag<span class="star_text"
+                        id="starA_super_Admin">*</span></label>
+                     <input type="text" class="form-control" id="tag_Edit_animal"
+                        name="animal_tag" placeholder="Animal Tag" minlength="5"
+                        maxlength="50"
+                        onkeyup="DetailTagAnimalLive()" value = "{{animal_detail.animal_tag}}">
+                     <span class="error-msg" id="tag_Edit_animal_label" style="display: none"></span>
+                  </div>
+                  <div class="form-group">
+                     <label for="password_customer">Age<span class="star_text"
+                        id="stardA_super_Admin"> * </span></label>
+                     <div class="for-icon">
+                        <input type="date" class="form-control" id="age_animal_edit_live"
+                           name="age" placeholder="Year Of Age"
+                           minlength="5" maxlength="19" value="{{animal_detail.date_of_birth|date:'Y-m-d'}}">
+                     </div>
+                     <span class="error-msg" id="age_animal_edit_live_label" style="display: none;"></span>
+                  </div>
+                  <div class="row">
+                  <div class="form-group col-md-6">
+                     <label for="company_id_super_Admin">Gender<span class="star_text"
+                        id="starA_super_Admin">*</span></label>
+                  <select name="gender" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" id= "edit_live_gender">
+                     {% if animal_detail.gender == 'Male' %}
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    {% else %}
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                    {% endif %}
+
+                  </select>
+
+                  </div>
+
+
+                  <div class="form-group col-md-6">
+                     <label for="">Animal Type<span class="star_text"
+                        id="starA_super_Admin">*</span></label>
+                     <select name="animal_type" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" id = "edit_live_animal_ty">
+                        {% if animal_detail.animal_type == 'Dry' %}
+
+                        <option value="Dry">Dry</option>
+                        <option value="Milking">Milking</option>
+                        {% elif animal_detail.animal_type  == 'Milking' %}
+                        <option value="Milking">Milking</option>
+
+                        <option value="Dry">Dry</option>
+                        {% else %}
+                        <option value="Select">----</option>
+
+                        <option value="Dry">Dry</option>
+                        <option value="Milking">Milking</option>
+
+                        {% endif %}
+
+
+                     </select>
+                  </div>
+               </div>
+                  <div class="form-group">
+                     <label for="">Animal Breed<span class="star_text"
+                        id="animal_bree">*</span></label>
+
+                  <select name="animal_bread" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" id= "animal_breed_live_text">
+                     {% if animal_detail.animal_breed == 'Automatic' %}
+                     <option value="Automatic">Automatic</option>
+                     <option value="Manual">Manual</option>
+                     {% elif animal_detail.animal_breed  == 'Manual' %}
+                    <option value="Manual">Manual</option>
+                     <option value="Automatic">Automatic</option>
+
+                        {% else %}
+                        <option value="Select">----</option>
+                        <option value="Automatic">Automatic</option>
+                        <option value="Manual">Manual</option>
+
+                        {% endif %}
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <!-- div class="title mb-2"><i class="lni lni-camera"></i><span>Image</span></div -->
+                  <button  class="btn btn-success" type="button" style="display:block;" onclick="document.getElementById('edit_Livestock_getFile4_found').click()"><i class="lni lni-camera"></i>Image Upload</button>
+                  <input type='file' id="edit_Livestock_getFile4_found" class="images first_step_cls" ngf-select="" ng-model="new_files" accept="image/*" name="main_image" style="display:none"onchange="EditLivestock_readURLMySecond_Found(this)">
+
+                  <span class="error-msg"id="edit_image_label_livestock" style="display: none"></span>
+
+                  <div class="col-md-12 text-center">
+
+                   {% if animal_detail.image %}
+
+                     <img id="edit_Livestock_blah4_found" src="/media/{{animal_detail.image}}" alt="your image" style="height: 130px;width: 100px" />
+                     {% else %}
+                     <img id="edit_Livestock_blah4_found" src="#" alt="your image" style="display: none;" />
+                     {% endif %}
+                  </div>
+                </div>
+
+
+
+                  <button type="submit" id="update_exact_live"
+                     class="btn btn-success w-100 pull-right"  >
+                  Update Information
+                  </button>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+<!-- end of ist popup -->
+
+<!-- starting of ist tab popup i.e add -->
+<div class="modal fade bd-example-modal-lg" id="add_ist_table" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog pt-0">
+      <div class="modal-content">
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title mt-0 w-100">Add Health</h4>
+            <button type="button" class="close danger text-dark" data-dismiss="modal">
+            &times;
+            </button>
+         </div>
+         <div class="modal-body">
+            <div class="card card-body">
+               <div class="alert alert-success" id = "health_popup_suceess" style="display: none"></div>
+
+               <div class="msg alert  alert-danger" style="display:none" id="health_popup_error"></div>
+
+               <form method="POST" action='/accounts/add_animal_detail/'
+                  name="popup_form" id="health_Add_form_popup">
+                  <input type="hidden" name="animal_particular_id"  value="{{animal_detail.id}}">
+
+                  {% csrf_token %}
+                  <div class="form-group">
+                     <label for="company_id_super_Admin">Health Title<span class="star_text"
+                        id="starA_super_Admin">*</span></label>
+                     <input type="text" class="form-control" id="health_title_input"
+                        name="title_health" placeholder="Health Title" minlength="5"
+                        maxlength="30"
+                        onkeyup="HealthTitleAnimal()">
+                     <span class="error-msg" id="title_health_label" style="display: none"></span>
+                  </div>
+                  <div class="form-group">
+                     <label for="password_customer">Health Cost<span class="star_text"
+                        id="stardA_super_Admin"> * </span></label>
+                     <div class="for-icon">
+                        <input type="number" class="form-control" id="cost_of_animal_input"
+                           name="cost" placeholder="Health Cost"
+                           minlength="1" maxlength="7" onkeyup="HealthCostAnimal()">
+                     </div>
+                     <span class="error-msg" id="cost_of_animal_input_label" style="display: none;"></span>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputFirstName">Add Content</label>
+                     <div class="for-icon">
+                        <textarea class="form-control" name="description" id="edit_editor1_2" maxlength="500"  onkeyup="AddContentAnimal()"></textarea>
+                     </div>
+                     <span  class="error-msg" id="content_ist_tab_label"></span>
+                  </div>
+
+
+
+
+                  <button type="submit" id="update_exact_live"
+                     class="btn btn-success w-100 pull-right"  >
+                  Update Information
+                  </button>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- end of ist tab popup -->
+
+
+<!-- starting of 2nd tab popup i.e add -->
+<div class="modal fade bd-example-modal-lg" id="family_add_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog pt-0">
+      <div class="modal-content">
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title mt-0 w-100">Add Family</h4>
+            <button type="button" class="close danger text-dark" data-dismiss="modal">
+            &times;
+            </button>
+         </div>
+         <div class="modal-body">
+            <div class="card card-body">
+               <div class="msg alert  alert-danger" style="display:none" id="msg_ajax_admin"></div>
+               <form method="POST" action=''
+                  name="popup_form" id="family_add_popup">
+                  {% csrf_token %}
+                  <div class="form-group">
+                     <div class="for-icon">
+                        <label for="password_customer">Male Parent<span class="star_text"
+                        id="male_p"> * </span></label>
+                        <select name="male_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
+                           <option value="Select">------</option>
+                           {% for one in male_parent %}
+                           <option value="{{one}}">{{one}}</option>
+                           {% endfor %}
+
+                        </select>
+                     </div>
+
+                     <span class="error-msg" id="male_parent_label_detail" style="display: none"></span>
+                  </div>
+                  <div class="form-group">
+                     <label for="password_customer">Female Parent<span class="star_text"
+                        id="stardA_super_Admin"> * </span></label>
+                     <div class="for-icon">
+                        <select name="female_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
+                           <option value="Select">------</option>
+                            {% for one in female_parent %}
+                           <option value="{{one}}">{{one}}</option>
+                           {% endfor %}
+
+                        </select>
+                     </div>
+                     <span class="error-msg" id="female_parent_label_detail" style="display: none;"></span>
+                  </div>
+                  <div class="form-group">
+                     <label for="password_customer">Select Child<span class="star_text"
+                        id="stardA_super_Admin"> * </span></label>
+                     <div class="for-icon">
+                        <select name="child_select" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
+                           <option value="Select">------</option>
+                           {% for one in all_child_parents %}
+                           <option value="{{one}}">{{one}}</option>
+                           {% endfor %}
+
+                        </select>
+                     </div>
+                     <span class="error-msg" id="cost_of_animal_input_label" style="display: none;"></span>
+                  </div>
+               <div class="button_secton_fly">
+                  <button type="submit" id="add_button"
+                     class="btn btn-success w-100 pull-right"  >
+                  Add
+                  </button>
+
+
+                  <button type="submit" id="update_exact_live"
+                     class="btn btn-success w-100 pull-right"  >
+                  Update Information
+                  </button>
+               </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- end of second_tab popup -->
+<!-- starting of 3rd tab popup i.e add -->
+<div class="modal fade bd-example-modal-lg" id="milking_tab_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog pt-0">
+      <div class="modal-content">
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title mt-0 w-100">Add Milk</h4>
+            <button type="button" class="close danger text-dark" data-dismiss="modal">
+            &times;
+            </button>
+         </div>
+         <div class="modal-body">
+            <div class="card card-body">
+               <div class="alert alert-success" id = "milk_popup_suceess" style="display: none"></div>
+
+               <div class="msg alert  alert-danger" style="display:none" id="milk_popup_error"></div>
+
+               <form method="POST" action='/accounts/added_animal_milking/'
+                  name="popup_form" id="milkig_add_popup_form">
+                  {% csrf_token %}
+                  <input type="hidden" name="animal_particular_id"  value="{{animal_detail.id}}">
+
+                  <div class="form-group">
+                     <label for="company_id_super_Admin">Morning Milk<span class="star_text"
+                        id="morning">*</span></label>
+                     <input type="number" class="form-control" id="morning_milk"
+                        name="morning_time" placeholder="Morning Milk" maxlength="10" 
+                        onkeyup="MorningMilk()">
+                     <span class="error-msg" id="morning_milk_label" style="display: none"></span>
+                  </div>
+                  <div class="form-group">
+                     <label for="password_customer">Evening Milk<span class="star_text"
+                        id="evening"> * </span></label>
+                     <div class="for-icon">
+                        <input type="number" class="form-control" id="evening_milk"
+                           name="evening_time" placeholder="Evening Milk"
+                         maxlength="10" onkeyup="EveningMilk()">
+                     </div>
+                     <span class="error-msg" id="evening_milk_label" style="display: none;"></span>
+                  </div>
+
+
+
+                  <button type="submit" id="evening_milk_button"
+                     class="btn btn-success w-100 pull-right"  >
+                  Update Information
+                  </button>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- end of 3rd tab popup -->
+<!-- starting of 4th tab popup i.e add -->
+<div class="modal fade bd-example-modal-lg" id="galley_tab_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog pt-0">
+      <div class="modal-content">
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title mt-0 w-100">Add Image</h4>
+            <button type="button" class="close danger text-dark" data-dismiss="modal">
+            &times;
+            </button>
+         </div>
+         <div class="modal-body">
+            <div class="card card-body">
+               <div class="alert alert-success" id = "gallery_popup_suceess" style="display: none"></div>
+
+               <div class="msg alert  alert-danger" style="display:none" id="gallery_popup_error"></div>
+
+               <form method="POST" action='/accounts/add_gallery/'
+                  name="popup_form" id="add_image_popup_form" enctype="multipart/formdata">
+                  {% csrf_token %}
+                  <input type="hidden" name="animal_particular_id" id="gallery_animal_id"  value="{{animal_detail.id}}">
+
+                <div class="form-group">
+                  <!-- div class="title mb-2"><i class="lni lni-camera"></i><span>Image</span></div -->
+                  <button  class="btn btn-success" type="button" style="display:block;" onclick="document.getElementById('gallery_tab_image').click()"><i class="lni lni-camera"></i>Image Upload</button>
+                  <input type='file' id="gallery_tab_image" class="images first_step_cls" ngf-select="" ng-model="new_files" accept="image/*" name="sec_image" style="display:none"onchange="GalleryImagetabRead(this)">
+
+                  <span class="error-msg"id="gallery_tab_image_label" style="display: none"></span>
+
+                  <div class="col-md-12 text-center">
+                    <img id="gallery_tab_image_show" alt="your image" style="display: none;" />
+                  </div>
+                </div>
+
+
+
+                  <button type="submit" id="image_popup_form"
+                     class="btn btn-success w-100 pull-right"  >
+                  Update Information
+                  </button>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- end of 4th tab popup -->
+<!-- starting of 5th tab popup i.e add -->
+<div class="modal fade bd-example-modal-lg" id="description_tab_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog pt-0">
+      <div class="modal-content">
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title mt-0 w-100">Add Description</h4>
+            <button type="button" class="close danger text-dark" data-dismiss="modal">
+            &times;
+            </button>
+         </div>
+         <div class="modal-body">
+            <div class="card card-body">
+               <div class="alert alert-success" id = "desc_popup_suceess" style="display: none"></div>
+
+               <div class="msg alert  alert-danger" style="display:none" id="desc_popup_error"></div>
+               <form method="POST" action='/accounts/description_added/'
+                  name="popup_form" id="description_Add_form">
+                  <input type="hidden" name="animal_particular_id"  value="{{animal_detail.id}}">
+
+                  {% csrf_token %}
+                  <div class="form-group">
+                     <label for="inputFirstName">Add Description</label>
+                     <div class="for-icon">
+                        <textarea class="form-control" name="description" id="description_popup" rows="10"></textarea>
+                     </div>
+                     <span  class="error-msg" id="description_popup_found_label"></span>
+                  </div>
+
+
+
+
+                  <button type="submit" id="description_popup_submit"
+                     class="btn btn-success w-100 pull-right"  >
+                  Update Information
+                  </button>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- end of second popup -->
+
+<div class="header-area" id="headerArea">
+   <div class="container h-100 d-flex align-items-center justify-content-between">
+      <!-- Back Button-->
+      <div class="back-button"><a href="{% url 'LandingPageOfSite' %}"><i class="lni-arrow-left"></i></a></div>
+      <!-- Page Title-->
+      <div class="page-heading">
+         <h6 class="mb-0">View Animal</h6>
+      </div>
+      <!-- Navbar Toggler-->
+      <div class="suha-navbar-toggler d-flex justify-content-between flex-wrap" id="suhaNavbarToggler"><span></span><span></span><span></span></div>
+   </div>
+</div>
+<!-- Sidenav Black Overlay-->
+<div class="sidenav-black-overlay"></div>
+<!-- Side Nav Wrapper-->
+<div class="suha-sidenav-wrapper" id="sidenavWrapper">
+   <!-- Sidenav Profile-->
+   {% if request.user.is_authenticated %}
+   <div class="sidenav-profile">
+      <div class="user-profile"><img src="{% static 'img/bg-img/9.jpg' %}" alt=""></div>
+      <div class="user-info">
+         <h6 class="user-name mb-0">Suha Jannat</h6>
+         <p class="available-balance">Balance <span>$<span class="counter">379.23</span></span></p>
+      </div>
+   </div>
+   {% endif %}
+   <!-- Sidenav Nav-->
+   {% if request.user.is_authenticated %}
+   <ul class="sidenav-nav">
+      <li><a href="#"><i class="lni-alarm lni-tada-effect"></i>Notifications<span class="ml-3 badge badge-warning">3</span></a></li>
+      <li><a href="#"><i class="lni-empty-file"></i>All Pages</a></li>
+      <li><a href="#"><i class="lni-heart-filled"></i>My Wishlist</a></li>
+      <li><a href="#"><i class="lni-cog"></i>Settings</a></li>
+      <li><a href="#" id="logout_popup"><i class="lni-power-switch"></i>Sign Out</a></li>
+   </ul>
+   {% endif %}
+   {% if not request.user.is_authenticated %}
+   <ul class="sidenav-nav">
+      <li><a href="{% url 'RegisterView' %}"><i class="lni-user"></i>Create New Account</a></li>
+      <li><a href="{% url 'LoginView' %}"><i class="lni-power-switch"></i>Sign In</a></li>
+   </ul>
+   {% endif %}
+   <div class="go-home-btn" id="goHomeBtn"><i class="lni-arrow-left"></i></div>
+</div>
 <div class="page-content-wrapper">
 
 <!--tabing start -->
 <div class="section_tab">
-			<div class="container">
-			<div class="row">
-				<div class="col-lg-12 col-md-12 col-sm-12">
-					<div class="section_tbb">
-						<div class="col-lg-12 inner_top_section">
-						<div class="row">
-							<div class="img_setion col-md-3">
-								<div class="img_section">
-									<img src="/media/main_img/new_cow_WiFd0Vh.jpg" alt="">
-								</div>
-								<div class="name_tab">	
-									<a herf="#">Animal Tag/Name</a>
-								</div>
-								</div>
-							<div class="button_section col-md-9">
-								<ul>
-									<li><a herf="#">Age 1 year</a></li>
-									<li><a herf="#">Male</a></li>
-									<li><a herf="#">Dry</a></li>
-									<li><a herf="#">Breed</a></li>
-									<li><a herf="#">Status</a></li>
-									<li>
-										<label class="switch">
-										  <input type="checkbox" checked>
-										  <span class="slider round"></span>
-										</label>
-									</li>
-								</ul>
-								<div class="bell_icon">
-									<i class="fa fa-bell" aria-hidden="true"></i>
-								</div>
-							</div>
-							</div>
-						</div>
-						<div class="col-md-12 nav_section">
-							<div class="tab_list">
-														
-								
-								<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+         <div class="container">
+            {% if messages %}
+        {% for message in messages %}
+        {% if 'success' in message.tags %}
+        <div class="alert alert-success" id = "msg_Sucess">
+          {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% if messages %}
+        {% for message in messages %}
+        {% if 'error' in message.tags %}
+        <div class="alert alert-danger" id="msg_sign_err">
+          {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+         <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+               <div class="section_tbb">
+                  <div class="col-lg-12 inner_top_section">
+                  <div class="row">
+                     <div class="img_setion col-md-3">
+                        <div class="img_section">
+                           <img src="/media/{{animal_detail.image}}" alt="">
+                        </div>
+                        <div class="name_tab">  
+                           <a herf="#">{{animal_detail.animal_tag|get_req}}</a>
+                        </div>
+                        </div>
+                     <div class="button_section col-md-9">
+                        <ul>
+                           {% if month_result %}
+                           <li><a herf="#">Age {{month_result}} Month</a></li>
+                           {% elif year_result %}
+
+                           <li><a herf="#">Age {{year_result}} year</a></li>
+                           
+                           {% endif %}
+                           <li><a herf="#">{{animal_detail.gender}}</a></li>
+                           <li><a herf="#">{{animal_detail.animal_type}}</a></li>
+                           <li><a herf="#">{{animal_detail.animal_breed}}</a></li>
+                           {% if animal_detail.is_active == True %}
+                           <li><a herf="#">Active</a></li>
+                           {% else %}
+                           <li><a herf="#" class="red_Active">Disabled</a></li>
+                           {% endif %}
+
+                           <li>
+                              <label class="switch">
+                                <input type="checkbox" {% if animal_detail.is_active is True %}
+                      checked {% else %} unchecked {% endif %} class="root" data-id = "{{animal_detail.id}}">
+                                <span class="slider round"></span>
+                              </label>
+                           </li>
+                        </ul>
+                        <div class="bell_icon icon_tabing_section">
+                           <i class="fa fa-bell " aria-hidden="true"></i>
+                        </div>
+                        <div class="icon_tabing_section">
+                           <i class="fa fa-plus" aria-hidden="true" id = "check_health_tab" data-toggle="modal" data-target="#add_ist_table"></i>
+                           <i class="fa fa-plus" aria-hidden="true" id = "check_family_tab" data-toggle="modal" data-target="#family_add_popup"  style="display: none;"></i>
+                           <i class="fa fa-plus" aria-hidden="true" id = "check_milking_atb" data-toggle="modal" data-target="#milking_tab_popup" style="display: none"></i>
+                           <i class="fa fa-plus" aria-hidden="true" data-toggle="modal" data-target="#galley_tab_popup" id = "check_gallery_tab" style="display: none"></i>
+                           <i class="fa fa-plus" data-toggle="modal" data-target="#description_tab_popup" aria-hidden="true" id = "check_description_tab" style="display: none"></i>
+
+                        </div>
+                        <div class="icon_tabing_section">
+                           <i class="fa fa-pencil-square-o"  data-toggle="modal" data-target="#edit_exact_information_popup"  aria-hidden="true"></i>
+                        </div>
+                     </div>
+                     </div>
+                  </div>
+                  <div class="col-md-12 nav_section">
+                     <div class="tab_list">
+                                          
+                        
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
   <li class="nav-item">
-    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Health</a>
+    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#Health" role="tab" aria-controls="pills-home-tab" aria-selected="true">Health</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Family</a>
+    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#Family" role="tab" aria-controls="pills-profile-tab" aria-selected="false">Family</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Milking</a>
+    <a class="nav-link" id="pills-miking-tab" data-toggle="pill" href="#Milking" role="tab" aria-controls="pills-contact-tab" aria-selected="false">Milking</a>
   </li>
    <li class="nav-item">
-    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Gallery</a>
+    <a class="nav-link" id="pills-gallery-tab" data-toggle="pill" href="#Gallery" role="tab" aria-controls="pills-contact-tab" aria-selected="false">Gallery</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pills-description-tab" data-toggle="pill" href="#Description" role="tab" aria-controls="pills-contact-tab" aria-selected="false">Description</a>
   </li>
 </ul>
 <div class="tab-content" id="pills-tabContent">
-  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum"
+    <div class="not_found_data">
+      <h6>No record found</h6>
+   </div>
+  <div class="tab-pane fade show active" id="Health" role="tabpanel" aria-labelledby="pills-home-tab">
+
+   <div class="health_section_health">
+   
+      <form>
+
+         {% if all_health_record %}
+         {% for one_health in all_health_record %}
+    <div class="form-check">
+   <label class="form-check-label" for="exampleCheck1">
+      <h4>{{one_health.tag_name}}</h4>
+      <div class="coast_section">
+         <p>Cost : {{one_health.cost_amount}} PKR</p>
+         <span>30 min ago</span>
+         <i class="fa fa-trash-o health_delete" aria-hidden="true" style="cursor: pointer;" data-id = "{{one_health.id}}"></i>
+
+      </div>
+   </label>
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <p id="contant_dt" class="form-text text-muted">{{one_health.text_description}}</p>
+  </div>
+  {% endfor %}
+  {% endif %}
+</form>
+
+
+
+   </div>
+</div>
+  <div class="tab-pane fade " id="Family" role="tabpanel" aria-labelledby="pills-profile-tab">
+  <div class="family_section">
+   <div class="parent_section">
+      <h2 class="heading_title">Parents</h2>
+      <ul>
+         <li>
+            <div class="img_p">
+               <img src="/media/main_img/new_cow.jpg" alt="img">
+            </div>
+            <h4> Animal Tag Number</h4>
+            <span class="btn"> male </span>
+            <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
+         </li>
+         <li>
+            <div class="img_p">
+               <img src="/media/main_img/new_cow.jpg" alt="img">
+            </div>
+            <h4> Animal Tag Number</h4>
+            <span class="btn"> female </span>
+             <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
+         </li>
+         
+      </ul>
+   </div>
+   <div class="child_section">
+      <h2 class="heading_title">Child</h2>
+      <ul>
+         <li>
+            <div class="img_p">
+               <img src="/media/main_img/new_cow.jpg" alt="img">
+            </div>
+            <h4> Animal Tag Number</h4>
+            <span class="btn"> male </span>
+             <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
+         </li>
+         <li>
+            <div class="img_p">
+               <img src="/media/main_img/new_cow.jpg" alt="img">
+            </div>
+            <h4> Animal Tag Number</h4>
+            <span class="btn"> female </span>
+             <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
+         </li>
+         <li>
+            <div class="img_p">
+               <img src="/media/main_img/new_cow.jpg" alt="img">
+            </div>
+            <h4> Animal Tag Number</h4>
+            <span class="btn"> female </span>
+             <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
+         </li>
+         
+      </ul>
+   </div>
+   </div>
+</div>
+  <div class="tab-pane fade" id="Milking" role="tabpanel" aria-labelledby="pills-contact-tab">
+   <div class="milking_section">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Filter
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+         <a {% if filter_by_class == 7 %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %} href='/accounts/view_animal/?product_id={{product_id}}&&filter=7' selected>Week</a>
+         <a {% if filter_by_class == 30 %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %} href="/accounts/view_animal/?product_id={{product_id}}&&filter=30">1 Month</a>
+         <a {% if filter_by_class == 91 %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %} href="/accounts/view_animal/?product_id={{product_id}}&&filter=91">3 Month</a>
+         <a {% if filter_by_class == 184 %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %} href="/accounts/view_animal/?product_id={{product_id}}&&filter=184">6 Month</a>
+         <a {% if filter_by_class == 365 %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %} href="/accounts/view_animal/?product_id={{product_id}}&&filter=365">1 Year</a>
+         <a {% if not filter_by_class %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %} href="/accounts/view_animal/?product_id={{product_id}}">Complete</a>
+        </div>
+      </div> 
+      
+      <div class="milk_table_section">
+         <ul class="title_table">
+            <li>Date</li>
+            <li>Morning</li>
+            <li>Evening</li>
+            <li>Total</li>
+            <li>Actions</li>
+
+         </ul>
+         <ul class="detail_table">
+
+            {% for one_milk in all_milking_record_list %}
+            <li class="item_list_detail">
+               <ul class="list_detail">
+                  <li>{{one_milk.created_on|date:'d-m-Y'}}</li>
+                  <li><span class="value">{{one_milk.morning_time}}</span> Liter</li>
+                  <li><span class="value">{{one_milk.evening_time}}</span> Liter</li>
+                  <li><span class="value">{{one_milk.sum_of_one}}</span> Liter</li>
+                  <li>
+                     <span class="edit"><i class="fa fa-trash-o milk_delete" aria-hidden="true" data-id = "{{one_milk.id}}"></i></span> 
+                  </li>
+               </ul>
+            </li>
+            {% endfor %}
+         </ul>
+         <ul class="total_table">
+            <li><span class="value">Total</span> Liter</li>
+            <li><span class="value">{{sum_of_morning}}</span> Liter</li>
+            <li><span class="value">{{sum_of_evening}}</span> Liter</li>
+            <li><span class="value">{{sum_of_two_list}}</span> Liter</li>
+         </ul>
+      </div>
+   </div>
+   
+</div>
+<div class="tab-pane fade" id="Gallery" role="tabpanel" aria-labelledby="pills-contact-tab">
+   <h1 class="font-weight-light text-center text-lg-left mt-4 mb-0"> Gallery</h1>
+   
+   <div class="row text-center text-lg-left">
+      {% for one_gallery in all_gallery %}
+
+    <div class="col-lg-3 col-md-4 col-6">
+      <a href="#" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="/media/{{one_gallery.image}}" alt="">
+            <div class="delete_icon_use">
+               <p><i class="fa fa-trash-o" aria-hidden="true"></i></p>
+            </div>
+          </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<div class="tab-pane fade" id="Description" role="tabpanel" aria-labelledby="pills-contact-tab">
+   <h1 class="font-weight-light text-center text-lg-left mt-4 mb-0">Description</h1>
+   <div class="descr_detail">
+      <div class="list_descr">
+         <ul>
+            {% for one_desc in all_description %}
+            <li>
+               <h6>{{one_desc.created_on}}
+                  <button type="button" class="btn btn-success"><i class="fa fa-trash-o delete_Descritpion" aria-hidden="true" data-id = "{{one_desc.id}}"></i></button>
+               </h6>
+               <p>{{one_desc.description}}</p>
+            </li>
+            {% endfor %}
+         </ul>
+      </div>
+   </div>
+</div>
 
 </div>
-  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum"
+                     
+                     
+                     
+                     
+                     </div>
+                  </div>
+                  
+               </div>
+            </div>
+            </div>
+            </div>
+            </div>
+<script src="{% static 'js/plugins/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'js/livestock/animal_info.js' %}"></script>
+<script type="text/javascript">
+   
+$("#update_exact_live_popup").on('submit', function(e){
+    if (DetailTagAnimalLive()  == true){
 
-</div>
-  <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum"
 
-</div>
-</div>
-							
-							
-							
-							</div>
-						</div>
-						
-					</div>
-				</div>
-				</div>
-				</div>
-				</div>
+          var form = $(this);
+          var Url = form.attr('action');
+          e.preventDefault();
+          var formdata = new FormData();
+          formdata.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+          var animal_particular_id = $("#animal_particular_id").val();
+          var main_image_var = $('#edit_Livestock_getFile4_found')[0].files[0]
+          var animal_tag = $('#tag_Edit_animal').val();
+          var age = $('#age_animal_edit_live').val();
+          var edit_live_animal_ty = $('#edit_live_animal_ty').val();
+          var gender = $('#edit_live_gender').val();
+          var animal_breed_live_text = $('#animal_breed_live_text').val();
+
+          formdata.append('animal_tag', animal_tag);
+          formdata.append('gender', gender);
+          formdata.append('animal_type', edit_live_animal_ty);
+          formdata.append('age', age);
+          formdata.append('animal_bread', animal_breed_live_text);
+          formdata.append('animal_particular_id', animal_particular_id);
+
+
+
+          if (main_image_var){
+            formdata.append('main_image', main_image_var);
+
+          }
+
+
+          $.ajax({
+              type: 'POST',
+              cache : false,
+              processData : false, 
+              contentType : false,
+              data: formdata,
+              url: Url,
+
+            success:function(response){
+                response_by_api = JSON.parse(response)
+                console.log("response_by_api is -------->", response_by_api)
+                if (response_by_api['status'] == 200){
+                    console.log(response_by_api)
+                    $("#msg_edit_sucess_animal").text(response_by_api["message"]);
+                    $('#msg_edit_sucess_animal').css("display", "block");
+                    var msg_ajax = document.getElementById("msg_edit_sucess_animal");
+                    setTimeout(function () {
+                        $(msg_ajax).css("display", "none");
+                    }, 2000);
+
+                    setTimeout(function(){
+                        window.location.reload(1);
+                    }, 2000);
+                }
+                else{
+
+                    $("#msg_edit_error_animal").text(response_by_api["error_message"]);
+                    $('#msg_edit_error_animal').css("display", "block");
+                    var msg_ajax = document.getElementById("msg_edit_error_animal");
+                    setTimeout(function () {
+                        $(msg_ajax).css("display", "none");
+                    }, 5000);
+
+                }
+
+            },
+        })
+
+    }
+    else{
+        DetailTagAnimalLive();
+        return false;
+    }
+})
+</script>
+<script type="text/javascript">
+   $("#add_image_popup_form").on('submit', function(e){
+    if (CheckFormGalleryImagetabRead() == true){
+
+
+          var form = $(this);
+          var Url = form.attr('action');
+          e.preventDefault();
+          var formdata = new FormData();
+          formdata.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+          var animal_particular_id = $("#gallery_animal_id").val();
+          var main_image_var = $('#gallery_tab_image')[0].files[0]
+          formdata.append('animal_particular_id', animal_particular_id);
+
+
+
+          if (main_image_var){
+            formdata.append('main_image', main_image_var);
+
+          }
+
+
+          $.ajax({
+              type: 'POST',
+              cache : false,
+              processData : false, 
+              contentType : false,
+              data: formdata,
+              url: Url,
+            success:function(response){
+                response_by_api = JSON.parse(response)
+                console.log("response_by_api is -------->", response_by_api)
+                if (response_by_api['status'] == 200){
+                    console.log(response_by_api)
+                    $("#gallery_popup_suceess").text(response_by_api["message"]);
+                    $('#gallery_popup_suceess').css("display", "block");
+                    var msg_ajax = document.getElementById("milk_popup_suceess");
+                    setTimeout(function () {
+                        $(msg_ajax).css("display", "none");
+                    }, 1500);
+
+
+                    setTimeout(function(){
+                        window.location.reload(1);
+                    }, 2000);
+
+                }
+                else{
+
+                    $("#gallery_popup_error").text(response_by_api["error_message"]);
+                    $('#gallery_popup_error').css("display", "block");
+                    var msg_ajax = document.getElementById("gallery_popup_error");
+                    setTimeout(function () {
+                        $(msg_ajax).css("display", "none");
+                    }, 5000);
+
+                }
+
+            },
+        })
+
+    }
+    else{
+        CheckFormGalleryImagetabRead();
+        return false;
+    }
+})
+
+</script>
 {%endblock%}

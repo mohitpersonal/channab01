@@ -244,6 +244,11 @@ button.btn.btn-success.w-100 {
     line-height: 28px;
     padding: 0;
 }
+.catagory-card {
+    background-image: url(/media/new_cow.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 /**/
 
 @media(max-width: 767px){
