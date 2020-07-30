@@ -8,6 +8,12 @@
 <!--css end tab fuction-->
 <link rel="stylesheet" href="{% static '/css/livestock/details_animal.css' %}">
 <!-- starting of ist exact info popup -->
+
+
+
+
+<!-- starting of ist exact info popup -->
+
 <input type="hidden" id = "session_destroy" value="sess">
 <div class="modal fade bd-example-modal-lg" id="edit_exact_information_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
    <div class="modal-dialog pt-0">
@@ -22,7 +28,9 @@
          <div class="modal-body">
             <div class="card card-body">
                <div class="alert alert-success" id = "msg_edit_sucess_animal" style="display: none"></div>
-               <div class="msg alert  alert-danger" style="display:none" id="msg_edit_error_animal"></div>
+
+               <div class="alert alert-success" id = "msg_edit_sucess_animal" style="display: none"></div>
+
                <form method="POST" action='/accounts/update_animal_detail/'
                   name="popup_form" id="update_exact_live_popup">
                   {% csrf_token %}
@@ -108,6 +116,10 @@
                         {% endif %}
                      </div>
                   </div>
+
+
+
+
                   <button type="submit" id="update_exact_live"
                      class="btn btn-success w-100 pull-right"  >
                   Update Information
@@ -119,6 +131,8 @@
    </div>
 </div>
 <!-- end of ist popup -->
+
+
 <!-- starting of ist tab popup i.e add -->
 <div class="modal fade bd-example-modal-lg" id="add_ist_table" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
    <div class="modal-dialog pt-0">
@@ -137,6 +151,7 @@
                <form method="POST" action='/accounts/add_animal_detail/'
                   name="popup_form" id="health_Add_form_popup">
                   <input type="hidden" name="animal_particular_id"  value="{{animal_detail.id}}">
+
                   {% csrf_token %}
                   <div class="form-group">
                      <label for="company_id_super_Admin">Health Title<span class="star_text"
@@ -537,6 +552,8 @@
                                        </div>
                                        <h4> Animal Tag Number</h4>
                                        <span class="btn"> male </span>
+            <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
+
                                     </li>
                                     <li>
                                        <div class="img_p">
@@ -544,11 +561,15 @@
                                        </div>
                                        <h4> Animal Tag Number</h4>
                                        <span class="btn"> female </span>
+            <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
+
                                     </li>
                                  </ul>
                               </div>
                               <div class="child_section">
                                  <h2 class="heading_title">Child</h2>
+            <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
+
                                  <ul>
                                     <li>
                                        <div class="img_p">
@@ -629,6 +650,9 @@
                               <div class="col-lg-3 col-md-4 col-6">
                                  <a href="#" class="d-block mb-4 h-100">
                                  <img class="img-fluid img-thumbnail" src="/media/{{one_gallery.image}}" alt="">
+                                 <div class="delete_icon_use">
+                                    <p><i class="fa fa-trash-o" aria-hidden="true"></i></p>
+                                     </div>
                                  </a>
                               </div>
                               {% endfor %}
@@ -659,6 +683,10 @@
       </div>
    </div>
 </div>
+
+
+
+
 <script src="{% static 'js/plugins/jquery-3.4.1.min.js' %}"></script>
 <script src="{% static 'js/livestock/animal_info.js' %}"></script>
 <script type="text/javascript">
@@ -811,3 +839,4 @@
    
 </script>
 {%endblock%}
+

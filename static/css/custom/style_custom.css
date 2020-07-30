@@ -76,6 +76,11 @@ div#notfound .notfound {
 #notfound .notfound .notfound-404 h1 {
     font-size: 180px;
 }
+.catagory-card {
+    background-image: url(/media/new_cow.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 
 @media only screen and (max-width: 767px) {
     .notfound .notfound-404 {
