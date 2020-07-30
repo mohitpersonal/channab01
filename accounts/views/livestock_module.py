@@ -87,7 +87,6 @@ class ListingAnimalLiveStock(View):
 			requested_user = User.objects.get(id = request.user.id)
 			all_animals = AddedAnimalLiveStock.objects.filter(created_by = requested_user).order_by('-id')
 
-			print("all_animals->", all_animals[0].image)
 			return render(request, 'livestock/animal_listing.html', locals())
 		except Exception as e:
 			print(e)
@@ -674,8 +673,9 @@ class DeactivateAnimal(View):
 	def get(self,request):
 		context = {}
 		try:
+			user_obj = User.objects.get(id = user_id)
 			id_animal = self.request.GET.get('id')
-			animal_instance = AddedAnimalLiveStock.objects.get(id = int(id_animal))
+			animal_instance = AddedAnimalLiveStock.objects.get(id = int(id_animal), created_by = user_obj)
 
 			if animal_instance.is_active == True:
 				animal_instance.is_active = False
@@ -692,8 +692,8 @@ class DeactivateAnimal(View):
 				context['status'] = 'success'
 				context['msg'] = 'False status'
 				return HttpResponse(json.dumps(context))
-		except:
-			print(sys.exc_info())
+		except Exception as e:
+			print(e)
 			context['status'] = 'fail'
 			context['msg'] = 'something went wrong'
 			return HttpResponse(json.dumps(context))
@@ -732,12 +732,12 @@ class DeleteHealth(View):
 			request_user = self.request.user.id
 			user_obj = User.objects.get(id = request_user)
 			delete_health = self.request.GET.get('title_id')
-			product_obj = HeathInformation.objects.get(id  = delete_health)
+			product_obj = HeathInformation.objects.get(id  = delete_health,created_by = user_obj)
 			product_id = int(product_obj.animal_instance.id)
-			HeathInformation.objects.filter(id = delete_health,created_by = user_obj).delete()
+			HeathInformation.objects.filter(id = int(delete_health),created_by = user_obj).delete()
 			return redirect('/accounts/view_animal/?product_id={}'.format(product_id))
 
-		except:
+		except Exception as e:
 			print(e)
 			messages.error(request,'Something went wrong,Please try again later or contact us')
 			return render(request, 'livestock/animal_info.html', locals())
@@ -751,12 +751,12 @@ class DeleteMilk(View):
 			request_user = self.request.user.id
 			user_obj = User.objects.get(id = request_user)
 			milk_id = self.request.GET.get('milk_id')
-			product_obj = MilKLitre.objects.get(id  = milk_id)
+			product_obj = MilKLitre.objects.get(id  = int(milk_id))
 			product_id = int(product_obj.animal_instance.id)
-			MilKLitre.objects.filter(id = milk_id,created_by = user_obj).delete()
+			MilKLitre.objects.filter(id =int(milk_id) ,created_by = user_obj).delete()
 			return redirect('/accounts/view_animal/?product_id={}'.format(product_id))
 
-		except:
+		except Exception as e:
 			print(e)
 			messages.error(request,'Something went wrong,Please try again later or contact us')
 			return render(request, 'livestock/animal_info.html', locals())
@@ -771,12 +771,12 @@ class DeleteDescription(View):
 			request_user = self.request.user.id
 			user_obj = User.objects.get(id = request_user)
 			delete_desc_id = self.request.GET.get('delete_desc_id')
-			product_obj = DescriptionTable.objects.get(id  = delete_desc_id)
+			product_obj = DescriptionTable.objects.get(id  = int(delete_desc_id))
 			product_id = int(product_obj.animal_instance.id)
-			DescriptionTable.objects.filter(id = delete_desc_id,created_by = user_obj).delete()
+			DescriptionTable.objects.filter(id = int(delete_desc_id),created_by = user_obj).delete()
 			return redirect('/accounts/view_animal/?product_id={}'.format(product_id))
 
-		except:
+		except Exception as e:
 			print(e)
 			messages.error(request,'Something went wrong,Please try again later or contact us')
 			return render(request, 'livestock/animal_info.html', locals())
@@ -798,13 +798,13 @@ class DeleteImageTab(View):
 		try:
 			request_user = self.request.user.id
 			user_obj = User.objects.get(id = request_user)
-			delete_desc_id = self.request.GET.get('delete_desc_id')
-			product_obj = AllGalleryAddedByUser.objects.get(id  = delete_desc_id)
-			product_id = int(product_obj.animal_instance.id)
-			AllGalleryAddedByUser.objects.filter(id = delete_desc_id,created_by = user_obj).delete()
+			delete_desc_id = self.request.GET.get('image_id')
+			product_obj = AllGalleryAddedByUser.objects.get(id  = int(delete_desc_id))
+			product_id = int(product_obj.product.id)
+			AllGalleryAddedByUser.objects.filter(id = int(delete_desc_id),product__created_by = user_obj).delete()
 			return redirect('/accounts/view_animal/?product_id={}'.format(product_id))
 
-		except:
+		except Exception as e:
 			print(e)
 			messages.error(request,'Something went wrong,Please try again later or contact us')
 			return render(request, 'livestock/animal_info.html', locals())
