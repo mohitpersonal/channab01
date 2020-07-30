@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'channab.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ChanaabOfficial12',
+        'NAME': 'mychnaab',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '',
@@ -103,13 +103,6 @@ DATABASES = {
 #     }
 # }
 
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-}
-}
 
 
 
