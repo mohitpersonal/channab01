@@ -1,4 +1,5 @@
 from .registeration import RegisterView
 from .login import LoginView,LogoutView,ForgetView,ResetPassword
-from .livestock_module import AddAnimalLivestock,ListingAnimalLiveStock,ViewParticluarAnimal
-__all__ = ['RegisterView', 'LoginView', 'LogoutView','ResetPassword','ForgetView','ViewParticluarAnimal','AddAnimalLivestock', 'ListingAnimalLiveStock']
+from .dashboard import DashBoardView,AllMilkRecord
+from .livestock_module import AddAnimalLivestock,DeleteHealth,DeleteImageTab,DeleteMilk,DeleteDescription,ListingAnimalLiveStock,DeactivateAnimal,ViewParticluarAnimal,AddDescriptionAnimal,AddMilkingAnimal,AddGalleryMore,AddHealthAnimalDetail,UpdateExactAnimalDetail
+__all__ = ['DeleteImageTab','AllMilkRecord','RegisterView','DashBoardView', 'LoginView', 'LogoutView','DeleteHealth','DeleteDescription','DeleteMilk','ResetPassword','ForgetView','DeactivateAnimal','ViewParticluarAnimal','AddAnimalLivestock', 'ListingAnimalLiveStock', 'AddDescriptionAnimal', 'AddMilkingAnimal', 'AddGalleryMore', 'AddHealthAnimalDetail', 'UpdateExactAnimalDetail']

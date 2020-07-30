@@ -3,7 +3,58 @@
 {% block content %}
 
 {% block title %} <title>Channab | Home Page</title> {% endblock %}
+<style type="text/css">
+  
+ .catagory-card {
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+}
+.card.mb-3.catagory-card:after {
+    content: '';
+    background-color: #000;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    opacity: 0.3;
+}
+.card.mb-3.catagory-card:hover:after{
+  opacity: 0.5;
 
+}
+.catagory-card a {
+    position: relative;
+    z-index: 1;
+}
+.catagory-card a span {
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 22px;
+    line-height: 6.5em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+} 
+.catagory-card:hover span {
+    color: #eee;
+}
+@media(max-width: 1190px){
+  .catagory-card a span {
+    font-size: 13px;
+}
+}
+@media(max-width: 767px){
+.catagory-card a span {
+    line-height: 23vh;
+}
+}
+
+</style>
  <div class="header-area" id="headerArea">
       <div class="container h-100 d-flex align-items-center justify-content-between">
         <!-- Back Button-->
@@ -59,36 +110,16 @@
           </div>
           <div class="product-catagory-wrap">
             <div class="row">
+              {% for one_category in categorylist %}
               <div class="col-2">
-                <div class="card mb-3 catagory-card">
-                  <div class="card-body"><a href="/search_cat/?cat_id_fil=Cow"><i class="lni-apartment filter_by_catg"></i><span class="">Cows</span></a></div>
+                <div class="card mb-3 catagory-card" style="background-image: url(/media/{{one_category.image}});">
+                  <div class="card-body"><a href="/search_cat/?cat_id_fil={{one_category.category_name}}"><span class="">Cows</span></a></div>
                 </div>
               </div>
-              <div class="col-2">
-                <div class="card mb-3 catagory-card">
-                  <div class="card-body"><a href="/search_cat/?cat_id_fil=Buffalo" class="filter_by_catg"><i class="lni-apartment"></i><span>Buffalo</span></a></div>
-                </div>
-              </div>
-              <div class="col-2">
-                <div class="card mb-3 catagory-card">
-                  <div class="card-body"><a href="/search_cat/?cat_id_fil=Goat" class="filter_by_catg"><i class="lni-apartment"></i><span>Goat</span></a></div>
-                </div>
-              </div>
-              <div class="col-2">
-                <div class="card mb-3 catagory-card">
-                  <div class="card-body"><a href="/search_cat/?cat_id_fil=Sheep" class="filter_by_catg"><i class="lni-apartment"></i><span>Sheep</span></a></div>
-                </div>
-              </div>
-              <div class="col-2">
-                <div class="card mb-3 catagory-card">
-                  <div class="card-body"><a href="/search_cat/?cat_id_fil=Other" class="filter_by_catg"><i class="lni-apartment"></i><span>Other</span></a></div>
-                </div>
-              </div>
-              <div class="col-2">
-                <div class="card mb-3 catagory-card">
-                  <div class="card-body"><a href="/search_cat/?cat_id_fil=Horse" class="filter_by_catg"><i class="lni-apartment"></i><span>Horses</span></a></div>
-                </div>
-              </div>
+              {% endfor %}
+            
+             
+              
             </div>
           </div>
         </div>
