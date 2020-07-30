@@ -10,7 +10,11 @@
 <!-- starting of ist exact info popup -->
 
 
-
+<style type="text/css">
+   .for-icon.child_multiselect {
+    background-color: tan;
+}
+</style>
 
 <!-- starting of ist exact info popup -->
 
@@ -50,7 +54,7 @@
                      <div class="for-icon">
                         <input type="date" class="form-control" id="age_animal_edit_live"
                            name="age" placeholder="Year Of Age"
-                           minlength="5" maxlength="19" value="{{animal_detail.date_of_birth|date:'Y-m-d'}}">
+                           minlength="5" maxlength="19" value="{{animal_detail.date_of_birth|date:'Y-m-d'}}"  min='2014-01-01' max='2020-05-01'>
                      </div>
                      <span class="error-msg" id="age_animal_edit_live_label" style="display: none;"></span>
                   </div>
@@ -203,22 +207,29 @@
          </div>
          <div class="modal-body">
             <div class="card card-body">
-               <div class="msg alert  alert-danger" style="display:none" id="msg_ajax_admin"></div>
-               <form method="POST" action=''
-                  name="popup_form" id="family_add_popup">
+               <div class="alert alert-success" id = "family_popup_suceess" style="display: none"></div>
+               <div class="msg alert  alert-danger" style="display:none" id="family_popup_error"></div>
+               <form method="POST" action='/accounts/add_child/'
+                  name="popup_form" id="family_add_popup_new_form">
                   {% csrf_token %}
+                  <input type="hidden" name="family_particular_id"  value="{{animal_detail.id}}">
+
                   <div class="form-group">
                      <div class="for-icon">
                         <label for="password_customer">Male Parent<span class="star_text"
                            id="male_p"> * </span></label>
-                        <select name="male_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
+                        <select name="male_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" id="male_parent_check_id">
                            <option value="Select">------</option>
                            {% for one in male_parent %}
-                           <option value="{{one}}">{{one}}</option>
+                           {% if one.id == animal_detail.male_parent|add:"0" %}
+                           <option value="{{one.id}}" selected>{{one.animal_tag}}</option>
+                           {% else %}
+                           <option value="{{one.id}}">{{one.animal_tag}}</option>
+                           {% endif %}
                            {% endfor %}
                         </select>
                      </div>
-                     <span class="error-msg" id="male_parent_label_detail" style="display: none"></span>
+                     <span class="error-msg" id="male_parent_label_detail_live" style="display: none">This Field is Required</span>
                   </div>
                   <div class="form-group">
                      <label for="password_customer">Female Parent<span class="star_text"
@@ -227,7 +238,13 @@
                         <select name="female_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
                            <option value="Select">------</option>
                            {% for one in female_parent %}
-                           <option value="{{one}}">{{one}}</option>
+                           {% if one.id == animal_detail.male_parent|add:"0" %}
+                           <option value="{{one.id}}" selected>{{one.animal_tag}}</option>
+                           {% else %}
+
+
+                           <option value="{{one.id}}">{{one.animal_tag}}</option>
+                           {% endif %}
                            {% endfor %}
                         </select>
                      </div>
@@ -236,11 +253,14 @@
                   <div class="form-group">
                      <label for="password_customer">Select Child<span class="star_text"
                         id="stardA_super_Admin"> * </span></label>
-                     <div class="for-icon">
-                        <select name="child_select" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
-                           <option value="Select">------</option>
+                     <div class="for-icon child_multiselect">
+                        <select name="child_select[]" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" id = "add_livestock_multiple" multiple="multiple">
                            {% for one in all_child_parents %}
-                           <option value="{{one}}">{{one}}</option>
+                           {% if one.id|add:"0" in make_list_int %}
+                           <option value="{{one.id}}" selected="selected">{{one.animal_tag}}</option>
+                           {% else %}
+                           <option value="{{one.id}}">{{one.animal_tag}}</option>
+                           {% endif %}
                            {% endfor %}
                         </select>
                      </div>
@@ -558,59 +578,57 @@
                                  {% endif %}
                         </div>
                         <div class="tab-pane fade " id="Family" role="tabpanel" aria-labelledby="pills-profile-tab">
-                           {% if all_parents %}
+                           {% if male_parent_detail or list_of_childs or female_parent_detail %}
                            <div class="family_section">
                               <div class="parent_section">
                                  <h2 class="heading_title">Parents</h2>
                                  <ul>
+                                    {% if male_parent_detail %}
                                     <li>
                                        <div class="img_p">
-                                          <img src="/media/main_img/new_cow.jpg" alt="img">
+                                          <img src="/media/{{male_parent_detail.0.image}}" alt="img">
                                        </div>
-                                       <h4> Animal Tag Number</h4>
-                                       <span class="btn"> male </span>
-                                       <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                                       <h4> {{male_parent_detail.0.animal_tag}}</h4>
+                                       <span class="btn"> Male </span>
+                                       <span class="btn delete_btn"> <i class="fa fa-trash-o " id = "male_delete_tab_del" aria-hidden="true" data-id = "{{animal_detail.id}}"></i></span>
 
                                     </li>
+                                    {% endif %}
+                                    {% if female_parent_detail %}
+
                                     <li>
                                        <div class="img_p">
-                                          <img src="/media/main_img/new_cow.jpg" alt="img">
+                                          <img src="/media/{{female_parent_detail.0.image}}" alt="img">
                                        </div>
-                                       <h4> Animal Tag Number</h4>
-                                       <span class="btn"> female </span>
-                                       <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                                       <h4> {{female_parent_detail.0.animal_tag}}</h4>
+                                       <span class="btn"> Female </span>
+                                       <span class="btn delete_btn "> <i class="fa fa-trash-o " id = "female_delete_tab_dl" aria-hidden="true" data-id = "{{animal_detail.id}}"></i></span>
 
                                     </li>
+                                    {% endif %}
                                  </ul>
                               </div>
+                              {% if list_of_childs %}
                               <div class="child_section">
                                  <h2 class="heading_title">Child</h2>
-                                 <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
 
                                  <ul>
+                                    {% for one in list_of_childs %}
                                     <li>
                                        <div class="img_p">
-                                          <img src="/media/main_img/new_cow.jpg" alt="img">
+                                          <img src="/media/{{one.one_object.image}}" alt="img">
                                        </div>
-                                       <h4> Animal Tag Number</h4>
-                                       <span class="btn"> male </span>
+                                       <h4> {{one.one_object.animal_tag}}</h4>
+                                       <span class="btn"> {{one.one_object.gender}} </span>
+                                       <span class="btn delete_btn"> <i class="fa fa-trash-o delete_child" aria-hidden="true" data-id = "{{one.id}}"></i></span>
+
                                     </li>
-                                    <li>
-                                       <div class="img_p">
-                                          <img src="/media/main_img/new_cow.jpg" alt="img">
-                                       </div>
-                                       <h4> Animal Tag Number</h4>
-                                       <span class="btn"> female </span>
-                                    </li>
-                                    <li>
-                                       <div class="img_p">
-                                          <img src="/media/main_img/new_cow.jpg" alt="img">
-                                       </div>
-                                       <h4> Animal Tag Number</h4>
-                                       <span class="btn"> female </span>
-                                    </li>
+
+                                    {% endfor %}
+
                                  </ul>
                               </div>
+                              {% endif %}
                            </div>
                            {% else %}
                                  <div class="tab-content" id="pills-tabContent">

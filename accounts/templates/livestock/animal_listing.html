@@ -168,7 +168,7 @@
           </div>
           {% if all_animals %}
           
-          {% for product in all_animals %}
+          {% for product in all_animal_list %}
           
           <div class="row">
             <div class="animal_list">
@@ -181,12 +181,20 @@
                 </div>              
               <div class="button_section col-md-9">
                 <ul>
-                  <li><a herf="#">Age 1 year</a></li>
-                  <li><a herf="#">Male</a></li>
-                  <li><a herf="#">Dry</a></li>
-                  <li><a herf="#">Breed</a></li>
-                  <li><a herf="#">Status</a></li>
-                  <li>
+                  {% if product.month_result %}
+                  <li><a herf="#">Age {{product.month_result}} Month</a></li>
+
+                  {% elif product.year_result %}
+                  <li><a herf="#">Age {{product.year_result}} year</a></li>
+                  {% endif %}
+                  <li><a herf="#">{{product.gender}}</a></li>
+                  <li><a herf="#">{{product.animal_type}}</a></li>
+                  <li><a herf="#">{{product.animal_breed}}</a></li>
+                  {% if product.status == True %}
+                  <li><a herf="#">Active</a></li>
+                  {% else %}
+                  <li><a herf="#" class="red_Active">Disabled</a></li>
+                  {% endif %}   
                     <label class="switch">
                       <input type="checkbox" checked>
                       <span class="slider round"></span>

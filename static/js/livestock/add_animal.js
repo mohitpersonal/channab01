@@ -38,7 +38,42 @@ $("#tag_name_live").focusout(function () {
 
 ////
 
+function Checkdatefrom(){
+    var val_date = $("#age_Check").val()
+    var datepicker = $("#age_Check").val().split("-") ;
+    console.log("ist new datepicker is ----------->", datepicker)
 
+    var datepicker_check = new Date(datepicker[2], datepicker[1] - 1, datepicker[0])
+    console.log("datepicker_check is ---------->", datepicker_check)
+    var new_date = datepicker_check.setDate(datepicker_check.getDate() + 1);
+    var today = new Date();
+    if (val_date == '' || val_date == null){
+        $("#age_Check").removeClass("has-success");
+        $("#age_Check").addClass("has-error");
+        $("#label_date_from").text("This Field is required")
+        return false ;
+    }
+    else{
+         if (new_date >= today){
+            $("#label_date_from").text("Invalid Date")
+            $("#age_Check").removeClass("has-success");
+            $("#age_Check").addClass("has-error");
+            return false ;
+        }
+        else{
+            $("#age_Check").addClass("has-success");
+            $("#label_date_from").text("")
+            return true ;
+            }
+        }
+}
+$("#age_Check").focusout(function () {
+    if ($(this).hasClass("has-success")) {
+        $(this).removeClass("has-success");
+        $(this).removeClass("has-error");
+    }
+})
+//////////
 
 
 

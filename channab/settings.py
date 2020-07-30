@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'channab.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ChanaabOfficial1',
+        'NAME': 'ChanaabOfficial12',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '',
