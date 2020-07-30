@@ -181,7 +181,7 @@
                   </div>
                   <button type="submit" id="update_exact_live"
                      class="btn btn-success w-100 pull-right"  >
-                  Update Information
+                  Save Information
                   </button>
                </form>
             </div>
@@ -246,10 +246,17 @@
                      </div>
                      <span class="error-msg" id="cost_of_animal_input_label" style="display: none;"></span>
                   </div>
-                  <button type="submit" id="update_exact_live"
+                  <div class="button_secton_fly">
+                      <button type="submit" id="update_exact_live"
                      class="btn btn-success w-100 pull-right"  >
-                  Update Information
+                  Save Information
                   </button>
+                  <button type="submit" id="add_button"
+                     class="btn btn-success w-100 pull-right"  >
+                  Add Animal
+                  </button>
+                 
+               </div>
                </form>
             </div>
          </div>
@@ -296,7 +303,7 @@
                   </div>
                   <button type="submit" id="evening_milk_button"
                      class="btn btn-success w-100 pull-right"  >
-                  Update Information
+                  Save Information
                   </button>
                </form>
             </div>
@@ -335,7 +342,7 @@
                   </div>
                   <button type="submit" id="image_popup_form"
                      class="btn btn-success w-100 pull-right"  >
-                  Update Information
+                  Save Information
                   </button>
                </form>
             </div>
@@ -372,7 +379,7 @@
                   </div>
                   <button type="submit" id="description_popup_submit"
                      class="btn btn-success w-100 pull-right"  >
-                  Update Information
+                  Save Information
                   </button>
                </form>
             </div>
@@ -519,10 +526,12 @@
                         </li>
                      </ul>
                      <div class="tab-content" id="pills-tabContent">
+
                         <div class="tab-pane fade show active" id="Health" role="tabpanel" aria-labelledby="pills-home-tab">
+                           {% if all_health_record %}
                            <div class="health_section_health">
                               <form>
-                                 {% if all_health_record %}
+                                 
                                  {% for one_health in all_health_record_list %}
                                  <div class="form-check">
                                     <label class="form-check-label" for="exampleCheck1">
@@ -537,11 +546,19 @@
                                     <p id="contant_dt" class="form-text text-muted">{{one_health.text_description}}</p>
                                  </div>
                                  {% endfor %}
-                                 {% endif %}
+                                 
                               </form>
                            </div>
+                           {% else %}
+                                 <div class="tab-content" id="pills-tabContent">
+                           <div class="not_found_data">
+                              <h6>No record found</h6>
+                           </div>
+                        </div>
+                                 {% endif %}
                         </div>
                         <div class="tab-pane fade " id="Family" role="tabpanel" aria-labelledby="pills-profile-tab">
+                           {% if all_parents %}
                            <div class="family_section">
                               <div class="parent_section">
                                  <h2 class="heading_title">Parents</h2>
@@ -552,7 +569,7 @@
                                        </div>
                                        <h4> Animal Tag Number</h4>
                                        <span class="btn"> male </span>
-            <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                                       <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
 
                                     </li>
                                     <li>
@@ -561,14 +578,14 @@
                                        </div>
                                        <h4> Animal Tag Number</h4>
                                        <span class="btn"> female </span>
-            <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                                       <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
 
                                     </li>
                                  </ul>
                               </div>
                               <div class="child_section">
                                  <h2 class="heading_title">Child</h2>
-            <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                                 <span class="btn delete_btn"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
 
                                  <ul>
                                     <li>
@@ -595,8 +612,16 @@
                                  </ul>
                               </div>
                            </div>
+                           {% else %}
+                                 <div class="tab-content" id="pills-tabContent">
+                           <div class="not_found_data">
+                              <h6>No record found</h6>
+                           </div>
+                        </div>
+                                 {% endif %}
                         </div>
                         <div class="tab-pane fade" id="Milking" role="tabpanel" aria-labelledby="pills-contact-tab">
+                           {% if all_milking_record_list %}
                            <div class="milking_section">
                               <div class="dropdown">
                                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -642,8 +667,17 @@
                                  </ul>
                               </div>
                            </div>
+                           {% else %}
+                                 <div class="tab-content" id="pills-tabContent">
+                           <div class="not_found_data">
+                              <h6>No record found</h6>
+                           </div>
+                        </div>
+                        {% endif %}
+
                         </div>
                         <div class="tab-pane fade" id="Gallery" role="tabpanel" aria-labelledby="pills-contact-tab">
+                           {% if all_gallery %}
                            <h1 class="font-weight-light text-center text-lg-left mt-4 mb-0"> Gallery</h1>
                            <div class="row text-center text-lg-left">
                               {% for one_gallery in all_gallery %}
@@ -651,14 +685,23 @@
                                  <a href="#" class="d-block mb-4 h-100">
                                  <img class="img-fluid img-thumbnail" src="/media/{{one_gallery.image}}" alt="">
                                  <div class="delete_icon_use">
-                                    <p><i class="fa fa-trash-o" aria-hidden="true"></i></p>
+                                    <p><i class="fa fa-trash-o delete_image_faltu" aria-hidden="true" data-id = {{one_gallery.id}}></i></p>
                                      </div>
                                  </a>
                               </div>
                               {% endfor %}
                            </div>
+                           {% else %}
+                                 <div class="tab-content" id="pills-tabContent">
+                           <div class="not_found_data">
+                              <h6>No record found</h6>
+                           </div>
+                        </div>
+                        {% endif %}
+
                         </div>
                         <div class="tab-pane fade" id="Description" role="tabpanel" aria-labelledby="pills-contact-tab">
+                           {% if all_description_list %}
                            <h1 class="font-weight-light text-center text-lg-left mt-4 mb-0">Description</h1>
                            <div class="descr_detail">
                               <div class="list_descr">
@@ -666,7 +709,7 @@
                                     {% for one_desc in all_description_list %}
                                     <li>
                                        <h6>{{one_desc.created_on}}
-                                          <button type="button" class="btn btn-success"><i class="fa fa-trash-o delete_Descritpion" aria-hidden="true" data-id = "{{one_desc.id}}"></i></button>
+                                          <button type="button" class="btn btn-success delete_Descritpion" data-id = "{{one_desc.id}}"><i class="fa fa-trash-o " aria-hidden="true" ></i></button>
                                        </h6>
                                        <p>{{one_desc.description}}</p>
                                     </li>
@@ -674,6 +717,13 @@
                                  </ul>
                               </div>
                            </div>
+                           {% else %}
+                                 <div class="tab-content" id="pills-tabContent">
+                           <div class="not_found_data">
+                              <h6>No record found</h6>
+                           </div>
+                        </div>
+                        {% endif %}
                         </div>
                      </div>
                   </div>

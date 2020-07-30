@@ -293,7 +293,7 @@ $(document).ready(function () {
 
 //// image tab
 
-    $('.img-fluid img-thumbnail').click(function(){
+    $('.delete_image_faltu').click(function(){
        swal({
      
           title : "Confirmation",
@@ -306,9 +306,9 @@ $(document).ready(function () {
      
        }).then(val =>{
 
-        var ids = $(this).attr('data-id');
+        var image_id_new = $(this).attr('data-id');
         if (val){
-            var url = '/accounts/delete_description/?delete_desc_id='+ids; 
+            var url = '/accounts/delete_image/?image_id='+image_id_new; 
             window.location.href = url
 
              swal({
