@@ -172,9 +172,37 @@ ul#pills-tab a.nav-link.active {
     color: #303030;
     font-weight: 500;
 }
+.animal_list .img_section {
+    height: 180px;
+    overflow: hidden;
+}
 @media(max-width:767px){
 .name_tab a {
     margin-bottom: 10px;
+}
+.animal_list .img_setion {
+    width: 30%;
+}
+.animal_list .button_section{
+      width: 70%;
+}
+.button_section ul li {
+    display: inline-block;
+    padding: 0px 6px 10px 0;
+    width: 43%;
+}
+}
+@media(max-width:680px){
+.animal_list .img_setion {
+    width: 20%;
+}
+.animal_list .button_section {
+    width: 80%;
+}
+.button_section ul li {
+    display: inline-block;
+    padding: 0px 6px 10px 0;
+    width: 49%;
 }
 }
 @media(max-width:480px){
@@ -188,5 +216,14 @@ ul#pills-tab a.nav-link.active {
 }
 div#pills-contact {
     font-size: 14px;
+}
+.animal_list .img_setion {
+    width: 25%;
+}
+.button_section li a {
+    padding: 10px 6px;
+}
+.button_section ul li {
+    padding: 0px 6px 8px 0;
 }
 }
