@@ -1,0 +1,211 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+
+{% block title %} <title>Channab | Livestock Dashboard</title> {% endblock %}
+<style type="text/css">
+  .layout-options a i {
+    line-height: 23px;
+}
+
+</style>
+<link rel="stylesheet" href="{% static '/css/livestock/listing_animal.css' %}">
+
+    <div class="preloader" id="preloader">
+      <div class="spinner-grow text-secondary" role="status">
+        <div class="sr-only">Loading...</div>
+      </div>
+    </div>
+    <!-- Header Area-->
+    <div class="header-area" id="headerArea">
+      <div class="container h-100 d-flex align-items-center justify-content-between">
+        <!-- Back Button-->
+        <div class="back-button"><a href="{% url 'LandingPageOfSite' %}"><i class="lni-arrow-left"></i></a></div>
+        <!-- Page Title-->
+        <div class="page-heading">
+          <h6 class="mb-0">Dashboard</h6>
+        </div>
+        <!-- Filter Option-->
+        <div class="filter-option" id="suhaNavbarToggler"><i class="lni-cog"></i></div>
+      </div>
+    </div>
+    <!-- Sidenav Black Overlay-->
+    <div class="sidenav-black-overlay"></div>
+    <div class="suha-sidenav-wrapper" id="sidenavWrapper">
+      <!-- Sidenav Profile-->
+      {% if request.user.is_authenticated %}
+      <div class="sidenav-profile">
+        <div class="user-profile"><img src="{% static 'img/bg-img/9.jpg' %}" alt=""></div>
+        <div class="user-info">
+          <h6 class="user-name mb-0">Suha Jannat</h6>
+          <p class="available-balance">Balance <span>$<span class="counter">379.23</span></span></p>
+        </div>
+      </div>
+      {% endif %}
+      <!-- Sidenav Nav-->
+      {% if request.user.is_authenticated %}
+      <ul class="sidenav-nav">
+        <li><a href="#"><i class="lni-alarm lni-tada-effect"></i>Notifications<span class="ml-3 badge badge-warning">3</span></a></li>
+        <li><a href="#"><i class="lni-empty-file"></i>All Pages</a></li>
+        <li><a href="#"><i class="lni-heart-filled"></i>My Wishlist</a></li>
+        <li><a href="#"><i class="lni-cog"></i>Settings</a></li>
+        <li><a href="#" id="logout_popup"><i class="lni-power-switch"></i>Sign Out</a></li>
+      </ul>
+      {% endif %}
+      {% if not request.user.is_authenticated %}
+      <ul class="sidenav-nav">
+        <li><a href="{% url 'RegisterView' %}"><i class="lni-user"></i>Create New Account</a></li>
+        <li><a href="{% url 'LoginView' %}"><i class="lni-power-switch"></i>Sign In</a></li>
+      </ul>
+      {% endif %}
+      <!-- Go Back Button-->
+      <div class="go-home-btn" id="goHomeBtn"><i class="lni-arrow-left"></i></div>
+    </div>
+
+    <!-- Side Nav Wrapper-->
+    <div class="page-content-wrapper">
+      <!-- Top Products-->
+      <div class="top-products-area pt-3">
+        <div class="container">
+                      {% if messages %}
+        {% for message in messages %}
+        {% if 'success' in message.tags %}
+        <div class="alert alert-success" id = "msg_Sucess">
+          {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% if messages %}
+        {% for message in messages %}
+        {% if 'error' in message.tags %}
+        <div class="alert alert-danger" id="msg_sign_err">
+          {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        <div class="row">
+           <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="container1"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="containers"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="product-catagories-wrapper pt-3">
+        <div class="container">
+          <div class="product-catagory-wrap">
+            <div class="row">
+              <div class="col-2">
+                <div class="card mb-3 catagory-card">
+                  <div class="card-body"><a href="/accounts/animal_list/"><i class="lni-apartment filter_by_catg"></i><span class="">My Form</span></a></div>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="card mb-3 catagory-card">
+                  <div class="card-body"><a href="/accounts/animal_list/" class="filter_by_catg"><i class="lni-apartment"></i><span>My Animal</span></a></div>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="card mb-3 catagory-card">
+                  <div class="card-body"><a href="/accounts/milk_record/" class="filter_by_catg"><i class="lni-apartment"></i><span>Milk Data</span></a></div>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="card mb-3 catagory-card">
+                  <div class="card-body"><a href="/accounts/animal_list/" class="filter_by_catg"><i class="lni-apartment"></i><span>Reports</span></a></div>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="card mb-3 catagory-card">
+                  <div class="card-body"><a href="/search_cat/?cat_id_fil=Sheep" class="filter_by_catg"><i class="lni-apartment"></i><span>Reports</span></a></div>
+                </div>
+              </div><div class="col-2">
+                <div class="card mb-3 catagory-card">
+                  <div class="card-body"><a href="/search_cat/?cat_id_fil=Sheep" class="filter_by_catg"><i class="lni-apartment"></i><span>Reports</span></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+   </div>
+      </div>
+    </div>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/cylinder.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script>
+    Highcharts.chart('container1', {
+  chart: {
+    type: 'pie',
+    options3d: {
+      enabled: true,
+      alpha: 45
+    }
+  },
+  title: {
+    text: 'This Month $6750'
+  },
+  plotOptions: {
+    pie: {
+      innerSize: 100,
+      depth: 45
+    }
+  },
+  series: [{
+    name: 'Total Expenses',
+    data: [
+      ['Shopping', 8],
+      ['Grocery', 3],
+      ['Medicine', 1],
+      ['Rental', 6],
+    ]
+  }]
+});
+
+</script>
+<script type="text/javascript">
+    Highcharts.chart('containers', {
+  chart: {
+    type: 'cylinder',
+    options3d: {
+      enabled: true,
+      alpha: 15,
+      beta: 15,
+      depth: 50,
+      viewDistance: 25
+    }
+  },
+  title: {
+    text: 'Animal Month Wise'
+  },
+  plotOptions: {
+    series: {
+      depth: 25,
+      colorByPoint: true
+    }
+  },
+  series: [{
+    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+    name: 'Cylinders',
+    showInLegend: false
+  }]
+});
+
+</script>
+<script src="{% static 'js/plugins/jquery-3.4.1.min.js' %}"></script>
+
+{% endblock %}

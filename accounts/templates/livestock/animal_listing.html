@@ -7,7 +7,14 @@
   .layout-options a i {
     line-height: 23px;
 }
-
+.animal_list {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    padding: 0px 0 30px;
+    border-bottom: 1px solid #fff;
+    margin-bottom: 30px;
+}
 </style>
 <link rel="stylesheet" href="{% static '/css/livestock/listing_animal.css' %}">
 
@@ -156,18 +163,22 @@
             {% endif %}
             <!-- Layout Options-->
             <div class="layout-options">
-
-            <a class="btn btn-success btn-sm add2cart-notify" href="{% url 'AddAnimalLivestock' %}"><i class="lni-plus"></i></a></div>
+              <a class="btn btn-success btn-sm add2cart-notify" href="{% url 'AddAnimalLivestock' %}"><i class="lni-plus"></i></a>
+            </div>
           </div>
           {% if all_animals %}
           
           {% for product in all_animals %}
+          
           <div class="row">
-              <div class="img_setion col-md-3">
-                <div class="img_section">
-                  <img src="/media/main_img/new_cow_WiFd0Vh.jpg" alt="">
-                </div>
-                </div>
+            <div class="animal_list">
+                <div class="img_setion col-md-3">
+                  <a href="/accounts/view_animal/?product_id={{product.id}}">
+                  <div class="img_section">
+                    <img src="/media/{{product.image}}" alt="">
+                  </div>
+                  </a>
+                </div>              
               <div class="button_section col-md-9">
                 <ul>
                   <li><a herf="#">Age 1 year</a></li>
@@ -188,6 +199,7 @@
               </div>
               </div>
             </div>
+            
   
 {% endfor %}
 {% else %}
@@ -200,6 +212,7 @@
       <p>The page you are looking for might have been removed had its name changed or is temporarily unavailable.</p>
       <a href="/">Back To Homepage</a>
     </div>
+  </div>
   </div>
 
 
