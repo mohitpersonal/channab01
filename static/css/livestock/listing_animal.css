@@ -176,6 +176,65 @@ ul#pills-tab a.nav-link.active {
     height: 180px;
     overflow: hidden;
 }
+.animal_list .img_section {
+    height: 150px;
+    overflow: hidden;
+    border-radius: 50%;
+    width: 150px;
+    margin: 0 auto;
+}
+.button_section .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.button_section .switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.button_section .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  height:30px;
+}
+.button_section .slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+      height: 23px;
+}
+.button_section input:checked + .slider {
+  background-color: #2196F3;
+}
+.section_tab input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+.button_section input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+.button_section .slider.round {
+  border-radius: 34px;
+}
+.button_section .slider.round:before {
+  border-radius: 50%;
+}
 @media(max-width:767px){
 .name_tab a {
     margin-bottom: 10px;
@@ -191,6 +250,13 @@ ul#pills-tab a.nav-link.active {
     padding: 0px 6px 10px 0;
     width: 43%;
 }
+.animal_list .img_section {
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+    width: 100px;
+    margin: 0 auto;
+}
 }
 @media(max-width:680px){
 .animal_list .img_setion {
@@ -203,6 +269,10 @@ ul#pills-tab a.nav-link.active {
     display: inline-block;
     padding: 0px 6px 10px 0;
     width: 49%;
+}
+.animal_list .img_section {
+    height: 80px;
+    width: 80px;
 }
 }
 @media(max-width:480px){
@@ -225,5 +295,9 @@ div#pills-contact {
 }
 .button_section ul li {
     padding: 0px 6px 8px 0;
+}
+.animal_list .img_section {
+    height: 60px;
+    width: 60px;
 }
 }
