@@ -349,6 +349,7 @@ class ViewParticluarAnimal(View):
 				my_health['tag_name'] = one_time.tag_name
 				my_health['cost_amount'] = one_time.cost_amount
 				my_health['id'] = one_time.id
+				my_health['text_description'] = one_time.text_description
 				all_health_record_list.append(my_health)
 
 

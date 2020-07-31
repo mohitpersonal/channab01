@@ -89,10 +89,10 @@
       <!-- Product Slides-->
       <div class="product-slides owl-carousel">
         <!-- Single Hero Slide-->
-        <div class="single-product-slide"><img src="/media/{{product_record.image}}" alt=""></div>
+        <div class="single-product-slide"><img src="{{product_record.image.url}}" alt=""></div>
         {% if products_other_images %}
         {% for one_image in products_other_images %}
-        <div class="single-product-slide"><img src="/media/{{one_image.image}}" alt=""></div>
+        <div class="single-product-slide"><img src="{{one_image.image.url}}" alt=""></div>
 
         {% endfor %}
         {% endif %}
