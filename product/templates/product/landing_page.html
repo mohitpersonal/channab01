@@ -137,7 +137,7 @@
             <!-- Single Flash Sale Card-->
             {% for one_market in all_markets %}
             <div class="card flash-sale-card">
-              <div class="card-body"><a href="/maket_listing/?market_based_id={{one_market.id}}"><img src="/media/{{one_market.market_image}}" alt="" class="market_banner_img" style="height: 250px "><span class="product-title">{{one_market.market_name}}</span>
+              <div class="card-body"><a href="/maket_listing/?market_based_id={{one_market.id}}"><img src="{{one_market.market_image.url}}" alt="" class="market_banner_img" style="height: 250px "><span class="product-title">{{one_market.market_name}}</span>
                   <p class="sale-price">{{one_market.location}}<span class="real-price"></span></p><span class="progress-title">{{one_market.description}}</span>
                   </a></div>
             </div>
