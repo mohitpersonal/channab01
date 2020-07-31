@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'storages',
 
 ]
 
@@ -77,33 +78,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'channab.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mychnaab',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': 3306,
-    }
-}
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'ChanaabOfficial1',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': '',
-#         'PORT': 3306,
-#     }
-# }
-
-
 
 
 
@@ -123,17 +97,20 @@ REST_FRAMEWORK = {
 }
 
 
+# Database
+# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'channab',
-#         'USER': 'channabuser',
-#         'PASSWORD': 'Ch@nn@b0183',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'channab',
+        'USER': 'channabuser',
+        'PASSWORD': 'Ch@nn@b0183',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
 
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -176,13 +153,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static")
+   os.path.join(BASE_DIR, "static")
 ]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/mediafiles/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
 
 #### Geo location api key
@@ -190,3 +166,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 GEO_API_KEY = 'aed9d8f5366c64a8e388ecf0d04a4104'
 
 API_KEY_FOR_SECURITY = '9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b'
+
+
+
+
+
+AWS_ACCESS_KEY_ID = 'AKIASTSQA7RFH6GEIQUX'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'channab01'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
