@@ -3,7 +3,7 @@
         <ul class="h-100 d-flex align-items-center justify-content-between">
           <li {% if request.resolver_match.url_name == 'LandingPageOfSite' %} class="" {% else %} class="" {% endif %} ><a href="{% url 'LandingPageOfSite' %}"><i class="lni-home"></i>Support</a></li>
           {% if request.user.is_authenticated %}
-          <li{% if request.resolver_match.url_name == 'ListingAnimalLiveStock' %} class="" {% else %} class="" {% endif %} ><a href="{% url 'ListingAnimalLiveStock' %}"><i class="lni-support"></i>My Selection</a></li>
+          <li{% if request.resolver_match.url_name == 'DashBoardView' %} class="active" {% else %} class="" {% endif %} ><a href="{% url 'DashBoardView' %}"><i class="lni-support"></i>My Selection</a></li>
           {% endif %}
           <li {% if request.resolver_match.url_name == 'LandingPageOfSite' %} class="active" {% else %} class="" {% endif %} ><a href="{% url 'LandingPageOfSite' %}"><i class="lni-cart"></i>Home</a></li>
           <li {% if request.resolver_match.url_name == 'ProductList' %} class="active" {% else %} class="" {% endif %} ><a href="{% url 'ProductList' %}"><i class="lni-heart"></i>Animal List</a></li>

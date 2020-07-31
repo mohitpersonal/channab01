@@ -1,4 +1,4 @@
-from .views import RegisterView,AddAnimalLivestock,ViewParticluarAnimal,ListingAnimalLiveStock,LoginView,LogoutView,ForgetView,ResetPassword
+from .views import *
 from django.urls import path
 from django.contrib.auth.decorators import login_required
 
@@ -18,9 +18,48 @@ urlpatterns = [
 
 	####### livestock module
 
+	path('update_animal_detail/', login_required(UpdateExactAnimalDetail.as_view()), name = 'UpdateExactAnimalDetail'),
 	path('add_animal/', login_required(AddAnimalLivestock.as_view()), name = 'AddAnimalLivestock'),
 	path('animal_list/', login_required(ListingAnimalLiveStock.as_view()), name = 'ListingAnimalLiveStock'),
-	path('view_animal/', login_required(ViewParticluarAnimal.as_view()), name = 'ViewParticluarAnimal')
+	path('view_animal/', login_required(ViewParticluarAnimal.as_view()), name = 'ViewParticluarAnimal'),
+	path('deactivate_animal/', login_required(DeactivateAnimal.as_view()), name = 'DeactivateAnimal'),
+
+
+	####animal_details page
+	path('added_animal_milking/', login_required(AddMilkingAnimal.as_view()), name = 'AddMilkingAnimal'),
+	path('milk_delete/', login_required(DeleteMilk.as_view()), name = 'DeleteMilk'),
+
+
+	###
+	path('add_child/', login_required(AddChildParent.as_view()), name = 'AddChildParent'),
+
+	path('delete_male/', login_required(DeleteMaleParent.as_view()), name = 'DeleteMaleParent'),
+	path('delete_female/', login_required(DeleteFemaleParent.as_view()), name = 'DeleteFemaleParent'),
+	path('delete_child/', login_required(DeleteChildObject.as_view()), name = 'DeleteChildObject'),
+
+
+	###description
+	path('description_added/', login_required(AddDescriptionAnimal.as_view()), name = 'AddDescriptionAnimal'),
+	path('delete_description/', login_required(DeleteDescription.as_view()), name = 'DeleteDescription'),
+
+	## gallery
+	path('add_gallery/', login_required(AddGalleryMore.as_view()), name = 'AddGalleryMore'),
+	path('delete_image/', login_required(DeleteImageTab.as_view()), name = 'DeleteImageTab'),
+
+	### health edit more
+	path('add_animal_detail/', login_required(AddHealthAnimalDetail.as_view()), name = 'AddHealthAnimalDetail'),
+	path('title_delete/', login_required(DeleteHealth.as_view()), name = 'DeleteHealth'),
+
+
+
+	## dashboard start
+
+	path('dashboard/', login_required(DashBoardView.as_view()), name = 'DashBoardView'),
+	path('milk_record/', login_required(AllMilkRecord.as_view()), name = 'AllMilkRecord')
+
+
+
+
 
 
 ]

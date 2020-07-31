@@ -97,7 +97,7 @@ ul.multiselect-container.dropdown-menu.show {
                 </div>
                 <div class="form-group col-md-4">
                   <div class="title mb-2"><i class="fa fa-birthday-cake" aria-hidden="true"></i><span>DOB</span></div>
-                  <input class="form-control" id="age_Check" type="date" name = "age" accept="" value=""placeholder="DOB" >
+                  <input class="form-control" id="age_Check" type="date" name = "age" accept="" value=""placeholder="DOB" min='2014-01-01' max='2020-05-01'>
                 </div>
                 <div class="form-group col-md-4">
                   <div class="title mb-2"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>Animal Breed</span></div>
@@ -131,11 +131,25 @@ ul.multiselect-container.dropdown-menu.show {
                 </div>
                 <div class="form-group col-md-4">
                   <div class="title mb-2"><i class="lni-phone-handset"></i><span>Male Parent</span></div>
-                  <input class="form-control" id="male_parent_live" name = "male_parent" type="text" value="" placeholder="Male Parent" minlength="6" maxlength="15">
+                                          <select name="male_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" id="male_parent_check_id">
+                           <option value="Select">------</option>
+                           {% for one in male_parent %}
+                           <option value="{{one.id}}">{{one.animal_tag}}</option>
+                           {% endfor %}
+                        </select>
+
                 </div>
                 <div class="form-group col-md-4">
                   <div class="title mb-2"><i class="lni-map-marker"></i><span>Female Parent</span></div>
-                  <input class="form-control" type="text" id="female_parent_libe" name = "female_parent" placeholder="Female Parent">
+                                          <select name="female_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
+                           <option value="Select">------</option>
+                           {% for one in female_parent %}
+
+
+                           <option value="{{one.id}}">{{one.animal_tag}}</option>
+                           {% endfor %}
+                        </select>
+
                 </div>
                 <div class="form-group col-md-4">
                   <div class="title mb-2"><i class="fa fa-paw" aria-hidden="true"></i><span>Animal Type</span></div>

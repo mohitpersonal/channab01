@@ -81,8 +81,22 @@
              });
          });
       </script>
+            <script type="text/javascript">
+         $(document).ready(function() {
+             $('#add_livestock_multiple').multiselect({
+                 nonSelectedText: 'No Child Selected',
+                 enableFiltering: true,
+                 enableCaseInsensitiveFiltering: true,
+                 buttonWidth:'400px',
+                 checkboxName:'child_select',
+         
+             });
+         });
+      </script>
+
       <script type="text/javascript">
          $('#logout_popup').click(function(){
+          $("#sidenavWrapper").hide();
            swal({
          
               title : "Confirmation",
@@ -106,8 +120,24 @@
          
                  })
               }
+              else{
+                $("#sidenavWrapper").show();
+
+              }
            })
          
          })
+      </script>
+
+      <script type="text/javascript">
+        
+        $(document).ready(function(){
+          var val_sess = $("#session_destroy").val();
+          if(val_sess == '' || val_sess == null){
+            sessionStorage.clear();
+
+          }
+
+        })
       </script>
 </html>
