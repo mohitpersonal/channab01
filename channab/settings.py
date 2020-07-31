@@ -78,33 +78,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'channab.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mychnaab',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': 3306,
-    }
-}
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'ChanaabOfficial1',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': '',
-#         'PORT': 3306,
-#     }
-# }
-
-
 
 
 
@@ -124,17 +97,20 @@ REST_FRAMEWORK = {
 }
 
 
+# Database
+# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'channab',
-#         'USER': 'channabuser',
-#         'PASSWORD': 'Ch@nn@b0183',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'channab',
+        'USER': 'channabuser',
+        'PASSWORD': 'Ch@nn@b0183',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
 
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -177,9 +153,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static")
+   os.path.join(BASE_DIR, "static")
 ]
 
 MEDIA_URL = '/mediafiles/'
