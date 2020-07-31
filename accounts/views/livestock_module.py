@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.urls import reverse
-from accounts.models import AddedAnimalLiveStock,AllGalleryAddedByUser,HeathInformation,MilKLitre,DescriptionTable
+from accounts.models import AddedAnimalLiveStock,AllGalleryAddedByUser,HeathInformation,MilKLitre,DescriptionTable,ParentsChild
 from product.models import Category
 from django.contrib.auth.models import User
 
@@ -20,7 +20,11 @@ class AddAnimalLivestock(View):
 
 	def get(self,request):
 		try:
+
 			all_category = Category.objects.values_list('category_name', flat = True)
+			male_parent = AddedAnimalLiveStock.objects.filter(gender = 'Male').values('animal_tag', 'id')
+			female_parent = AddedAnimalLiveStock.objects.filter(gender = 'Female').values('animal_tag','id')
+
 			return render(request, 'livestock/add_animal.html', locals())
 		except Exception as e:
 			print(e)
@@ -86,8 +90,51 @@ class ListingAnimalLiveStock(View):
 		try:
 			requested_user = User.objects.get(id = request.user.id)
 			all_animals = AddedAnimalLiveStock.objects.filter(created_by = requested_user).order_by('-id')
+			all_animal_list = []
+			for animal_detail in all_animals:
+				animal_list_dict = {}
+				age_str = animal_detail.date_of_birth
+				day = age_str.day
+				month = age_str.month
+				year = age_str.year
+				born = date(year, month, day)
+				today = date.today()
+				year_result = 0
+				month_result = 0
+				try:
+					birthday = born.replace(year = today.year)
+				except ValueError:
+					birthday = born.replace(year = today.year, month = born.month + 1, day = 1) 
+				if birthday > today:
+					year_result = today.year - born.year - 1
+				else:
+					if today.year == born.year:
+						month_result = today.month - born.month
+					else:
+						year_result = today.year - born.year
+				if year_result:
+					animal_list_dict['year_result'] = year_result
+				elif month_result:
+					animal_list_dict['month_result'] = month_result
 
-			print("all_animals->", all_animals[0].image)
+
+
+
+				animal_list_dict['id'] = animal_detail.id
+				animal_list_dict['animal_tag'] = animal_detail.animal_tag
+				animal_list_dict['gender'] = animal_detail.gender
+				animal_list_dict['image'] = animal_detail.image
+				animal_list_dict['status'] = animal_detail.is_active
+				animal_list_dict['animal_type'] = animal_detail.animal_type
+				animal_list_dict['animal_breed'] = animal_detail.animal_breed
+				all_animal_list.append(animal_list_dict)
+			print(all_animal_list)
+
+
+
+
+
+
 			return render(request, 'livestock/animal_listing.html', locals())
 		except Exception as e:
 			print(e)
@@ -228,6 +275,11 @@ class ViewParticluarAnimal(View):
 			product_id = self.request.GET.get('product_id')
 			user_obj = User.objects.get(id = int(request.user.id))
 			animal_detail = AddedAnimalLiveStock.objects.get(id = int(product_id), created_by = user_obj)
+			if type(animal_detail.male_parent) == int:
+				male_parent_detail = AddedAnimalLiveStock.objects.filter(id = int(animal_detail.male_parent), created_by = user_obj, gender = 'Male')
+
+			if type(animal_detail.female_parent) == int:
+				female_parent_detail =  AddedAnimalLiveStock.objects.filter(id = int(animal_detail.male_parent), created_by = user_obj, gender = 'Female')
 
 
 
@@ -255,9 +307,31 @@ class ViewParticluarAnimal(View):
 
 
 
-			male_parent = AddedAnimalLiveStock.objects.filter(gender = 'Male').values_list('animal_tag', flat = True)
-			female_parent = AddedAnimalLiveStock.objects.filter(gender = 'Female').values_list('animal_tag', flat = True)
-			all_child_parents = AddedAnimalLiveStock.objects.filter(is_active = True).values_list('animal_tag', flat = True)
+
+
+
+
+			male_parent = AddedAnimalLiveStock.objects.filter(gender = 'Male').values('animal_tag', 'id').exclude(id = int(product_id))
+			female_parent = AddedAnimalLiveStock.objects.filter(gender = 'Female').values('animal_tag','id').exclude(id = int(product_id))
+			all_child_parents = AddedAnimalLiveStock.objects.values('animal_tag','id').exclude(id = int(product_id))
+
+
+			child_already_list = ParentsChild.objects.filter(animal_instance = animal_detail, created_by = user_obj)
+			list_of_childs = []
+			for one_record in child_already_list:
+				new_dict = {}
+				one_id = int(one_record.child_id)
+				new_dict['id'] = one_record.id
+				one_object = AddedAnimalLiveStock.objects.get(id = one_id, created_by = user_obj)
+				new_dict['one_object'] = one_object
+
+				list_of_childs.append(new_dict)
+
+
+
+			dropdown_child_already_list = ParentsChild.objects.filter(animal_instance = animal_detail, created_by = user_obj).values_list('child_id', flat = True)
+			make_list_int = list(map(int,dropdown_child_already_list))
+
 
 
 			all_health_record = HeathInformation.objects.filter(is_active = True, created_by = user_obj, animal_instance = animal_detail)
@@ -297,7 +371,6 @@ class ViewParticluarAnimal(View):
 				all_milking_record_list.append(milk_dict)
 
 			all_milking_record_morning = MilKLitre.objects.filter(is_active = True, created_by = user_obj, animal_instance = animal_detail).values_list('morning_time', flat = True)
-			print("")
 
 
 			all_milking_record_evening = MilKLitre.objects.filter(is_active = True, created_by = user_obj, animal_instance = animal_detail).values_list('evening_time', flat = True)
@@ -511,20 +584,21 @@ class UpdateExactAnimalDetail(View):
 			age = request.POST.get('age')
 			animal_bread = request.POST.get('animal_bread')
 			gender = request.POST.get('gender')
+			import dateparser
+			age = dateparser.parse(age)
+
 			animal_type = self.request.POST.get('animal_type')
 			image = request.FILES.get('main_image')
 			obj = AddedAnimalLiveStock.objects.get(id = int(hidden_id),created_by = user_obj)
-
-			print("\n" * 3)
-			print("image is ---------->", image)
-			print("\n" * 3)
 			if not image:
 				image = obj.image
 			
 
-			AddedAnimalLiveStock.objects.filter(id = int(hidden_id),created_by = user_obj).update(animal_tag = animal_tag, date_of_birth=age, animal_breed = animal_bread, gender = gender, animal_type = animal_type,updated_by = user_obj)
+			AddedAnimalLiveStock.objects.filter(id = int(hidden_id),created_by = user_obj).update(animal_tag = animal_tag, animal_breed = animal_bread, gender = gender, animal_type = animal_type,updated_by = user_obj)
 
 			obj.image = image
+			print(age)
+			obj.date_of_birth=age
 			obj.save()
 
 			context['status']  = 200
@@ -637,6 +711,47 @@ class AddMilkingAnimal(View):
 
 
 
+class AddChildParent(View):
+
+
+	def post(self,request):
+		context = {}
+
+		try :
+			user_id = request.user.id
+			user_obj = User.objects.get(id = user_id)
+			hidden_id = request.POST.get('family_particular_id')
+			get_animal_instance = AddedAnimalLiveStock.objects.get(id = int(hidden_id))
+
+
+
+			male_parent = request.POST.get('male_parent')
+			female_parent = self.request.POST.get('female_parent')
+			if male_parent:
+				get_animal_instance.male_parent = male_parent
+				get_animal_instance.save()
+			if female_parent:
+				get_animal_instance.female_parent = female_parent
+				get_animal_instance.save()
+
+			child_select = self.request.POST.getlist('child_select[]')
+			for one in child_select:
+				ParentsChild.objects.create(animal_instance = get_animal_instance, child_id = one, created_by = user_obj)
+
+
+
+			context['status']  = 200
+			context['message'] = 'You have successfully Added an Family Members of Your Animal'
+			return HttpResponse(json.dumps(context))
+		except Exception as e:
+			print(e)
+			context['status'] = 500
+			context['error_message'] = 'Something went wrong,Please try again later or contact us'
+			return HttpResponse(json.dumps(context))
+
+
+
+
 
 
 
@@ -674,8 +789,9 @@ class DeactivateAnimal(View):
 	def get(self,request):
 		context = {}
 		try:
+			user_obj = User.objects.get(id = request.user.id)
 			id_animal = self.request.GET.get('id')
-			animal_instance = AddedAnimalLiveStock.objects.get(id = int(id_animal))
+			animal_instance = AddedAnimalLiveStock.objects.get(id = int(id_animal), created_by = user_obj)
 
 			if animal_instance.is_active == True:
 				animal_instance.is_active = False
@@ -692,8 +808,8 @@ class DeactivateAnimal(View):
 				context['status'] = 'success'
 				context['msg'] = 'False status'
 				return HttpResponse(json.dumps(context))
-		except:
-			print(sys.exc_info())
+		except Exception as e:
+			print(e)
 			context['status'] = 'fail'
 			context['msg'] = 'something went wrong'
 			return HttpResponse(json.dumps(context))
@@ -732,12 +848,12 @@ class DeleteHealth(View):
 			request_user = self.request.user.id
 			user_obj = User.objects.get(id = request_user)
 			delete_health = self.request.GET.get('title_id')
-			product_obj = HeathInformation.objects.get(id  = delete_health)
+			product_obj = HeathInformation.objects.get(id  = delete_health,created_by = user_obj)
 			product_id = int(product_obj.animal_instance.id)
-			HeathInformation.objects.filter(id = delete_health,created_by = user_obj).delete()
+			HeathInformation.objects.filter(id = int(delete_health),created_by = user_obj).delete()
 			return redirect('/accounts/view_animal/?product_id={}'.format(product_id))
 
-		except:
+		except Exception as e:
 			print(e)
 			messages.error(request,'Something went wrong,Please try again later or contact us')
 			return render(request, 'livestock/animal_info.html', locals())
@@ -751,12 +867,12 @@ class DeleteMilk(View):
 			request_user = self.request.user.id
 			user_obj = User.objects.get(id = request_user)
 			milk_id = self.request.GET.get('milk_id')
-			product_obj = MilKLitre.objects.get(id  = milk_id)
+			product_obj = MilKLitre.objects.get(id  = int(milk_id))
 			product_id = int(product_obj.animal_instance.id)
-			MilKLitre.objects.filter(id = milk_id,created_by = user_obj).delete()
+			MilKLitre.objects.filter(id =int(milk_id) ,created_by = user_obj).delete()
 			return redirect('/accounts/view_animal/?product_id={}'.format(product_id))
 
-		except:
+		except Exception as e:
 			print(e)
 			messages.error(request,'Something went wrong,Please try again later or contact us')
 			return render(request, 'livestock/animal_info.html', locals())
@@ -771,12 +887,12 @@ class DeleteDescription(View):
 			request_user = self.request.user.id
 			user_obj = User.objects.get(id = request_user)
 			delete_desc_id = self.request.GET.get('delete_desc_id')
-			product_obj = DescriptionTable.objects.get(id  = delete_desc_id)
+			product_obj = DescriptionTable.objects.get(id  = int(delete_desc_id))
 			product_id = int(product_obj.animal_instance.id)
-			DescriptionTable.objects.filter(id = delete_desc_id,created_by = user_obj).delete()
+			DescriptionTable.objects.filter(id = int(delete_desc_id),created_by = user_obj).delete()
 			return redirect('/accounts/view_animal/?product_id={}'.format(product_id))
 
-		except:
+		except Exception as e:
 			print(e)
 			messages.error(request,'Something went wrong,Please try again later or contact us')
 			return render(request, 'livestock/animal_info.html', locals())
@@ -798,14 +914,98 @@ class DeleteImageTab(View):
 		try:
 			request_user = self.request.user.id
 			user_obj = User.objects.get(id = request_user)
-			delete_desc_id = self.request.GET.get('delete_desc_id')
-			product_obj = AllGalleryAddedByUser.objects.get(id  = delete_desc_id)
-			product_id = int(product_obj.animal_instance.id)
-			AllGalleryAddedByUser.objects.filter(id = delete_desc_id,created_by = user_obj).delete()
+			delete_desc_id = self.request.GET.get('image_id')
+			product_obj = AllGalleryAddedByUser.objects.get(id  = int(delete_desc_id))
+			product_id = int(product_obj.product.id)
+			AllGalleryAddedByUser.objects.filter(id = int(delete_desc_id),product__created_by = user_obj).delete()
 			return redirect('/accounts/view_animal/?product_id={}'.format(product_id))
 
-		except:
+		except Exception as e:
 			print(e)
 			messages.error(request,'Something went wrong,Please try again later or contact us')
 			return render(request, 'livestock/animal_info.html', locals())
+
+
+
+
+
+
+
+
+
+
+
+
+
+class DeleteMaleParent(View):
+
+	def get(self,request):
+
+		try:
+			request_user = self.request.user.id
+			user_obj = User.objects.get(id = request_user)
+			delete_male_id = self.request.GET.get('delete_male_id')
+			product_obj = AddedAnimalLiveStock.objects.get(id  = int(delete_male_id), created_by = user_obj)
+			print("dddddddddddddddddddddddddddddd", product_obj)
+			product_id = int(product_obj.id)
+			product_obj.male_parent = ''
+			product_obj.save()
+			return redirect('/accounts/view_animal/?product_id={}'.format(product_id))
+
+		except Exception as e:
+			print(e)
+			messages.error(request,'Something went wrong,Please try again later or contact us')
+			return render(request, 'livestock/animal_info.html', locals())
+
+
+
+
+
+
+class DeleteFemaleParent(View):
+
+	def get(self,request):
+
+		try:
+			request_user = self.request.user.id
+			user_obj = User.objects.get(id = request_user)
+			delete_female_id = self.request.GET.get('delete_female_id')
+			product_obj = AddedAnimalLiveStock.objects.get(id  = int(delete_female_id), created_by = user_obj)
+			product_id = int(product_obj.id)
+			product_obj.male_parent = ''
+			product_obj.save()
+			return redirect('/accounts/view_animal/?product_id={}'.format(product_id))
+
+		except Exception as e:
+			print(e)
+			messages.error(request,'Something went wrong,Please try again later or contact us')
+			return render(request, 'livestock/animal_info.html', locals())
+
+
+
+
+
+
+class DeleteChildObject(View):
+
+	def get(self,request):
+
+		try:
+			request_user = self.request.user.id
+			user_obj = User.objects.get(id = request_user)
+			delete_child_id = self.request.GET.get('delete_child_id')
+			product_obj = ParentsChild.objects.get(id  = int(delete_child_id))
+			product_id = int(product_obj.animal_instance.id)
+			ParentsChild.objects.filter(id = int(delete_child_id),created_by = user_obj).delete()
+			return redirect('/accounts/view_animal/?product_id={}'.format(product_id))
+
+		except Exception as e:
+			print(e)
+			messages.error(request,'Something went wrong,Please try again later or contact us')
+			return render(request, 'livestock/animal_info.html', locals())
+
+
+
+
+
 

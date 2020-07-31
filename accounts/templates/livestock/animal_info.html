@@ -8,6 +8,16 @@
 <!--css end tab fuction-->
 <link rel="stylesheet" href="{% static '/css/livestock/details_animal.css' %}">
 <!-- starting of ist exact info popup -->
+
+
+<style type="text/css">
+   .for-icon.child_multiselect {
+    background-color: tan;
+}
+</style>
+
+<!-- starting of ist exact info popup -->
+
 <input type="hidden" id = "session_destroy" value="sess">
 <div class="modal fade bd-example-modal-lg" id="edit_exact_information_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
    <div class="modal-dialog pt-0">
@@ -22,7 +32,9 @@
          <div class="modal-body">
             <div class="card card-body">
                <div class="alert alert-success" id = "msg_edit_sucess_animal" style="display: none"></div>
-               <div class="msg alert  alert-danger" style="display:none" id="msg_edit_error_animal"></div>
+
+               <div class="alert alert-success" id = "msg_edit_sucess_animal" style="display: none"></div>
+
                <form method="POST" action='/accounts/update_animal_detail/'
                   name="popup_form" id="update_exact_live_popup">
                   {% csrf_token %}
@@ -42,7 +54,7 @@
                      <div class="for-icon">
                         <input type="date" class="form-control" id="age_animal_edit_live"
                            name="age" placeholder="Year Of Age"
-                           minlength="5" maxlength="19" value="{{animal_detail.date_of_birth|date:'Y-m-d'}}">
+                           minlength="5" maxlength="19" value="{{animal_detail.date_of_birth|date:'Y-m-d'}}"  min='2014-01-01' max='2020-05-01'>
                      </div>
                      <span class="error-msg" id="age_animal_edit_live_label" style="display: none;"></span>
                   </div>
@@ -108,6 +120,10 @@
                         {% endif %}
                      </div>
                   </div>
+
+
+
+
                   <button type="submit" id="update_exact_live"
                      class="btn btn-success w-100 pull-right"  >
                   Update Information
@@ -119,6 +135,8 @@
    </div>
 </div>
 <!-- end of ist popup -->
+
+
 <!-- starting of ist tab popup i.e add -->
 <div class="modal fade bd-example-modal-lg" id="add_ist_table" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
    <div class="modal-dialog pt-0">
@@ -137,6 +155,7 @@
                <form method="POST" action='/accounts/add_animal_detail/'
                   name="popup_form" id="health_Add_form_popup">
                   <input type="hidden" name="animal_particular_id"  value="{{animal_detail.id}}">
+
                   {% csrf_token %}
                   <div class="form-group">
                      <label for="company_id_super_Admin">Health Title<span class="star_text"
@@ -166,7 +185,7 @@
                   </div>
                   <button type="submit" id="update_exact_live"
                      class="btn btn-success w-100 pull-right"  >
-                  Update Information
+                  Save Information
                   </button>
                </form>
             </div>
@@ -188,22 +207,29 @@
          </div>
          <div class="modal-body">
             <div class="card card-body">
-               <div class="msg alert  alert-danger" style="display:none" id="msg_ajax_admin"></div>
-               <form method="POST" action=''
-                  name="popup_form" id="family_add_popup">
+               <div class="alert alert-success" id = "family_popup_suceess" style="display: none"></div>
+               <div class="msg alert  alert-danger" style="display:none" id="family_popup_error"></div>
+               <form method="POST" action='/accounts/add_child/'
+                  name="popup_form" id="family_add_popup_new_form">
                   {% csrf_token %}
+                  <input type="hidden" name="family_particular_id"  value="{{animal_detail.id}}">
+
                   <div class="form-group">
                      <div class="for-icon">
                         <label for="password_customer">Male Parent<span class="star_text"
                            id="male_p"> * </span></label>
-                        <select name="male_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
+                        <select name="male_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" id="male_parent_check_id">
                            <option value="Select">------</option>
                            {% for one in male_parent %}
-                           <option value="{{one}}">{{one}}</option>
+                           {% if one.id == animal_detail.male_parent|add:"0" %}
+                           <option value="{{one.id}}" selected>{{one.animal_tag}}</option>
+                           {% else %}
+                           <option value="{{one.id}}">{{one.animal_tag}}</option>
+                           {% endif %}
                            {% endfor %}
                         </select>
                      </div>
-                     <span class="error-msg" id="male_parent_label_detail" style="display: none"></span>
+                     <span class="error-msg" id="male_parent_label_detail_live" style="display: none">This Field is Required</span>
                   </div>
                   <div class="form-group">
                      <label for="password_customer">Female Parent<span class="star_text"
@@ -212,7 +238,13 @@
                         <select name="female_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
                            <option value="Select">------</option>
                            {% for one in female_parent %}
-                           <option value="{{one}}">{{one}}</option>
+                           {% if one.id == animal_detail.male_parent|add:"0" %}
+                           <option value="{{one.id}}" selected>{{one.animal_tag}}</option>
+                           {% else %}
+
+
+                           <option value="{{one.id}}">{{one.animal_tag}}</option>
+                           {% endif %}
                            {% endfor %}
                         </select>
                      </div>
@@ -221,20 +253,30 @@
                   <div class="form-group">
                      <label for="password_customer">Select Child<span class="star_text"
                         id="stardA_super_Admin"> * </span></label>
-                     <div class="for-icon">
-                        <select name="child_select" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
-                           <option value="Select">------</option>
+                     <div class="for-icon child_multiselect">
+                        <select name="child_select[]" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" id = "add_livestock_multiple" multiple="multiple">
                            {% for one in all_child_parents %}
-                           <option value="{{one}}">{{one}}</option>
+                           {% if one.id|add:"0" in make_list_int %}
+                           <option value="{{one.id}}" selected="selected">{{one.animal_tag}}</option>
+                           {% else %}
+                           <option value="{{one.id}}">{{one.animal_tag}}</option>
+                           {% endif %}
                            {% endfor %}
                         </select>
                      </div>
                      <span class="error-msg" id="cost_of_animal_input_label" style="display: none;"></span>
                   </div>
-                  <button type="submit" id="update_exact_live"
+                  <div class="button_secton_fly">
+                      <button type="submit" id="update_exact_live"
                      class="btn btn-success w-100 pull-right"  >
-                  Update Information
+                  Save Information
                   </button>
+                  <button type="submit" id="add_button"
+                     class="btn btn-success w-100 pull-right"  >
+                  Add Animal
+                  </button>
+                 
+               </div>
                </form>
             </div>
          </div>
@@ -281,7 +323,7 @@
                   </div>
                   <button type="submit" id="evening_milk_button"
                      class="btn btn-success w-100 pull-right"  >
-                  Update Information
+                  Save Information
                   </button>
                </form>
             </div>
@@ -320,7 +362,7 @@
                   </div>
                   <button type="submit" id="image_popup_form"
                      class="btn btn-success w-100 pull-right"  >
-                  Update Information
+                  Save Information
                   </button>
                </form>
             </div>
@@ -357,7 +399,7 @@
                   </div>
                   <button type="submit" id="description_popup_submit"
                      class="btn btn-success w-100 pull-right"  >
-                  Update Information
+                  Save Information
                   </button>
                </form>
             </div>
@@ -504,10 +546,12 @@
                         </li>
                      </ul>
                      <div class="tab-content" id="pills-tabContent">
+
                         <div class="tab-pane fade show active" id="Health" role="tabpanel" aria-labelledby="pills-home-tab">
+                           {% if all_health_record %}
                            <div class="health_section_health">
                               <form>
-                                 {% if all_health_record %}
+                                 
                                  {% for one_health in all_health_record_list %}
                                  <div class="form-check">
                                     <label class="form-check-label" for="exampleCheck1">
@@ -522,60 +566,81 @@
                                     <p id="contant_dt" class="form-text text-muted">{{one_health.text_description}}</p>
                                  </div>
                                  {% endfor %}
-                                 {% endif %}
+                                 
                               </form>
                            </div>
+                           {% else %}
+                                 <div class="tab-content" id="pills-tabContent">
+                           <div class="not_found_data">
+                              <h6>No record found</h6>
+                           </div>
+                        </div>
+                                 {% endif %}
                         </div>
                         <div class="tab-pane fade " id="Family" role="tabpanel" aria-labelledby="pills-profile-tab">
+                           {% if male_parent_detail or list_of_childs or female_parent_detail %}
+
                            <div class="family_section">
                               <div class="parent_section">
                                  <h2 class="heading_title">Parents</h2>
                                  <ul>
+                                    {% if male_parent_detail %}
                                     <li>
                                        <div class="img_p">
-                                          <img src="/media/main_img/new_cow.jpg" alt="img">
+                                          <img src="/media/{{male_parent_detail.0.image}}" alt="img">
                                        </div>
-                                       <h4> Animal Tag Number</h4>
-                                       <span class="btn"> male </span>
+                                       <h4> {{male_parent_detail.0.animal_tag}}</h4>
+                                       <span class="btn"> Male </span>
+                                       <span class="btn delete_btn"> <i class="fa fa-trash-o " id = "male_delete_tab_del" aria-hidden="true" data-id = "{{animal_detail.id}}"></i></span>
+
                                     </li>
+                                    {% endif %}
+                                    {% if female_parent_detail %}
+
                                     <li>
                                        <div class="img_p">
-                                          <img src="/media/main_img/new_cow.jpg" alt="img">
+                                          <img src="/media/{{female_parent_detail.0.image}}" alt="img">
                                        </div>
-                                       <h4> Animal Tag Number</h4>
-                                       <span class="btn"> female </span>
+                                       <h4> {{female_parent_detail.0.animal_tag}}</h4>
+                                       <span class="btn"> Female </span>
+                                       <span class="btn delete_btn "> <i class="fa fa-trash-o " id = "female_delete_tab_dl" aria-hidden="true" data-id = "{{animal_detail.id}}"></i></span>
+
                                     </li>
+                                    {% endif %}
                                  </ul>
                               </div>
+                              {% if list_of_childs %}
                               <div class="child_section">
                                  <h2 class="heading_title">Child</h2>
+
                                  <ul>
+                                    {% for one in list_of_childs %}
                                     <li>
                                        <div class="img_p">
-                                          <img src="/media/main_img/new_cow.jpg" alt="img">
+                                          <img src="/media/{{one.one_object.image}}" alt="img">
                                        </div>
-                                       <h4> Animal Tag Number</h4>
-                                       <span class="btn"> male </span>
+                                       <h4> {{one.one_object.animal_tag}}</h4>
+                                       <span class="btn"> {{one.one_object.gender}} </span>
+                                       <span class="btn delete_btn"> <i class="fa fa-trash-o delete_child" aria-hidden="true" data-id = "{{one.id}}"></i></span>
+
                                     </li>
-                                    <li>
-                                       <div class="img_p">
-                                          <img src="/media/main_img/new_cow.jpg" alt="img">
-                                       </div>
-                                       <h4> Animal Tag Number</h4>
-                                       <span class="btn"> female </span>
-                                    </li>
-                                    <li>
-                                       <div class="img_p">
-                                          <img src="/media/main_img/new_cow.jpg" alt="img">
-                                       </div>
-                                       <h4> Animal Tag Number</h4>
-                                       <span class="btn"> female </span>
-                                    </li>
+
+                                    {% endfor %}
+
                                  </ul>
                               </div>
+                              {% endif %}
+                           </div>
+                           {% else %}
+                           <div class="tab-content" id="pills-tabContent">
+                           <div class="not_found_data">
+                              <h6>No record found</h6>
                            </div>
                         </div>
+                        {% endif %}
+                        </div>
                         <div class="tab-pane fade" id="Milking" role="tabpanel" aria-labelledby="pills-contact-tab">
+                           {% if all_milking_record_list %}
                            <div class="milking_section">
                               <div class="dropdown">
                                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -621,20 +686,41 @@
                                  </ul>
                               </div>
                            </div>
+                           {% else %}
+                                 <div class="tab-content" id="pills-tabContent">
+                           <div class="not_found_data">
+                              <h6>No record found</h6>
+                           </div>
+                        </div>
+                        {% endif %}
+
                         </div>
                         <div class="tab-pane fade" id="Gallery" role="tabpanel" aria-labelledby="pills-contact-tab">
+                           {% if all_gallery %}
                            <h1 class="font-weight-light text-center text-lg-left mt-4 mb-0"> Gallery</h1>
                            <div class="row text-center text-lg-left">
                               {% for one_gallery in all_gallery %}
                               <div class="col-lg-3 col-md-4 col-6">
                                  <a href="#" class="d-block mb-4 h-100">
                                  <img class="img-fluid img-thumbnail" src="/media/{{one_gallery.image}}" alt="">
+                                 <div class="delete_icon_use">
+                                    <p><i class="fa fa-trash-o delete_image_faltu" aria-hidden="true" data-id = {{one_gallery.id}}></i></p>
+                                     </div>
                                  </a>
                               </div>
                               {% endfor %}
                            </div>
+                           {% else %}
+                                 <div class="tab-content" id="pills-tabContent">
+                           <div class="not_found_data">
+                              <h6>No record found</h6>
+                           </div>
+                        </div>
+                        {% endif %}
+
                         </div>
                         <div class="tab-pane fade" id="Description" role="tabpanel" aria-labelledby="pills-contact-tab">
+                           {% if all_description_list %}
                            <h1 class="font-weight-light text-center text-lg-left mt-4 mb-0">Description</h1>
                            <div class="descr_detail">
                               <div class="list_descr">
@@ -642,7 +728,7 @@
                                     {% for one_desc in all_description_list %}
                                     <li>
                                        <h6>{{one_desc.created_on}}
-                                          <button type="button" class="btn btn-success"><i class="fa fa-trash-o delete_Descritpion" aria-hidden="true" data-id = "{{one_desc.id}}"></i></button>
+                                          <button type="button" class="btn btn-success delete_Descritpion" data-id = "{{one_desc.id}}"><i class="fa fa-trash-o " aria-hidden="true" ></i></button>
                                        </h6>
                                        <p>{{one_desc.description}}</p>
                                     </li>
@@ -650,6 +736,13 @@
                                  </ul>
                               </div>
                            </div>
+                           {% else %}
+                                 <div class="tab-content" id="pills-tabContent">
+                           <div class="not_found_data">
+                              <h6>No record found</h6>
+                           </div>
+                        </div>
+                        {% endif %}
                         </div>
                      </div>
                   </div>
@@ -659,6 +752,10 @@
       </div>
    </div>
 </div>
+
+
+
+
 <script src="{% static 'js/plugins/jquery-3.4.1.min.js' %}"></script>
 <script src="{% static 'js/livestock/animal_info.js' %}"></script>
 <script type="text/javascript">
@@ -810,4 +907,5 @@
    })
    
 </script>
-{%endblock%}
+{% endblock %}
+

@@ -293,7 +293,7 @@ $(document).ready(function () {
 
 //// image tab
 
-    $('.img-fluid img-thumbnail').click(function(){
+    $('.delete_image_faltu').click(function(){
        swal({
      
           title : "Confirmation",
@@ -306,9 +306,9 @@ $(document).ready(function () {
      
        }).then(val =>{
 
-        var ids = $(this).attr('data-id');
+        var image_id_new = $(this).attr('data-id');
         if (val){
-            var url = '/accounts/delete_description/?delete_desc_id='+ids; 
+            var url = '/accounts/delete_image/?image_id='+image_id_new; 
             window.location.href = url
 
              swal({
@@ -325,6 +325,100 @@ $(document).ready(function () {
 
 
 
+///////////////parent
+
+     $('#male_delete_tab_del').click(function(){
+       swal({
+     
+          title : "Confirmation",
+          text : "Are you sure you want to Delete ?",
+          buttons : {
+             cancel : true,
+             confirm : "Confirm"
+          }
+     
+     
+       }).then(val =>{
+
+        var ids = $(this).attr('data-id');
+        if (val){
+            var url = '/accounts/delete_male/?delete_male_id='+ids; 
+            window.location.href = url
+
+             swal({
+                title : "Thanks !",
+                text : "You have Sucessfully Logout Your Account",
+                icon : "success"
+     
+             })
+          }
+       })
+     
+     })
+
+
+///////////// child
+
+     $('#female_delete_tab_dl').click(function(){
+       swal({
+     
+          title : "Confirmation",
+          text : "Are you sure you want to Delete ?",
+          buttons : {
+             cancel : true,
+             confirm : "Confirm"
+          }
+     
+     
+       }).then(val =>{
+
+        var ids = $(this).attr('data-id');
+        if (val){
+            var url = '/accounts/delete_female/?delete_female_id='+ids; 
+            window.location.href = url
+
+             swal({
+                title : "Thanks !",
+                text : "You have Sucessfully Logout Your Account",
+                icon : "success"
+     
+             })
+          }
+       })
+     
+     })
+
+
+    /////female
+
+         $('.delete_child').click(function(){
+       swal({
+     
+          title : "Confirmation",
+          text : "Are you sure you want to Delete ?",
+          buttons : {
+             cancel : true,
+             confirm : "Confirm"
+          }
+     
+     
+       }).then(val =>{
+
+        var ids = $(this).attr('data-id');
+        if (val){
+            var url = '/accounts/delete_child/?delete_child_id='+ids; 
+            window.location.href = url
+
+             swal({
+                title : "Thanks !",
+                text : "You have Sucessfully Logout Your Account",
+                icon : "success"
+     
+             })
+          }
+       })
+     
+     })
 
 
 
@@ -936,21 +1030,21 @@ $(document).on("click", ".root", function(){
 ////////////////////////////     parents 
 
 
-function checkforblank() {
-    var check_type = $("#countary_check_text_found").val();
+function CheckParentRecord() {
+    var check_type = $("#male_parent_check_id").val();
     if (check_type == 'Select') {
-        document.getElementById("countary_check_text_found").classList.remove("has-success");
-        document.getElementById("countary_check_text_found").classList.add("has-error");
-        document.getElementById('label_your_account').style.display = 'block';
+        document.getElementById("male_parent_check_id").classList.remove("has-success");
+        document.getElementById("male_parent_check_id").classList.add("has-error");
+        document.getElementById('male_parent_label_detail_live').style.display = 'block';
         return false;
     } else {
-        document.getElementById("countary_check_text_found").classList.add("has-success");
-        document.getElementById('label_your_account').style.display = 'none';
+        document.getElementById("male_parent_check_id").classList.add("has-success");
+        document.getElementById('male_parent_label_detail_live').style.display = 'none';
         return true;
     }
 }
 
-$("#countary_check_text_found").focusout(function () {
+$("#male_parent_check_id").focusout(function () {
     if ($(this).hasClass("has-success")) {
         $(this).removeClass("has-success");
         $(this).removeClass("has-error");
@@ -958,23 +1052,71 @@ $("#countary_check_text_found").focusout(function () {
 })
 
 
-function checkforblank() {
-    var check_type = $("#countary_check_text_found").val();
+
+$(document).on('change','#male_parent_check_id', function(){
+    var check_type = $("#male_parent_check_id").val();
     if (check_type == 'Select') {
-        document.getElementById("countary_check_text_found").classList.remove("has-success");
-        document.getElementById("countary_check_text_found").classList.add("has-error");
-        document.getElementById('label_your_account').style.display = 'block';
+        document.getElementById("male_parent_check_id").classList.remove("has-success");
+        document.getElementById("male_parent_check_id").classList.add("has-error");
+        document.getElementById('male_parent_label_detail_live').style.display = 'block';
         return false;
     } else {
-        document.getElementById("countary_check_text_found").classList.add("has-success");
-        document.getElementById('label_your_account').style.display = 'none';
+        document.getElementById("male_parent_check_id").classList.add("has-success");
+        document.getElementById('male_parent_label_detail_live').style.display = 'none';
         return true;
     }
-}
+})
 
-$("#countary_check_text_found").focusout(function () {
-    if ($(this).hasClass("has-success")) {
-        $(this).removeClass("has-success");
-        $(this).removeClass("has-error");
+
+$("#family_add_popup_new_form").on('submit', function(e){
+    if (CheckParentRecord() == true){
+
+
+        var form = $(this);
+        data = (form).serialize();
+        var Url = form.attr('action');
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            data: data,
+            url: Url,
+            success:function(response){
+                response_by_api = JSON.parse(response)
+                console.log("response_by_api is -------->", response_by_api)
+                if (response_by_api['status'] == 200){
+                    console.log(response_by_api)
+                    $("#family_popup_suceess").text(response_by_api["message"]);
+                    $('#family_popup_suceess').css("display", "block");
+                    var msg_ajax = document.getElementById("family_popup_suceess");
+                    setTimeout(function () {
+                        $(msg_ajax).css("display", "none");
+                    }, 1500);
+
+
+                    setTimeout(function(){
+                        window.location.reload(1);
+                    }, 2000);
+
+                }
+                else{
+
+                    $("#family_popup_error").text(response_by_api["error_message"]);
+                    $('#family_popup_error').css("display", "block");
+                    var msg_ajax = document.getElementById("family_popup_error");
+                    setTimeout(function () {
+                        $(msg_ajax).css("display", "none");
+                    }, 5000);
+
+                }
+
+            },
+        })
+
+    }
+    else{
+        CheckParentRecord();
+        return false;
     }
 })
+

@@ -30,6 +30,13 @@ urlpatterns = [
 	path('milk_delete/', login_required(DeleteMilk.as_view()), name = 'DeleteMilk'),
 
 
+	###
+	path('add_child/', login_required(AddChildParent.as_view()), name = 'AddChildParent'),
+
+	path('delete_male/', login_required(DeleteMaleParent.as_view()), name = 'DeleteMaleParent'),
+	path('delete_female/', login_required(DeleteFemaleParent.as_view()), name = 'DeleteFemaleParent'),
+	path('delete_child/', login_required(DeleteChildObject.as_view()), name = 'DeleteChildObject'),
+
 
 	###description
 	path('description_added/', login_required(AddDescriptionAnimal.as_view()), name = 'AddDescriptionAnimal'),
