@@ -962,7 +962,7 @@ function EditLivestock_readURLMySecond_Found(input) {
       next('div').find('img');
       reader.onload = function(e) {
          $("#edit_Livestock_blah4_found").show();
-         $('#edit_Livestock_blah4_found').attr('src', e.target.result).width(130).height(100);
+         $('#edit_Livestock_blah4_found').attr('src', e.target.result).width(70).height(50);
       }
       reader.readAsDataURL(input.files[0]);
    }

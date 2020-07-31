@@ -20,10 +20,11 @@ class AddAnimalLivestock(View):
 
 	def get(self,request):
 		try:
+			requested_user = User.objects.get(id = request.user.id)
 
 			all_category = Category.objects.values_list('category_name', flat = True)
-			male_parent = AddedAnimalLiveStock.objects.filter(gender = 'Male').values('animal_tag', 'id')
-			female_parent = AddedAnimalLiveStock.objects.filter(gender = 'Female').values('animal_tag','id')
+			male_parent = AddedAnimalLiveStock.objects.filter(gender = 'Male', created_by = requested_user).values('animal_tag', 'id')
+			female_parent = AddedAnimalLiveStock.objects.filter(gender = 'Female',  created_by = requested_user).values('animal_tag','id')
 
 			return render(request, 'livestock/add_animal.html', locals())
 		except Exception as e:
@@ -314,9 +315,9 @@ class ViewParticluarAnimal(View):
 
 
 
-			male_parent = AddedAnimalLiveStock.objects.filter(gender = 'Male').values('animal_tag', 'id').exclude(id = int(product_id))
-			female_parent = AddedAnimalLiveStock.objects.filter(gender = 'Female').values('animal_tag','id').exclude(id = int(product_id))
-			all_child_parents = AddedAnimalLiveStock.objects.values('animal_tag','id').exclude(id = int(product_id))
+			male_parent = AddedAnimalLiveStock.objects.filter(gender = 'Male',  created_by = user_obj).values('animal_tag', 'id').exclude(id = int(product_id))
+			female_parent = AddedAnimalLiveStock.objects.filter(gender = 'Female',created_by = user_obj).values('animal_tag','id').exclude(id = int(product_id))
+			all_child_parents = AddedAnimalLiveStock.objects.filter(created_by = user_obj).values('animal_tag','id').exclude(id = int(product_id))
 
 
 			child_already_list = ParentsChild.objects.filter(animal_instance = animal_detail, created_by = user_obj)
@@ -392,7 +393,7 @@ class ViewParticluarAnimal(View):
 			filter_by = request.GET.get('filter')
 			if filter_by:
 				if int(filter_by) == 7:
-					some_day_last_week = timezone.now().date() - timedelta(days=7)
+					some_day_last_week = timezone.now() - timedelta(days=7)
 					all_milking_record = MilKLitre.objects.filter(is_active = True, created_by = user_obj, animal_instance = animal_detail, created_on__gte = some_day_last_week)
 
 					all_milking_record_list = []
@@ -423,7 +424,7 @@ class ViewParticluarAnimal(View):
 
 				elif int(filter_by) == 30:
 					filter_by_class = 30
-					some_day_last_month = timezone.now().date() - timedelta(days=30)
+					some_day_last_month = timezone.now() - timedelta(days=30)
 					all_milking_record = MilKLitre.objects.filter(is_active = True, created_by = user_obj, animal_instance = animal_detail, created_on__gte = some_day_last_month)
 
 					all_milking_record_list = []
@@ -452,7 +453,7 @@ class ViewParticluarAnimal(View):
 
 				elif int(filter_by) == 91:
 					filter_by_class = 91
-					some_day_last_week = timezone.now().date() - timedelta(days=91)
+					some_day_last_week = timezone.now() - timedelta(days=91)
 					all_milking_record = MilKLitre.objects.filter(is_active = True, created_by = user_obj, animal_instance = animal_detail, created_on__gte = some_day_last_week)
 
 					all_milking_record_list = []
@@ -481,7 +482,7 @@ class ViewParticluarAnimal(View):
 
 				elif int(filter_by) == 184:
 					filter_by_class = 184
-					some_day_last_week = timezone.now().date() - timedelta(days=184)
+					some_day_last_week = timezone.now() - timedelta(days=184)
 					all_milking_record = MilKLitre.objects.filter(is_active = True, created_by = user_obj, animal_instance = animal_detail, created_on__gte = some_day_last_week)
 
 					all_milking_record_list = []
@@ -510,7 +511,7 @@ class ViewParticluarAnimal(View):
 
 				elif int(filter_by) == 365:
 					filter_by_class = 365
-					some_day_last_week = timezone.now().date() - timedelta(days=365)
+					some_day_last_week = timezone.now() - timedelta(days=365)
 					all_milking_record = MilKLitre.objects.filter(is_active = True, created_by = user_obj, animal_instance = animal_detail, created_on__gte = some_day_last_week)
 
 					all_milking_record_list = []

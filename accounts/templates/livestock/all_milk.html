@@ -1,130 +1,244 @@
 {% extends 'base/main.html' %}
 {% load static %}
 {% block content %}
-
-{% block title %} <title>Channab | Milk Records</title> {% endblock %}
-<style type="text/css">
-  .layout-options a i {
-    line-height: 23px;
-}
-
-</style>
+{% load title %}
+{% block title %} 
+<title>Channab | Milk Records</title>
+{% endblock %}
+<!--css end tab fuction-->
 <link rel="stylesheet" href="{% static '/css/livestock/details_animal.css' %}">
-
-    <div class="preloader" id="preloader">
-      <div class="spinner-grow text-secondary" role="status">
-        <div class="sr-only">Loading...</div>
+<!-- starting of ist exact info popup -->
+<style type="text/css">
+   .for-icon.child_multiselect {
+   background-color: tan;
+   }
+</style>
+<div class="header-area" id="headerArea">
+   <div class="container h-100 d-flex align-items-center justify-content-between">
+      <!-- Back Button-->
+      <div class="back-button"><a href="{% url 'LandingPageOfSite' %}"><i class="lni-arrow-left"></i></a></div>
+      <!-- Page Title-->
+      <div class="page-heading">
+         <h6 class="mb-0">Farm Milk Records</h6>
       </div>
-    </div>
-    <!-- Header Area-->
-    <div class="header-area" id="headerArea">
-      <div class="container h-100 d-flex align-items-center justify-content-between">
-        <!-- Back Button-->
-        <div class="back-button"><a href="{% url 'LandingPageOfSite' %}"><i class="lni-arrow-left"></i></a></div>
-        <!-- Page Title-->
-        <div class="page-heading">
-          <h6 class="mb-0">Milk Records</h6>
-        </div>
-        <!-- Filter Option-->
-        <div class="filter-option" id="suhaNavbarToggler"><i class="lni-cog"></i></div>
+      <!-- Navbar Toggler-->
+      <div class="suha-navbar-toggler d-flex justify-content-between flex-wrap" id="suhaNavbarToggler"><span></span><span></span><span></span></div>
+   </div>
+</div>
+<!-- Sidenav Black Overlay-->
+<div class="sidenav-black-overlay"></div>
+<!-- Side Nav Wrapper-->
+<div class="suha-sidenav-wrapper" id="sidenavWrapper">
+   <!-- Sidenav Profile-->
+   {% if request.user.is_authenticated %}
+   <div class="sidenav-profile">
+      <div class="user-profile"><img src="{% static 'img/bg-img/9.jpg' %}" alt=""></div>
+      <div class="user-info">
+         <h6 class="user-name mb-0">Suha Jannat</h6>
+         <p class="available-balance">Balance <span>$<span class="counter">379.23</span></span></p>
       </div>
-    </div>
-    <!-- Sidenav Black Overlay-->
-    <div class="sidenav-black-overlay"></div>
-    <div class="suha-sidenav-wrapper" id="sidenavWrapper">
-      <!-- Sidenav Profile-->
-      {% if request.user.is_authenticated %}
-      <div class="sidenav-profile">
-        <div class="user-profile"><img src="{% static 'img/bg-img/9.jpg' %}" alt=""></div>
-        <div class="user-info">
-          <h6 class="user-name mb-0">Suha Jannat</h6>
-          <p class="available-balance">Balance <span>$<span class="counter">379.23</span></span></p>
-        </div>
-      </div>
-      {% endif %}
-      <!-- Sidenav Nav-->
-      {% if request.user.is_authenticated %}
-      <ul class="sidenav-nav">
-        <li><a href="#"><i class="lni-alarm lni-tada-effect"></i>Notifications<span class="ml-3 badge badge-warning">3</span></a></li>
-        <li><a href="#"><i class="lni-empty-file"></i>All Pages</a></li>
-        <li><a href="#"><i class="lni-heart-filled"></i>My Wishlist</a></li>
-        <li><a href="#"><i class="lni-cog"></i>Settings</a></li>
-        <li><a href="#" id="logout_popup"><i class="lni-power-switch"></i>Sign Out</a></li>
-      </ul>
-      {% endif %}
-      {% if not request.user.is_authenticated %}
-      <ul class="sidenav-nav">
-        <li><a href="{% url 'RegisterView' %}"><i class="lni-user"></i>Create New Account</a></li>
-        <li><a href="{% url 'LoginView' %}"><i class="lni-power-switch"></i>Sign In</a></li>
-      </ul>
-      {% endif %}
-      <!-- Go Back Button-->
-      <div class="go-home-btn" id="goHomeBtn"><i class="lni-arrow-left"></i></div>
-    </div>
-
-    <!-- Side Nav Wrapper-->
-    <div class="page-content-wrapper">
-      <!-- Top Products-->
-      <div class="top-products-area pt-3">
-        <div class="container">
-                      {% if messages %}
-        {% for message in messages %}
-        {% if 'success' in message.tags %}
-        <div class="alert alert-success" id = "msg_Sucess">
-          {{ message }}
-        </div>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-        {% if messages %}
-        {% for message in messages %}
-        {% if 'error' in message.tags %}
-        <div class="alert alert-danger" id="msg_sign_err">
-          {{ message }}
-        </div>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-
-        <div class="row">
-          <div class="col-md-12 nav_section">
-                  <div class="tab_list">
-                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                        <li class="nav-item">
-                           <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#Health" role="tab" aria-controls="pills-home-tab" aria-selected="true">Health</a>
-                        </li>
-                        <li class="nav-item">
-                           <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#Family" role="tab" aria-controls="pills-profile-tab" aria-selected="false">Family</a>
-                        </li>
-                        <li class="nav-item">
-                           <a class="nav-link" id="pills-miking-tab" data-toggle="pill" href="#Milking" role="tab" aria-controls="pills-contact-tab" aria-selected="false">Milking</a>
-                        </li>
-                        <li class="nav-item">
-                           <a class="nav-link" id="pills-gallery-tab" data-toggle="pill" href="#Gallery" role="tab" aria-controls="pills-contact-tab" aria-selected="false">Gallery</a>
-                        </li>
-                     </ul>
-                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="Health" role="tabpanel" aria-labelledby="pills-home-tab">
-                           
-                        </div>
-                        <div class="tab-pane fade " id="Family" role="tabpanel" aria-labelledby="pills-profile-tab">
-                          
-                        </div>
-                        <div class="tab-pane fade" id="Milking" role="tabpanel" aria-labelledby="pills-contact-tab">
-                           <div class="milking_section">
-                              
-                              
+   </div>
+   {% endif %}
+   <!-- Sidenav Nav-->
+   {% if request.user.is_authenticated %}
+   <ul class="sidenav-nav">
+      <li><a href="#"><i class="lni-alarm lni-tada-effect"></i>Notifications<span class="ml-3 badge badge-warning">3</span></a></li>
+      <li><a href="#"><i class="lni-empty-file"></i>All Pages</a></li>
+      <li><a href="#"><i class="lni-heart-filled"></i>My Wishlist</a></li>
+      <li><a href="#"><i class="lni-cog"></i>Settings</a></li>
+      <li><a href="#" id="logout_popup"><i class="lni-power-switch"></i>Sign Out</a></li>
+   </ul>
+   {% endif %}
+   {% if not request.user.is_authenticated %}
+   <ul class="sidenav-nav">
+      <li><a href="{% url 'RegisterView' %}"><i class="lni-user"></i>Create New Account</a></li>
+      <li><a href="{% url 'LoginView' %}"><i class="lni-power-switch"></i>Sign In</a></li>
+   </ul>
+   {% endif %}
+   <div class="go-home-btn" id="goHomeBtn"><i class="lni-arrow-left"></i></div>
+</div>
+<div class="page-content-wrapper">
+   <!--tabing start -->
+   <div class="section_tab">
+      <div class="container">
+         {% if messages %}
+         {% for message in messages %}
+         {% if 'success' in message.tags %}
+         <div class="alert alert-success" id = "msg_Sucess">
+            {{ message }}
+         </div>
+         {% endif %}
+         {% endfor %}
+         {% endif %}
+         {% if messages %}
+         {% for message in messages %}
+         {% if 'error' in message.tags %}
+         <div class="alert alert-danger" id="msg_sign_err">
+            {{ message }}
+         </div>
+         {% endif %}
+         {% endfor %}
+         {% endif %}
+         <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+               <div class="section_tbb">
+                  <div class="col-md-12 nav_section">
+                     <div class="tab_list">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                           <li class="nav-item">
+                              <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#Health" role="tab" aria-controls="pills-home-tab" aria-selected="true">Daily</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#Monthly" role="tab" aria-controls="pills-profile-tab" aria-selected="false">Monthly</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" id="pills-miking-tab" data-toggle="pill" href="#Milking" role="tab" aria-controls="pills-contact-tab" aria-selected="false">Quartly</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" id="pills-gallery-tab" data-toggle="pill" href="#Gallery" role="tab" aria-controls="pills-contact-tab" aria-selected="false">Yearly</a>
+                           </li>
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                           <div class="tab-pane fade show active" id="Health" role="tabpanel" aria-labelledby="pills-home-tab">
+                              <div class="milking_section_day">
+                                 <div class="milk_table_section">
+                                    <ul class="title_table">
+                                       <li>Date</li>
+                                       <li>Morning</li>
+                                       <li>Evening</li>
+                                       <li>Total</li>
+                                    </ul>
+                                    <ul class="detail_table">
+                                       {% for one_milk in all_milking_record_list %}
+                                       <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{one_milk.created_on|date:'d-m-Y'}}</li>
+                                             <li><span class="value">{{one_milk.morning_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.evening_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.sum_of_one}}</span> Liter</li>
+                                             <li>
+                                                <span class="edit"><i class="fa fa-trash-o milk_delete" aria-hidden="true" data-id = "{{one_milk.id}}"></i></span> 
+                                             </li>
+                                          </ul>
+                                       </li>
+                                       {% endfor %}
+                                    </ul>
+                                    <ul class="total_table">
+                                       <li><span class="value">Total</span> Liter</li>
+                                       <li><span class="value">{{sum_of_morning}}</span> Liter</li>
+                                       <li><span class="value">{{sum_of_evening}}</span> Liter</li>
+                                       <li><span class="value">{{sum_of_two_list}}</span> Liter</li>
+                                    </ul>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="tab-pane fade " id="Monthly" role="tabpanel" aria-labelledby="pills-profile-tab">
+                              <div class="milking_section_day_new">
+                                 <div class="milk_table_section">
+                                    <ul class="title_table">
+                                       <li>Date</li>
+                                       <li>Morning</li>
+                                       <li>Evening</li>
+                                       <li>Total</li>
+                                    </ul>
+                                    <ul class="detail_table">
+                                       {% for one_milk in all_milking_record_list %}
+                                       <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{one_milk.created_on|date:'d-m-Y'}}</li>
+                                             <li><span class="value">{{one_milk.morning_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.evening_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.sum_of_one}}</span> Liter</li>
+                                             <li>
+                                                <span class="edit"><i class="fa fa-trash-o milk_delete" aria-hidden="true" data-id = "{{one_milk.id}}"></i></span> 
+                                             </li>
+                                          </ul>
+                                       </li>
+                                       {% endfor %}
+                                    </ul>
+                                    <ul class="total_table">
+                                       <li><span class="value">Total</span> Liter</li>
+                                       <li><span class="value">{{sum_of_morning}}</span> Liter</li>
+                                       <li><span class="value">{{sum_of_evening}}</span> Liter</li>
+                                       <li><span class="value">{{sum_of_two_list}}</span> Liter</li>
+                                    </ul>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="tab-pane fade" id="Milking" role="tabpanel" aria-labelledby="pills-contact-tab">
+                              <div class="milking_section_day">
+                                 <div class="milk_table_section">
+                                    <ul class="title_table">
+                                       <li>Date</li>
+                                       <li>Morning</li>
+                                       <li>Evening</li>
+                                       <li>Total</li>
+                                    </ul>
+                                    <ul class="detail_table">
+                                       {% for one_milk in all_milking_record_list %}
+                                       <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{one_milk.created_on|date:'d-m-Y'}}</li>
+                                             <li><span class="value">{{one_milk.morning_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.evening_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.sum_of_one}}</span> Liter</li>
+                                             <li>
+                                                <span class="edit"><i class="fa fa-trash-o milk_delete" aria-hidden="true" data-id = "{{one_milk.id}}"></i></span> 
+                                             </li>
+                                          </ul>
+                                       </li>
+                                       {% endfor %}
+                                    </ul>
+                                    <ul class="total_table">
+                                       <li><span class="value">Total</span> Liter</li>
+                                       <li><span class="value">{{sum_of_morning}}</span> Liter</li>
+                                       <li><span class="value">{{sum_of_evening}}</span> Liter</li>
+                                       <li><span class="value">{{sum_of_two_list}}</span> Liter</li>
+                                    </ul>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="tab-pane fade" id="Gallery" role="tabpanel" aria-labelledby="pills-contact-tab">
+                              <div class="milking_section_day">
+                                 <div class="milk_table_section">
+                                    <ul class="title_table">
+                                       <li>Date</li>
+                                       <li>Morning</li>
+                                       <li>Evening</li>
+                                       <li>Total</li>
+                                    </ul>
+                                    <ul class="detail_table">
+                                       {% for one_milk in all_milking_record_list %}
+                                       <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{one_milk.created_on|date:'d-m-Y'}}</li>
+                                             <li><span class="value">{{one_milk.morning_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.evening_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.sum_of_one}}</span> Liter</li>
+                                             <li>
+                                                <span class="edit"><i class="fa fa-trash-o milk_delete" aria-hidden="true" data-id = "{{one_milk.id}}"></i></span> 
+                                             </li>
+                                          </ul>
+                                       </li>
+                                       {% endfor %}
+                                    </ul>
+                                    <ul class="total_table">
+                                       <li><span class="value">Total</span> Liter</li>
+                                       <li><span class="value">{{sum_of_morning}}</span> Liter</li>
+                                       <li><span class="value">{{sum_of_evening}}</span> Liter</li>
+                                       <li><span class="value">{{sum_of_two_list}}</span> Liter</li>
+                                    </ul>
+                                 </div>
+                              </div>
                            </div>
                         </div>
-                        <div class="tab-pane fade" id="Gallery" role="tabpanel" aria-labelledby="pills-contact-tab">
-                           <h1 class="font-weight-light text-center text-lg-left mt-4 mb-0"> Gallery</h1>
-                          
-                        </div>
-                      
                      </div>
                   </div>
                </div>
-        </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
 <script src="{% static 'js/plugins/jquery-3.4.1.min.js' %}"></script>
-
 {% endblock %}
