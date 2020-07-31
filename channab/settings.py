@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'storages',
 
 ]
 
@@ -165,8 +166,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/mediafiles/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
 
 #### Geo location api key
@@ -174,3 +175,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 GEO_API_KEY = 'aed9d8f5366c64a8e388ecf0d04a4104'
 
 API_KEY_FOR_SECURITY = '9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b'
+
+
+
+
+
+AWS_ACCESS_KEY_ID = 'AKIASTSQA7RFH6GEIQUX'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'channab01'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
