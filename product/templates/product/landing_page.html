@@ -162,7 +162,7 @@
             <div class="col-12">
               <div class="card weekly-product-card mb-3">
                 <div class="card-body d-flex align-items-center">
-                  <div class="product-thumbnail-side"><span class="badge badge-success ">{{one_product.category_instance.category_name}}</span><a class="wishlist-btn" href="."><i class="lni-heart-filled"></i></a><a class="product-thumbnail d-block" href="/one_detail/?id={{one_product.id}}"><img src="/media/{{one_product.image}}" alt=""></a></div>
+                  <div class="product-thumbnail-side"><span class="badge badge-success ">{{one_product.category_instance.category_name}}</span><a class="wishlist-btn" href="."><i class="lni-heart-filled"></i></a><a class="product-thumbnail d-block" href="/one_detail/?id={{one_product.id}}"><img src="{{one_product.image.url}}" alt=""></a></div>
                   <div class="product-description"><a class="product-title d-block" href="/one_detail/?id={{one_product.id}}">{{one_product.name}}</a>
                     <p class="sale-price"><i>Rs.</i>{{one_product.price}}</p>
                     <div class="product-rating"><i class="fa fa-phone" aria-hidden="true"></i>{{one_product.mobilenumber}}</div><div class="product-rating"><i class="lni-map-marker"></i>{{one_product.city}}</div><a class="btn btn-success btn-sm add2cart-notify" href="/one_detail/?id={{one_product.id}}"></i>More Info</a>
