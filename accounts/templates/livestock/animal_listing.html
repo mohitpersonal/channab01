@@ -196,7 +196,7 @@
                   <li><a herf="#" class="red_Active">Disabled</a></li>
                   {% endif %}   
                     <label class="switch">
-                      <input type="checkbox" {% if animal_detail.is_active is True %}
+                      <input type="checkbox" {% if product.status is True %}
                               checked {% else %} unchecked {% endif %} class="root" data-id = "{{product.id}}">
                               <span class="slider round"></span>
                     </label>
