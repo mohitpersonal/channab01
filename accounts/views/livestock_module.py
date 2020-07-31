@@ -54,7 +54,7 @@ class AddAnimalLivestock(View):
 			user_obj = User.objects.get(id = request.user.id)
 
 
-			product_obj = AddedAnimalLiveStock.objects.create(animal_tag = animal_tag, animal_breed = animal_bread, category_instance = category_instance, gender = gender,male_parent = male_parent,female_parent = female_parent,  image = image, description = description, animal_type = animal_type,created_by = user_obj)
+			product_obj = AddedAnimalLiveStock.objects.create(animal_tag = animal_tag, animal_breed = animal_bread, category_instance = category_instance, gender = gender,male_parent = int(male_parent),female_parent = int(female_parent),  image = image, description = description, animal_type = animal_type,created_by = user_obj)
 			product_obj.date_of_birth = age
 			product_obj.save()
 
@@ -279,7 +279,7 @@ class ViewParticluarAnimal(View):
 			product_id = self.request.GET.get('product_id')
 			user_obj = User.objects.get(id = int(request.user.id))
 			animal_detail = AddedAnimalLiveStock.objects.get(id = int(product_id), created_by = user_obj)
-			if type(animal_detail.male_parent) == int:
+			if  type(animal_detail.male_parent) == int:
 				male_parent_detail = AddedAnimalLiveStock.objects.filter(id = int(animal_detail.male_parent), created_by = user_obj, gender = 'Male')
 
 			if type(animal_detail.female_parent) == int:
@@ -738,15 +738,18 @@ class AddChildParent(View):
 			male_parent = request.POST.get('male_parent')
 			female_parent = self.request.POST.get('female_parent')
 			if male_parent:
-				get_animal_instance.male_parent = male_parent
+				get_animal_instance.male_parent = int(male_parent)
 				get_animal_instance.save()
 			if female_parent:
-				get_animal_instance.female_parent = female_parent
+				get_animal_instance.female_parent = int(female_parent)
 				get_animal_instance.save()
 
 			child_select = self.request.POST.getlist('child_select[]')
+			print(child_select)
 			for one in child_select:
-				ParentsChild.objects.create(animal_instance = get_animal_instance, child_id = one, created_by = user_obj)
+				exist_obj = ParentsChild.objects.filter(child_id = int(one))
+				if not exist_obj:
+					ParentsChild.objects.create(animal_instance = get_animal_instance, child_id = one, created_by = user_obj)
 
 
 

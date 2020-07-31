@@ -22,8 +22,8 @@ class AddedAnimalLiveStock(models.Model):
 	date_of_purchase =  models.DateField(auto_now_add = True)
 
 	gender = models.CharField(max_length=1000,choices = choices, null = True, blank = True)
-	male_parent = models.CharField(max_length=100,null = True, blank = True)
-	female_parent = models.CharField(max_length=100,null = True, blank = True)
+	male_parent = models.IntegerField(null = True, blank = True)
+	female_parent = models.IntegerField(null = True, blank = True)
 	animal_type = models.CharField(max_length = 15, null = True, blank = True)
 	description = models.TextField(null = True, blank = True)
 

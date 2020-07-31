@@ -219,7 +219,7 @@
                         <label for="password_customer">Male Parent<span class="star_text"
                            id="male_p"> * </span></label>
                         <select name="male_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" id="male_parent_check_id">
-                           <option value="Select">------</option>
+                           <option value="0">------</option>
                            {% for one in male_parent %}
                            {% if one.id == animal_detail.male_parent|add:"0" %}
                            <option value="{{one.id}}" selected>{{one.animal_tag}}</option>
@@ -236,7 +236,7 @@
                         id="stardA_super_Admin"> * </span></label>
                      <div class="for-icon">
                         <select name="female_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
-                           <option value="Select">------</option>
+                           <option value="0">------</option>
                            {% for one in female_parent %}
                            {% if one.id == animal_detail.male_parent|add:"0" %}
                            <option value="{{one.id}}" selected>{{one.animal_tag}}</option>
@@ -581,6 +581,7 @@
                            {% if male_parent_detail or list_of_childs or female_parent_detail %}
 
                            <div class="family_section">
+                              {% if male_parent_detail or female_parent_detail %}
                               <div class="parent_section">
                                  <h2 class="heading_title">Parents</h2>
                                  <ul>
@@ -609,6 +610,7 @@
                                     {% endif %}
                                  </ul>
                               </div>
+                              {% endif %}
                               {% if list_of_childs %}
                               <div class="child_section">
                                  <h2 class="heading_title">Child</h2>

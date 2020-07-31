@@ -1032,7 +1032,7 @@ $(document).on("click", ".root", function(){
 
 function CheckParentRecord() {
     var check_type = $("#male_parent_check_id").val();
-    if (check_type == 'Select') {
+    if (check_type == '0') {
         document.getElementById("male_parent_check_id").classList.remove("has-success");
         document.getElementById("male_parent_check_id").classList.add("has-error");
         document.getElementById('male_parent_label_detail_live').style.display = 'block';
@@ -1055,7 +1055,7 @@ $("#male_parent_check_id").focusout(function () {
 
 $(document).on('change','#male_parent_check_id', function(){
     var check_type = $("#male_parent_check_id").val();
-    if (check_type == 'Select') {
+    if (check_type == '0') {
         document.getElementById("male_parent_check_id").classList.remove("has-success");
         document.getElementById("male_parent_check_id").classList.add("has-error");
         document.getElementById('male_parent_label_detail_live').style.display = 'block';
