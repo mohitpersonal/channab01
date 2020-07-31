@@ -132,7 +132,7 @@ ul.multiselect-container.dropdown-menu.show {
                 <div class="form-group col-md-4">
                   <div class="title mb-2"><i class="fa fa-male" aria-hidden="true"></i><span>Male Parent</span></div>
                                           <select name="male_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" id="male_parent_check_id">
-                           <option value="Select">Male Parent</option>
+                           <option value="0">Male Parent</option>
                            {% for one in male_parent %}
                            <option value="{{one.id}}">{{one.animal_tag}}</option>
                            {% endfor %}
@@ -142,7 +142,7 @@ ul.multiselect-container.dropdown-menu.show {
                 <div class="form-group col-md-4">
                   <div class="title mb-2"><i class="fa fa-female" aria-hidden="true"></i><span>Female Parent</span></div>
                                           <select name="female_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
-                           <option value="Select">Female Parent</option>
+                           <option value="0">Female Parent</option>
                            {% for one in female_parent %}
 
 
