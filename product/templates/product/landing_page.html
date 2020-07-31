@@ -112,7 +112,7 @@
             <div class="row">
               {% for one_category in categorylist %}
               <div class="col-2">
-                <div class="card mb-3 catagory-card" style="background-image: url(/media/{{one_category.image}});">
+                <div class="card mb-3 catagory-card" style="background-image: url({{one_category.image.url}});">
                   <div class="card-body"><a href="/search_cat/?cat_id_fil={{one_category.category_name}}"><span class="">{{one_category.category_name}}</span></a></div>
 
                 </div>
