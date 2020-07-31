@@ -22,8 +22,8 @@ class AddedAnimalLiveStock(models.Model):
 	date_of_purchase =  models.DateField(auto_now_add = True)
 
 	gender = models.CharField(max_length=1000,choices = choices, null = True, blank = True)
-	male_parent = models.IntegerField(null = True, blank = True)
-	female_parent = models.IntegerField(null = True, blank = True)
+	male_parent = models.IntegerField(null = True, blank = True, default = 0)
+	female_parent = models.IntegerField(null = True, blank = True, default = 0)
 	animal_type = models.CharField(max_length = 15, null = True, blank = True)
 	description = models.TextField(null = True, blank = True)
 
@@ -116,7 +116,7 @@ class DescriptionTable(models.Model):
 class ParentsChild(models.Model):
 
 	animal_instance = models.ForeignKey(AddedAnimalLiveStock, on_delete = models.CASCADE, null = True, blank = True)
-	child_id = models.IntegerField(null = True, blank = True)
+	child_id = models.IntegerField(null = True, blank = True, default = 0)
 	is_active = models.BooleanField(default = True)
 	created_on = models.DateTimeField(auto_now_add = True)
 	updated_on  = models.DateTimeField(auto_now = True)
