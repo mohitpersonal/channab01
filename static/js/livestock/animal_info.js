@@ -962,7 +962,7 @@ function EditLivestock_readURLMySecond_Found(input) {
       next('div').find('img');
       reader.onload = function(e) {
          $("#edit_Livestock_blah4_found").show();
-         $('#edit_Livestock_blah4_found').attr('src', e.target.result).width(130).height(100);
+         $('#edit_Livestock_blah4_found').attr('src', e.target.result).width(70).height(50);
       }
       reader.readAsDataURL(input.files[0]);
    }
@@ -1032,7 +1032,7 @@ $(document).on("click", ".root", function(){
 
 function CheckParentRecord() {
     var check_type = $("#male_parent_check_id").val();
-    if (check_type == 'Select') {
+    if (check_type == '0') {
         document.getElementById("male_parent_check_id").classList.remove("has-success");
         document.getElementById("male_parent_check_id").classList.add("has-error");
         document.getElementById('male_parent_label_detail_live').style.display = 'block';
@@ -1055,7 +1055,7 @@ $("#male_parent_check_id").focusout(function () {
 
 $(document).on('change','#male_parent_check_id', function(){
     var check_type = $("#male_parent_check_id").val();
-    if (check_type == 'Select') {
+    if (check_type == '0') {
         document.getElementById("male_parent_check_id").classList.remove("has-success");
         document.getElementById("male_parent_check_id").classList.add("has-error");
         document.getElementById('male_parent_label_detail_live').style.display = 'block';

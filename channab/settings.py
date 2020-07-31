@@ -111,6 +111,16 @@ DATABASES = {
         'PORT': '',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'ChanaabOfficial1',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': '',
+#         'PORT': 3306,
+#     }
+# }
 
 
 CORS_ORIGIN_ALLOW_ALL = True
