@@ -455,116 +455,6 @@ label span.star_text {
     height: 180px;
     overflow: hidden;
 }
-
-@media(max-width:990px){
-.tab_list li{
-    max-width: 17%;
-    flex: 0 0 17%;     
-    margin: 0 8px;
-}
-}
-@media(max-width:767px){
-.name_tab a {
-    margin-bottom: 10px;
-}
-.inner_top_section .button_section.col-md-9 {
-    width: 70%;
-}
-.inner_top_section .img_setion {
-    width: 30%;
-}
-.button_section li a {
-    background-color: #00b050;
-    font-size: 16px;
-    padding: 8px 3px;
-    }
-
-.name_tab a {
-    padding: 9px 3px;
-}
-.tab_list {
-    width: 100%;
-}
-.nav_section {
-    border-top: 1px solid #eee;
-    padding: 0px;
-}
-.tab-pane h1.font-weight-light {
-    text-align: left !important;
-}
-
-.tab_list li {
-    max-width: 100%;
-    flex: auto;
-    margin: 0 8px;
-    width: 16%;
-}
-.tab_list li a {
-    padding: 0;
-}
-.tab_list ul {
-    display: flex;
-    border-bottom: 1px solid #eee;
-    padding: 10px;
-}
-.tab-content .tab-pane.fade {
-    width: 660px;
-}
-.tab-content {
-    padding: 0px 15px 15px;
-    overflow: scroll;
-    width: 100%;
-}
-#Family ul li {
-    max-width: 100%;
-    flex: none;
-    display: flex;
-    text-align: left;
-    margin-bottom: 20px;
-    width: 100%;
-}
-}
-@media(max-width:480px){
-.tab_list li a {
-    font-size: 12px;
-}
-
-div#pills-contact {
-    font-size: 14px;
-}
-.section_tbb .inner_top_section .img_setion .img_section {
-    height: 105px;
-    width: 100%;
-    text-align: center;
-}
-
-.button_section ul li {
-    padding: 0px 6px 10px 0;
-    width: 49%;
-}
-.tab_list li {
-    display: inline-block;
-    max-width: 100%;
-    flex: auto;
-    width: auto;
-}
-.tab_list li a {
-    padding: 0;
-}
-.tab_list ul {
-    display: flex;
-    text-align: center;
-}
-}
-@media(max-width:380px){
-.section_tbb .inner_top_section .img_setion .img_section {
-    height: 96px;
-}
-.button_section ul li {
-    width: 48%;
-}
-}
-
 a.red_Active {
     background-color: red !important;
 }
@@ -691,3 +581,259 @@ button.swal-button.swal-button--confirm {
     border-radius: 3px;
     margin-bottom: 20px;
 }
+
+@media(max-width:990px){
+.tab_list li{
+    max-width: 17%;
+    flex: 0 0 17%;     
+    margin: 0 8px;
+}
+}
+@media(max-width:767px){
+.name_tab a {
+    margin-bottom: 10px;
+}
+.inner_top_section .button_section.col-md-9 {
+    width: 70%;
+}
+.inner_top_section .img_setion {
+    width: 30%;
+}
+.button_section li a {
+    background-color: #00b050;
+    font-size: 10px;
+    padding: 8px 3px;
+    }
+
+.name_tab a {
+    padding: 9px 3px;
+}
+.tab_list {
+    width: 100%;
+}
+.nav_section {
+    border-top: 1px solid #eee;
+    padding: 0px;
+}
+.tab-pane h1.font-weight-light {
+    text-align: left !important;
+}
+
+.tab_list li {
+    max-width: 100%;
+    flex: auto;
+    margin: 0 8px;
+    width: 16%;
+}
+.tab_list li a {
+    padding: 0;
+}
+.tab_list ul {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+}
+
+.tab-content {
+    padding: 0px 15px 15px;
+    width: 100%;
+}
+#Family ul li {
+    max-width: 100%;
+    flex: none;
+    display: flex;
+    text-align: left;
+    margin-bottom: 20px;
+    width: 100%;
+}
+.not_found_data h6 {
+    padding: 35px;
+    font-size: 20px;
+    }
+    .button_section ul li {
+    width: 30%;
+}
+.name_tab a {
+    font-size: 10px;
+    }
+#Family ul li .img_p img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+#Family ul li .img_p {
+    max-width: 16vw;
+    height: 16vw;
+}
+#Family ul li h4 {
+    padding: 8% 20px;
+    font-size: 15px;
+}
+#Family ul li span.btn {
+    margin: 7% 15px;
+    }
+    .milking_section button#dropdownMenuButton {
+    padding: 5px 15px;
+    font-size: 11px;
+}
+ul.title_table li {
+    font-size: 10px;
+}
+.milk_table_section ul.detail_table ul.list_detail li {
+    padding: 10px 1px;
+    line-height: 16px;
+    font-size: 11px;
+}
+.tab_list li {
+    font-size: 11px;
+}
+}
+@media(max-width:640px){
+    #Family ul li span.btn {
+    margin: 7% 15px;
+    font-size: 10px;
+}
+}
+
+@media(max-width:480px){
+.tab_list li a {
+    font-size: 12px;
+}
+
+div#pills-contact {
+    font-size: 14px;
+}
+
+.button_section ul li {
+    padding: 0px 6px 10px 0;
+    width: 30%;
+}
+.tab_list li {
+    display: inline-block;
+    max-width: 100%;
+    flex: auto;
+    width: auto;
+}
+.tab_list li a {
+    padding: 0;
+}
+.tab_list ul {
+    display: flex;
+    text-align: center;
+}
+.section_tbb .inner_top_section .img_setion .img_section {
+    height: 25vw;
+    width: 26vw;
+    padding-right: 10px;
+    text-align: center;
+}
+.not_found_data h6 {
+    padding: 25px;
+    font-size: 20px;
+}
+.health_section_health form label.form-check-label h4 {
+    font-size: 12px;
+    padding-top: 8px;
+    width: auto;
+}
+.health_section_health form label.form-check-label .coast_section {
+    width: auto;
+    padding-left:10px;
+    float: right;
+}
+.health_section_health form .coast_section p {
+    font-size: 10px;
+}
+.health_section_health form label.form-check-label .coast_section span {
+    font-size: 11px;
+}
+.health_section_health form .coast_section i.fa {
+    font-size: 12px;
+}
+.health_section_health form input#exampleCheck1:checked + p {
+    font-size: 12px;
+}
+#Family ul li h4 {
+    font-size: 11px;
+}
+div#Family ul {
+    padding: 10px 0;
+}
+
+#Family ul li {
+    margin-left: 0;
+}
+#Family ul li span.btn {
+    margin: 6% 7px;
+    font-size: 10px;
+    padding: 10px;
+}
+#Family ul li h4 {
+    padding: 7% 10px;
+    margin-bottom: 0;
+}
+.tab_list ul {
+    display: flex;
+    text-align: center;
+    padding: 10px 0;
+}
+.milk_table_section ul.detail_table ul.list_detail {
+    padding: 0;
+}
+.milk_table_section ul.detail_table ul.list_detail li {
+    padding: 10px 1px;
+    line-height: 16px;
+    font-size: 11px;
+    margin: 0;
+}
+.milking_section button#dropdownMenuButton {
+    max-width: fit-content;
+    min-width: fit-content;
+}
+#Gallery .col-lg-3.col-md-4.col-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.descr_detail h6 {
+    font-size: 12px;
+}
+.list_descr p {
+    padding-top: 8px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    font-size: 10px;
+    padding-right: 60px;
+    line-height: 20px;
+    margin-bottom: 50px;
+}
+.list_descr button.btn.btn-success {
+    float: right;
+    font-size: 11px;
+    padding: 3px 9px;
+    line-height: 22px;
+    border-radius: 50px;
+}
+}
+@media(max-width:380px){
+
+.button_section ul li {
+    width: 31%;
+}
+.button_section ul li {
+    padding: 0px 4px 8px 0;
+}
+.inner_top_section .button_section.col-md-9 {
+    width: 71%;
+}
+.inner_top_section .img_setion {
+    width: 29%;
+}
+.button_section ul li {
+    padding: 0px 3px 8px 0;
+}
+.button_section li a {
+    font-size: 10px;
+}
+}
+

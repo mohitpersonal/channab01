@@ -114,7 +114,7 @@
                      <span class="error-msg"id="edit_image_label_livestock" style="display: none"></span>
                      <div class="col-md-12 text-center">
                         {% if animal_detail.image %}
-                        <img id="edit_Livestock_blah4_found" src="/media/{{animal_detail.image}}" alt="your image" style="height: 130px;width: 100px" />
+                        <img id="edit_Livestock_blah4_found" src="{{animal_detail.image.url}}" alt="your image" style="height: 130px;width: 100px" />
                         {% else %}
                         <img id="edit_Livestock_blah4_found" src="#" alt="your image" style="display: none;" />
                         {% endif %}
@@ -481,7 +481,7 @@
                   <div class="row">
                      <div class="img_setion col-md-3">
                         <div class="img_section">
-                           <img src="/media/{{animal_detail.image}}" alt="">
+                           <img src="{{animal_detail.image.url}}" alt="">
                         </div>
                         <div class="name_tab">  
                            <a herf="#">{{animal_detail.animal_tag|get_req}}</a>
@@ -579,6 +579,7 @@
                         </div>
                         <div class="tab-pane fade " id="Family" role="tabpanel" aria-labelledby="pills-profile-tab">
                            {% if male_parent_detail or list_of_childs or female_parent_detail %}
+
                            <div class="family_section">
                               <div class="parent_section">
                                  <h2 class="heading_title">Parents</h2>
@@ -586,7 +587,7 @@
                                     {% if male_parent_detail %}
                                     <li>
                                        <div class="img_p">
-                                          <img src="/media/{{male_parent_detail.0.image}}" alt="img">
+                                          <img src="{{male_parent_detail.0.image.url}}" alt="img">
                                        </div>
                                        <h4> {{male_parent_detail.0.animal_tag}}</h4>
                                        <span class="btn"> Male </span>
@@ -598,7 +599,7 @@
 
                                     <li>
                                        <div class="img_p">
-                                          <img src="/media/{{female_parent_detail.0.image}}" alt="img">
+                                          <img src="{{female_parent_detail.0.image.url}}" alt="img">
                                        </div>
                                        <h4> {{female_parent_detail.0.animal_tag}}</h4>
                                        <span class="btn"> Female </span>
@@ -616,7 +617,7 @@
                                     {% for one in list_of_childs %}
                                     <li>
                                        <div class="img_p">
-                                          <img src="/media/{{one.one_object.image}}" alt="img">
+                                          <img src="{{one.one_object.image.url}}" alt="img">
                                        </div>
                                        <h4> {{one.one_object.animal_tag}}</h4>
                                        <span class="btn"> {{one.one_object.gender}} </span>
@@ -630,6 +631,13 @@
                               </div>
                               {% endif %}
                            </div>
+                           {% else %}
+                           <div class="tab-content" id="pills-tabContent">
+                           <div class="not_found_data">
+                              <h6>No record found</h6>
+                           </div>
+                        </div>
+                        {% endif %}
                         </div>
                         <div class="tab-pane fade" id="Milking" role="tabpanel" aria-labelledby="pills-contact-tab">
                            {% if all_milking_record_list %}
@@ -694,7 +702,7 @@
                               {% for one_gallery in all_gallery %}
                               <div class="col-lg-3 col-md-4 col-6">
                                  <a href="#" class="d-block mb-4 h-100">
-                                 <img class="img-fluid img-thumbnail" src="/media/{{one_gallery.image}}" alt="">
+                                 <img class="img-fluid img-thumbnail" src="{{one_gallery.image.url}}" alt="">
                                  <div class="delete_icon_use">
                                     <p><i class="fa fa-trash-o delete_image_faltu" aria-hidden="true" data-id = {{one_gallery.id}}></i></p>
                                      </div>
@@ -899,5 +907,5 @@
    })
    
 </script>
-{%endblock%}
+{% endblock %}
 

@@ -36,6 +36,10 @@ class AddAnimalLivestock(View):
 		try:
 			animal_tag = request.POST.get('animal_tag')
 			age = request.POST.get('age')
+			import dateparser
+			age = dateparser.parse(age)
+
+
 			category = request.POST.get('category')
 			animal_bread = request.POST.get('animal_bread')
 			gender = request.POST.get('gender')
@@ -46,13 +50,12 @@ class AddAnimalLivestock(View):
 			category_instance = Category.objects.get(category_name = category)
 
 			image = request.FILES.get('main_image')
-
-			print("\n" * 3)
-			print("images is --------->", image)
 			user_obj = User.objects.get(id = request.user.id)
 
 
-			product_obj = AddedAnimalLiveStock.objects.create(animal_tag = animal_tag, date_of_birth=age, animal_breed = animal_bread, category_instance = category_instance, gender = gender,male_parent = male_parent,female_parent = female_parent,  image = image, description = description, animal_type = animal_type,created_by = user_obj)
+			product_obj = AddedAnimalLiveStock.objects.create(animal_tag = animal_tag, animal_breed = animal_bread, category_instance = category_instance, gender = gender,male_parent = male_parent,female_parent = female_parent,  image = image, description = description, animal_type = animal_type,created_by = user_obj)
+			product_obj.date_of_birth = age
+			product_obj.save()
 
 			ist_image = request.FILES.get('ist_image')
 			sec_image = request.FILES.get('sec_image')
@@ -275,10 +278,11 @@ class ViewParticluarAnimal(View):
 			product_id = self.request.GET.get('product_id')
 			user_obj = User.objects.get(id = int(request.user.id))
 			animal_detail = AddedAnimalLiveStock.objects.get(id = int(product_id), created_by = user_obj)
+			if type(animal_detail.male_parent) == int:
+				male_parent_detail = AddedAnimalLiveStock.objects.filter(id = int(animal_detail.male_parent), created_by = user_obj, gender = 'Male')
 
-			male_parent_detail = AddedAnimalLiveStock.objects.filter(id = int(animal_detail.male_parent), created_by = user_obj, gender = 'Male')
-
-			female_parent_detail =  AddedAnimalLiveStock.objects.filter(id = int(animal_detail.male_parent), created_by = user_obj, gender = 'Female')
+			if type(animal_detail.female_parent) == int:
+				female_parent_detail =  AddedAnimalLiveStock.objects.filter(id = int(animal_detail.male_parent), created_by = user_obj, gender = 'Female')
 
 
 
@@ -348,6 +352,7 @@ class ViewParticluarAnimal(View):
 				my_health['tag_name'] = one_time.tag_name
 				my_health['cost_amount'] = one_time.cost_amount
 				my_health['id'] = one_time.id
+				my_health['text_description'] = one_time.text_description
 				all_health_record_list.append(my_health)
 
 
@@ -589,13 +594,18 @@ class UpdateExactAnimalDetail(View):
 			animal_type = self.request.POST.get('animal_type')
 			image = request.FILES.get('main_image')
 			obj = AddedAnimalLiveStock.objects.get(id = int(hidden_id),created_by = user_obj)
+			print("ddddddddddddddd->", obj)
 			if not image:
 				image = obj.image
-			
 
-			AddedAnimalLiveStock.objects.filter(id = int(hidden_id),created_by = user_obj).update(animal_tag = animal_tag, animal_breed = animal_bread, gender = gender, animal_type = animal_type,updated_by = user_obj)
 
 			obj.image = image
+			obj.animal_tag  = animal_tag
+			obj.animal_breed  = animal_bread
+			obj.gender  = gender
+			obj.animal_type  = animal_type
+			obj.updated_by  = user_obj
+
 			print(age)
 			obj.date_of_birth=age
 			obj.save()

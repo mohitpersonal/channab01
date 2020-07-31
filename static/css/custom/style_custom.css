@@ -81,7 +81,31 @@ div#notfound .notfound {
     background-size: cover;
     background-repeat: no-repeat;
 }
+.product-catagory-wrap .catagory-card {
+    background-color: #00b050;
+    padding: 0;
+}
+.product-catagory-wrap .catagory-card a span {
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 17px;
+    padding-top: 41%;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.product-catagory-wrap .catagory-card a{
+  height: 100%;
+}
+.product-catagory-wrap .catagory-card a:hover span {
+    color: #dadada;
+}
 
+@media(max-width:1200px){
+.product-catagory-wrap .catagory-card a span {
+    font-size: 12px;
+}
+
+}
 @media only screen and (max-width: 767px) {
     .notfound .notfound-404 {
       height: 142px;
@@ -89,4 +113,7 @@ div#notfound .notfound {
     .notfound .notfound-404 h1 {
       font-size: 112px;
     }
+    .product-catagory-wrap .catagory-card a span {
+    font-size: 10px;
+}
 }
