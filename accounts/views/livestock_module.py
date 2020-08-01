@@ -282,13 +282,12 @@ class ViewParticluarAnimal(View):
 			product_id = self.request.GET.get('product_id')
 			user_obj = User.objects.get(id = int(request.user.id))
 			animal_detail = AddedAnimalLiveStock.objects.get(id = int(product_id), created_by = user_obj)
-			print("ssssssssssssssssssss", animal_detail.female_parent)
+			
 
-			if  type(animal_detail.male_parent) == int and not animal_detail.male_parent == 0:
+			if not int(animal_detail.male_parent) == 0:
 				male_parent_detail = AddedAnimalLiveStock.objects.filter(id = int(animal_detail.male_parent), created_by = user_obj, gender = 'Male')
 
-			if type(animal_detail.female_parent) == int and not animal_detail.female_parent == 0:
-				print("xxxxxxxxxxx")
+			if not int(animal_detail.female_parent) == 0:
 				female_parent_detail =  AddedAnimalLiveStock.objects.filter(id = int(animal_detail.female_parent), created_by = user_obj, gender = 'Female')
 				print(female_parent_detail)
 

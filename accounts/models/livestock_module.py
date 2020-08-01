@@ -84,7 +84,7 @@ class MilKLitre(models.Model):
 
 	animal_instance = models.ForeignKey(AddedAnimalLiveStock, on_delete = models.CASCADE, null = True, blank = True)
 	is_active = models.BooleanField(default = True)
-	created_on = models.DateTimeField(auto_now_add = True)
+	created_on = models.DateField(auto_now_add = True)
 	updated_on  = models.DateTimeField(auto_now = True)
 	created_by = models.ForeignKey(User, on_delete = models.CASCADE, null = True, blank = True, related_name = 'animal_milk_created')
 	updated_by = models.ForeignKey(User, on_delete = models.CASCADE, null = True, blank = True, related_name = 'animal_milk_updated')
