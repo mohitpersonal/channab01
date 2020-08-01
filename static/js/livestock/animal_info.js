@@ -208,7 +208,7 @@ $(document).ready(function () {
 
              swal({
                 title : "Thanks !",
-                text : "You have Sucessfully Logout Your Account",
+                text : "You have Sucessfully Delete this Record",
                 icon : "success"
      
              })
@@ -240,7 +240,7 @@ $(document).ready(function () {
 
              swal({
                 title : "Thanks !",
-                text : "You have Sucessfully Logout Your Account",
+                text : "You have Sucessfully Delete this Record",
                 icon : "success"
      
              })
@@ -278,7 +278,7 @@ $(document).ready(function () {
 
              swal({
                 title : "Thanks !",
-                text : "You have Sucessfully Logout Your Account",
+                text : "You have Sucessfully Delete this Record",
                 icon : "success"
      
              })
@@ -313,7 +313,7 @@ $(document).ready(function () {
 
              swal({
                 title : "Thanks !",
-                text : "You have Sucessfully Logout Your Account",
+                text : "You have Sucessfully Delete this Record",
                 icon : "success"
      
              })
@@ -347,7 +347,7 @@ $(document).ready(function () {
 
              swal({
                 title : "Thanks !",
-                text : "You have Sucessfully Logout Your Account",
+                text : "You have Sucessfully Delete this Record",
                 icon : "success"
      
              })
@@ -379,7 +379,7 @@ $(document).ready(function () {
 
              swal({
                 title : "Thanks !",
-                text : "You have Sucessfully Logout Your Account",
+                text : "You have Sucessfully Delete this Record",
                 icon : "success"
      
              })
@@ -411,7 +411,7 @@ $(document).ready(function () {
 
              swal({
                 title : "Thanks !",
-                text : "You have Sucessfully Logout Your Account",
+                text : "You have Sucessfully Delete this Record",
                 icon : "success"
      
              })

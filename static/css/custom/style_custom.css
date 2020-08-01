@@ -1,3 +1,15 @@
+button.swal-button.swal-button--cancel {
+    background-color: transparent;
+    border: 1px solid #00b050;
+    color: #00b050;
+}
+button.swal-button.swal-button--confirm {
+    background-color: #00b050 !important;
+    border: 1px solid #00b050;
+}
+.swal-footer{
+    text-align: center;
+}
 
 div#notfound {
     width: 100%;
