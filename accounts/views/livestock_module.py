@@ -290,7 +290,7 @@ class ViewParticluarAnimal(View):
 			if type(animal_detail.female_parent) == int and not animal_detail.female_parent == 0:
 				print("xxxxxxxxxxx")
 				female_parent_detail =  AddedAnimalLiveStock.objects.filter(id = int(animal_detail.female_parent), created_by = user_obj, gender = 'Female')
-
+				print(female_parent_detail)
 
 			age_str = animal_detail.date_of_birth
 			day = age_str.day
@@ -322,6 +322,7 @@ class ViewParticluarAnimal(View):
 
 			male_parent = AddedAnimalLiveStock.objects.filter(gender = 'Male',  created_by = user_obj).values('animal_tag', 'id').exclude(id = int(product_id))
 			female_parent = AddedAnimalLiveStock.objects.filter(gender = 'Female',created_by = user_obj).values('animal_tag','id').exclude(id = int(product_id))
+			
 			all_child_parents = AddedAnimalLiveStock.objects.filter(created_by = user_obj).values('animal_tag','id').exclude(id = int(product_id))
 
 
@@ -993,7 +994,7 @@ class DeleteFemaleParent(View):
 			delete_female_id = self.request.GET.get('delete_female_id')
 			product_obj = AddedAnimalLiveStock.objects.get(id  = int(delete_female_id), created_by = user_obj)
 			product_id = int(product_obj.id)
-			product_obj.male_parent = 0
+			product_obj.female_parent = 0
 			product_obj.save()
 			return redirect('/accounts/view_animal/?product_id={}'.format(product_id))
 

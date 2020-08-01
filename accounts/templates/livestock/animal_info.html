@@ -238,7 +238,7 @@
                         <select name="female_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
                            <option value="0">------</option>
                            {% for one in female_parent %}
-                           {% if one.id == animal_detail.male_parent|add:"0" %}
+                           {% if one.id == animal_detail.female_parent|add:"0" %}
                            <option value="{{one.id}}" selected>{{one.animal_tag}}</option>
                            {% else %}
 
