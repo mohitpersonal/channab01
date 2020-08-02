@@ -86,16 +86,16 @@
                      <div class="tab_list">
                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                            <li class="nav-item">
-                              <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#Health" role="tab" aria-controls="pills-home-tab" aria-selected="true">Daily</a>
+                              <a class="nav-link active" id="pills-daily-tab" data-toggle="pill" href="#Health" role="tab" aria-controls="pills-home-tab" aria-selected="true">Daily</a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#Monthly" role="tab" aria-controls="pills-profile-tab" aria-selected="false">Monthly</a>
+                              <a class="nav-link" id="pills-Weekly-tab" data-toggle="pill" href="#Weekly" role="tab" aria-controls="pills-profile-tab" aria-selected="false">Weekly</a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" id="pills-miking-tab" data-toggle="pill" href="#Milking" role="tab" aria-controls="pills-contact-tab" aria-selected="false">Quartly</a>
+                              <a class="nav-link" id="pills-Monthly-tab" data-toggle="pill" href="#Monthly" role="tab" aria-controls="pills-contact-tab" aria-selected="false">Monthly</a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" id="pills-gallery-tab" data-toggle="pill" href="#Gallery" role="tab" aria-controls="pills-contact-tab" aria-selected="false">Yearly</a>
+                              <a class="nav-link" id="pills-Yearly-tab" data-toggle="pill" href="#Yearly" role="tab" aria-controls="pills-contact-tab" aria-selected="false">Yearly</a>
                            </li>
                         </ul>
                         <div class="tab-content" id="pills-tabContent">
@@ -103,85 +103,35 @@
                               <div class="milking_section_day">
                                  <div class="milk_table_section">
                                     <ul class="title_table">
-                                       <li>Date</li>
+                                       <li>Animal Tag</li>
                                        <li>Morning</li>
                                        <li>Evening</li>
                                        <li>Total</li>
                                     </ul>
                                     <ul class="detail_table">
+                                       {% for one_animal_milk in day_wise_milk_list %}
                                        <li class="item_list_detail">
                                           <ul class="list_detail">
-                                             <li>{{last_days_first|date:'d-m-Y'}}</li>
-                                             <li><span class="value">{{sum_of_morning_ist}}</span> Liter</li>
-                                             <li><span class="value">{{sum_of_evening_ist}}</span> Liter</li>
-                                             <li><span class="value">{{sum_of_both_ist}}</span> Liter</li>
+                                             <li>{{one_animal_milk.animal_tag}}</li>
+                                             <li><span class="value">{{one_animal_milk.sum_of_morning}}</span> Liter</li>
+                                             <li><span class="value">{{one_animal_milk.sum_of_evening}}</span> Liter</li>
+                                             <li><span class="value">{{one_animal_milk.sum_of_both}}</span> Liter</li>
                                              
                                           </ul>
                                        </li>
-                                       <li class="item_list_detail">
-                                          <ul class="list_detail">
-                                             <li>{{sec_last_days_create|date:'d-m-Y'}}</li>
-                                             <li><span class="value">{{two_last_day_morning}}</span> Liter</li>
-                                             <li><span class="value">{{two_last_day_evening}}</span> Liter</li>
-                                             <li><span class="value">{{sum_of_both_Secon}}</span> Liter</li>
-                                             
-                                          </ul>
-                                       </li>
-                                       <li class="item_list_detail">
-                                          <ul class="list_detail">
-                                             <li>{{three_created_on|date:'d-m-Y'}}</li>
-                                             <li><span class="value">{{three_last_day_morning}}</span> Liter</li>
-                                             <li><span class="value">{{three_last_day_evening}}</span> Liter</li>
-                                             <li><span class="value">{{sum_of_three}}</span> Liter</li>
-                                             
-                                          </ul>
-                                       </li>
-                                       <li class="item_list_detail">
-                                          <ul class="list_detail">
-                                             <li>{{fourth_created|date:'d-m-Y'}}</li>
-                                             <li><span class="value">{{fourth_sum_of_morning}}</span> Liter</li>
-                                             <li><span class="value">{{fourth_sum_of_evening}}</span> Liter</li>
-                                             <li><span class="value">{{sum_of_forth}}</span> Liter</li>
-                                             
-                                          </ul>
-                                       </li>
-                                      <li class="item_list_detail">
-                                          <ul class="list_detail">
-                                             <li>{{fifth_created|date:'d-m-Y'}}</li>
-                                             <li><span class="value">{{fifth_milking_record_morning}}</span> Liter</li>
-                                             <li><span class="value">{{fifth_milking_record_evening}}</span> Liter</li>
-                                             <li><span class="value">{{sum_of_fifth}}</span> Liter</li>
-                                             
-                                          </ul>
-                                       </li><li class="item_list_detail">
-                                          <ul class="list_detail">
-                                             <li>{{sixth_create|date:'d-m-Y'}}</li>
-                                             <li><span class="value">{{sixth_create_record_morning}}</span> Liter</li>
-                                             <li><span class="value">{{sixth_create_record_evening}}</span> Liter</li>
-                                             <li><span class="value">{{sum_of_sixth}}</span> Liter</li>
-                                             
-                                          </ul>
-                                       </li>
-                                         </li><li class="item_list_detail">
-                                          <ul class="list_detail">
-                                             <li>{{seven|date:'d-m-Y'}}</li>
-                                             <li><span class="value">{{seven_record_morning}}</span> Liter</li>
-                                             <li><span class="value">{{seven_record_evening}}</span> Liter</li>
-                                             <li><span class="value">{{sum_of_seventh}}</span> Liter</li>
-                                             
-                                          </ul>
-                                       </li>
+                                       {% endfor %}
+
                                     </ul>
                                     <ul class="total_table">
                                        <li><span class="value">Total</span> Liter</li>
-                                       <li><span class="value">{{all_morning_column}}</span> Liter</li>
-                                       <li><span class="value">{{all_colum_evening}}</span> Liter</li>
-                                       <li><span class="value">{{total_colum_evening}}</span> Liter</li>
+                                       <li><span class="value">{{total_morning_column}}</span> Liter</li>
+                                       <li><span class="value">{{total_eveining_sum}}</span> Liter</li>
+                                       <li><span class="value">{{all_sum_total}}</span> Liter</li>
                                     </ul>
                                  </div>
                               </div>
                            </div>
-                           <div class="tab-pane fade " id="Monthly" role="tabpanel" aria-labelledby="pills-profile-tab">
+                           <div class="tab-pane fade " id="Weekly" role="tabpanel" aria-labelledby="pills-profile-tab">
                               <div class="milking_section_day_new">
                                  <div class="milk_table_section">
                                     <ul class="title_table">
@@ -191,19 +141,63 @@
                                        <li>Total</li>
                                     </ul>
                                     <ul class="detail_table">
-                                       {% for one_milk in all_milking_record_list %}
                                        <li class="item_list_detail">
                                           <ul class="list_detail">
-                                             <li>{{one_milk.created_on|date:'d-m-Y'}}</li>
-                                             <li><span class="value">{{one_milk.morning_time}}</span> Liter</li>
-                                             <li><span class="value">{{one_milk.evening_time}}</span> Liter</li>
-                                             <li><span class="val-ue">{{one_milk.sum_of_one}}</span> Liter</li>
-                                             <li>
-                                                <span class="edit"><i class="fa fa-trash-o milk_delete" aria-hidden="true" data-id = "{{one_milk.id}}"></i></span> 
-                                             </li>
+                                             <li>{{range_created_on}}</li>
+                                             <li><span class="value">{{seven_record_morning}}</span> Liter</li>
+                                             <li><span class="value">{{last_week_evening}}</span> Liter</li>
+                                             <li><span class="val-ue">{{sum_of_ist_week}}</span> Liter</li>
                                           </ul>
                                        </li>
-                                       {% endfor %}
+                                        <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{one_range_created_on}}</li>
+                                             <li><span class="value">{{one_seven_record_morning}}</span> Liter</li>
+                                             <li><span class="value">{{one_last_week_evening}}</span> Liter</li>
+                                             <li><span class="val-ue">{{one_sum_of_ist_week}}</span> Liter</li>
+                                          </ul>
+                                       </li>
+                                        <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{two_range_created_on}}</li>
+                                             <li><span class="value">{{two_seven_record_morning}}</span> Liter</li>
+                                             <li><span class="value">{{two_last_week_evening}}</span> Liter</li>
+                                             <li><span class="val-ue">{{two_sum_of_ist_week}}</span> Liter</li>
+                                          </ul>
+                                       </li>
+                                        <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{three_range_created_on}}</li>
+                                             <li><span class="value">{{three_seven_record_morning}}</span> Liter</li>
+                                             <li><span class="value">{{three_last_week_evening}}</span> Liter</li>
+                                             <li><span class="val-ue">{{three_sum_of_ist_week}}</span> Liter</li>
+                                          </ul>
+                                       </li>
+                                        <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{fourth_range_created_on}}</li>
+                                             <li><span class="value">{{fourth_seven_record_morning}}</span> Liter</li>
+                                             <li><span class="value">{{fourth_last_week_evening}}</span> Liter</li>
+                                             <li><span class="val-ue">{{fourth_sum_of_ist_week}}</span> Liter</li>
+                                          </ul>
+                                       </li>
+                                        <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{fifth_range_created_on}}</li>
+                                             <li><span class="value">{{one_seven_record_morning}}</span> Liter</li>
+                                             <li><span class="value">{{fifth_seven_record_morning}}</span> Liter</li>
+                                             <li><span class="val-ue">{{fifth_sum_of_ist_week}}</span> Liter</li>
+                                          </ul>
+                                       </li>
+                                       <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{sixth_range_created_on}}</li>
+                                             <li><span class="value">{{sixth_seven_record_morning}}</span> Liter</li>
+                                             <li><span class="value">{{sixth_last_week_evening}}</span> Liter</li>
+                                             <li><span class="val-ue">{{sixth_sum_of_ist_week}}</span> Liter</li>
+                                          </ul>
+                                       </li>
+
                                     </ul>
                                     <ul class="total_table">
                                        <li><span class="value">Total</span> Liter</li>
@@ -214,7 +208,7 @@
                                  </div>
                               </div>
                            </div>
-                           <div class="tab-pane fade" id="Milking" role="tabpanel" aria-labelledby="pills-contact-tab">
+                           <div class="tab-pane fade" id="Monthly" role="tabpanel" aria-labelledby="pills-contact-tab">
                               <div class="milking_section_day">
                                  <div class="milk_table_section">
                                     <ul class="title_table">
@@ -224,7 +218,6 @@
                                        <li>Total</li>
                                     </ul>
                                     <ul class="detail_table">
-                                       {% for one_milk in all_milking_record_list %}
                                        <li class="item_list_detail">
                                           <ul class="list_detail">
                                              <li>{{one_milk.created_on|date:'d-m-Y'}}</li>
@@ -232,11 +225,76 @@
                                              <li><span class="value">{{one_milk.evening_time}}</span> Liter</li>
                                              <li><span class="value">{{one_milk.sum_of_one}}</span> Liter</li>
                                              <li>
-                                                <span class="edit"><i class="fa fa-trash-o milk_delete" aria-hidden="true" data-id = "{{one_milk.id}}"></i></span> 
+                                               
                                              </li>
                                           </ul>
                                        </li>
-                                       {% endfor %}
+                                       <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{one_milk.created_on|date:'d-m-Y'}}</li>
+                                             <li><span class="value">{{one_milk.morning_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.evening_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.sum_of_one}}</span> Liter</li>
+                                             <li>
+                                               
+                                             </li>
+                                          </ul>
+                                       </li>
+                                       <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{one_milk.created_on|date:'d-m-Y'}}</li>
+                                             <li><span class="value">{{one_milk.morning_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.evening_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.sum_of_one}}</span> Liter</li>
+                                             <li>
+                                               
+                                             </li>
+                                          </ul>
+                                       </li>
+                                       <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{one_milk.created_on|date:'d-m-Y'}}</li>
+                                             <li><span class="value">{{one_milk.morning_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.evening_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.sum_of_one}}</span> Liter</li>
+                                             <li>
+                                               
+                                             </li>
+                                          </ul>
+                                       </li>
+                                       <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{one_milk.created_on|date:'d-m-Y'}}</li>
+                                             <li><span class="value">{{one_milk.morning_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.evening_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.sum_of_one}}</span> Liter</li>
+                                             <li>
+                                               
+                                             </li>
+                                          </ul>
+                                       </li>
+                                       <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{one_milk.created_on|date:'d-m-Y'}}</li>
+                                             <li><span class="value">{{one_milk.morning_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.evening_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.sum_of_one}}</span> Liter</li>
+                                             <li>
+                                               
+                                             </li>
+                                          </ul>
+                                       </li>
+                                       <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{one_milk.created_on|date:'d-m-Y'}}</li>
+                                             <li><span class="value">{{one_milk.morning_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.evening_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.sum_of_one}}</span> Liter</li>
+                                             <li>
+                                               
+                                             </li>
+                                          </ul>
+                                       </li>
                                     </ul>
                                     <ul class="total_table">
                                        <li><span class="value">Total</span> Liter</li>
@@ -247,7 +305,7 @@
                                  </div>
                               </div>
                            </div>
-                           <div class="tab-pane fade" id="Gallery" role="tabpanel" aria-labelledby="pills-contact-tab">
+                           <div class="tab-pane fade" id="Yearly" role="tabpanel" aria-labelledby="pills-contact-tab">
                               <div class="milking_section_day">
                                  <div class="milk_table_section">
                                     <ul class="title_table">
@@ -257,7 +315,6 @@
                                        <li>Total</li>
                                     </ul>
                                     <ul class="detail_table">
-                                       {% for one_milk in all_milking_record_list %}
                                        <li class="item_list_detail">
                                           <ul class="list_detail">
                                              <li>{{one_milk.created_on|date:'d-m-Y'}}</li>
@@ -265,11 +322,18 @@
                                              <li><span class="value">{{one_milk.evening_time}}</span> Liter</li>
                                              <li><span class="value">{{one_milk.sum_of_one}}</span> Liter</li>
                                              <li>
-                                                <span class="edit"><i class="fa fa-trash-o milk_delete" aria-hidden="true" data-id = "{{one_milk.id}}"></i></span> 
+                                               
                                              </li>
                                           </ul>
                                        </li>
-                                       {% endfor %}
+                                       <li class="item_list_detail">
+                                          <ul class="list_detail">
+                                             <li>{{one_milk.created_on|date:'d-m-Y'}}</li>
+                                             <li><span class="value">{{one_milk.morning_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.evening_time}}</span> Liter</li>
+                                             <li><span class="value">{{one_milk.sum_of_one}}</span> Liter</li>
+                                          </ul>
+                                       </li>
                                     </ul>
                                     <ul class="total_table">
                                        <li><span class="value">Total</span> Liter</li>
@@ -290,4 +354,6 @@
    </div>
 </div>
 <script src="{% static 'js/plugins/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'js/livestock/milk_stock_form.js' %}"></script>
+
 {% endblock %}

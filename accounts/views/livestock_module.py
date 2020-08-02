@@ -563,7 +563,6 @@ class ViewParticluarAnimal(View):
 				one_dict['id'] = one_desc.id
 				all_description_list.append(one_dict)
 
-			print(all_milking_record_list)
 
 
 

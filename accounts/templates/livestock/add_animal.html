@@ -13,6 +13,10 @@ ul.multiselect-container.dropdown-menu.show {
     
     background-color: #00b894;
 }
+.user-info-card {
+    background-color: #bcadad;
+    border-color: beige;
+    }
 
 </style>
     <div class="header-area" id="headerArea">
@@ -21,7 +25,7 @@ ul.multiselect-container.dropdown-menu.show {
         <div class="back-button"><a href="/accounts/animal_list/"><i class="lni-arrow-left"></i></a></div>
         <!-- Page Title-->
         <div class="page-heading">
-          <h6 class="mb-0">Sell your Animal</h6>
+          <h6 class="mb-0">Farm Animals</h6>
         </div>
         <!-- Navbar Toggler-->
         <div class="suha-navbar-toggler d-flex justify-content-between flex-wrap" id="suhaNavbarToggler"><span></span><span></span><span></span></div>
@@ -69,7 +73,7 @@ ul.multiselect-container.dropdown-menu.show {
 
               <div class="user-info">
 
-                <h3 class="text-center">Animal Detail</h3>
+                <h3 class="text-center">Add Farm Animal</h3>
               </div>
             </div>
           </div>
@@ -102,7 +106,7 @@ ul.multiselect-container.dropdown-menu.show {
                 <div class="form-group col-md-4">
                   <div class="title mb-2"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>Animal Breed</span></div>
                   <select name="animal_bread" id = "animal_bread_live" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
-                    <option value="Select">Animal Breed</option>
+                    <option value="Select">Select Breed</option>
                     <option value="Automatic">Automatic</option>
                     <option value="Manual">Manual</option>
                   </select>
@@ -111,7 +115,7 @@ ul.multiselect-container.dropdown-menu.show {
                 <div class="form-group col-md-4">
                   <div class="title mb-2"><i class="fa fa-caret-down" aria-hidden="true"></i><span>Animal Category</span></div>
                   <select name="category" id = "category_live_Animal" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
-                    <option value="Select">Animal Category</option>
+                    <option value="Select">Select Category</option>
                     {% for one in all_category %}
                     <option value="{{one}}">{{one}}</option>
                     {% endfor %}
@@ -122,7 +126,7 @@ ul.multiselect-container.dropdown-menu.show {
                 <div class="form-group col-md-4">
                   <div class="title mb-2"><i class="fa fa-transgender" aria-hidden="true"></i><span>Gender</span></div>
                   <select name="gender" id = "mail_gendercheck_live" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
-                    <option value="Select">Gender</option>
+                    <option value="Select">Select Gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
@@ -132,7 +136,7 @@ ul.multiselect-container.dropdown-menu.show {
                 <div class="form-group col-md-4">
                   <div class="title mb-2"><i class="fa fa-male" aria-hidden="true"></i><span>Male Parent</span></div>
                                           <select name="male_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" id="male_parent_check_id">
-                           <option value="0">Male Parent</option>
+                           <option value="0">Select Male Parent</option>
                            {% for one in male_parent %}
                            <option value="{{one.id}}">{{one.animal_tag}}</option>
                            {% endfor %}
@@ -142,7 +146,7 @@ ul.multiselect-container.dropdown-menu.show {
                 <div class="form-group col-md-4">
                   <div class="title mb-2"><i class="fa fa-female" aria-hidden="true"></i><span>Female Parent</span></div>
                                           <select name="female_parent" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
-                           <option value="0">Female Parent</option>
+                           <option value="0">Select Female Parent</option>
                            {% for one in female_parent %}
 
 
@@ -154,7 +158,7 @@ ul.multiselect-container.dropdown-menu.show {
                 <div class="form-group col-md-4">
                   <div class="title mb-2"><i class="fa fa-paw" aria-hidden="true"></i><span>Animal Type</span></div>
                   <select name="animal_type" id = "animal_type_live_stock" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
-                    <option value="Select">Animal Type</option>
+                    <option value="Select">Select Type</option>
                     <option value="Dry">Dry</option>
                     <option value="Milking">Milking</option>
                   </select>    

@@ -2258,18 +2258,6 @@ textarea:invalid {
       -o-transition: width 0.5s;
       transition: width 0.5s; }
 
-.add2cart-notification {
-  position: fixed;
-  bottom: 58px;
-  width: 100%;
-  height: 30px;
-  background-color: #00b894;
-  z-index: 1000;
-  color: #ffffff;
-  text-align: center;
-  font-size: 12px;
-  line-height: 30px;
-  font-weight: 700; }
 
 .footer-nav-area {
   -webkit-transition-duration: 500ms;

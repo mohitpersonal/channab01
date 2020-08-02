@@ -1,0 +1,95 @@
+button.swal-button.swal-button--cancel {
+    background-color: transparent;
+    border: 1px solid #00b050;
+    color: #00b050;
+}
+button.swal-button.swal-button--confirm {
+    background-color: #00b050 !important;
+    border: 1px solid #00b050;
+}
+.swal-footer{
+    text-align: center;
+}
+
+div#notfound {
+    width: 100%;
+    box-sizing: border-box;
+}
+div#notfound .notfound {
+    max-width: 800px;
+    margin: 60px auto;
+    box-shadow: 0 0 18px 0 #eee;
+    border-radius: 14px;
+    padding: 33px;
+    display: inline-block;
+	
+    background-color: #fff;
+}
+#notfound {
+  position: relative;
+  height: 60vh;
+}
+
+#notfound .notfound {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.notfound {
+  max-width: 410px;
+  width: 100%;
+  text-align: center;
+}
+
+.notfound .notfound-404 {
+  height: 250px;
+  position: relative;
+  z-index: -1;
+}
+
+
+
+
+.notfound h2 {
+  color: #000;
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 0;
+}
+
+.notfound p {
+     color: #6c6c6c;
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    letter-spacing: 0.5px;
+}
+
+.notfound a {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  text-decoration: none;
+  text-transform: uppercase;
+  background: #f90505;
+  display: inline-block;
+  padding: 15px 30px;
+  border-radius: 40px;
+  color: #fff;
+  font-weight: 700;
+  -webkit-box-shadow: 0px 4px 15px -5px #0046d5;
+          box-shadow: 0px 4px 15px -5px #0046d5;
+}
+#notfound .notfound .notfound-404 h1 {
+    font-size: 180px;
+}
+.catagory-card {
+    background-image: url(/media/new_cow.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}

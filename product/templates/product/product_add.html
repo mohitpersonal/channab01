@@ -13,7 +13,10 @@ ul.multiselect-container.dropdown-menu.show {
     
     background-color: #00b894;
 }
-
+.user-info-card {
+    background-color: #d7d294;
+    border-color: #d3dfdf;
+  }
 </style>
     <div class="header-area" id="headerArea">
       <div class="container h-100 d-flex align-items-center justify-content-between">
@@ -102,7 +105,7 @@ ul.multiselect-container.dropdown-menu.show {
                 <div class="form-group col-md-4">
                   <div class="title mb-2"><i class="fa fa-caret-down" aria-hidden="true"></i><span>Animal Category</span></div>
                   <select name="category" id = "countary_check_text_found" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
-                    <option value="Select">Please Select</option>
+                    <option value="Select">Select Category</option>
                     {% for one in all_category %}
                     <option value="{{one}}">{{one}}</option>
                     {% endfor %}
@@ -134,7 +137,7 @@ ul.multiselect-container.dropdown-menu.show {
                 <div class="form-group col-md-4">
                   <div class="title mb-2"><i class="fa fa-paw" aria-hidden="true"></i><span>Animal Type</span></div>
                   <select name="animal_type" id = "countary_check_text_found" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control">
-                    <option value="---">---</option>
+                    <option value="---">Select Type</option>
                     <option value="Dry">Dry</option>
                     <option value="Milking">Milking</option>
                     <option value="Breader">Breader</option>
