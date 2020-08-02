@@ -3,6 +3,7 @@
 {% block content %}
 
 {% block title %} <title>Channab | Livestock Dashboard</title> {% endblock %}
+
 <style type="text/css">
   .layout-options a i {
     line-height: 23px;
@@ -15,7 +16,7 @@
       <div class="spinner-grow text-secondary" role="status">
         <div class="sr-only">Loading...</div>
       </div>
-    </div>
+    </div>  
     <!-- Header Area-->
     <div class="header-area" id="headerArea">
       <div class="container h-100 d-flex align-items-center justify-content-between">
@@ -105,35 +106,64 @@
         <div class="container">
           <div class="product-catagory-wrap">
             <div class="row">
-              <div class="col-2">
-                <div class="card mb-3 catagory-card">
-                  <div class="card-body"><a href="/accounts/animal_list/"><span class="">My Form</span></a></div>
+              <div class="col-md-3 col-sm-6 text-center">
+                <div class="card  catagory-card">
+                  <div class="card-body">
+                    <a href="/accounts/animal_list/">
+                        <div class="icon_cate">
+                          <img src="/media/tractor.png">
+                        </div>
+                        <p class="">My Form</p>
+                     </a>
+                  </div>
                 </div>
               </div>
-              <div class="col-2">
-                <div class="card mb-3 catagory-card">
-                  <div class="card-body"><a href="/accounts/animal_list/" class="filter_by_catg"><span>My Animal</span></a></div>
+
+              <div class="col-md-3 col-sm-6 text-center">
+                <div class="card  catagory-card">
+                  <div class="card-body">
+                    <a href="/accounts/animal_list/">
+                        <div class="icon_cate">
+                          <img src="/media/cow.png">
+                        </div>
+                        <p class="">My Animal</p>
+                     </a>
+                  </div>
                 </div>
               </div>
-              <div class="col-2">
-                <div class="card mb-3 catagory-card">
-                  <div class="card-body"><a href="/accounts/milk_record/" class="filter_by_catg"><span>Milk Data</span></a></div>
+
+              <div class="col-md-3 col-sm-6 text-center">
+                <div class="card  catagory-card">
+                  <div class="card-body">
+                    <a href="/accounts/animal_list/">
+                        <div class="icon_cate">
+                          <img src="/media/milk.png">
+                        </div>
+                        <p class="">Milk Data</p>
+                     </a>
+                  </div>
                 </div>
               </div>
-              <div class="col-2">
-                <div class="card mb-3 catagory-card">
-                  <div class="card-body"><a href="/accounts/animal_list/" class="filter_by_catg"><span>Reports</span></a></div>
+
+              <div class="col-md-3 col-sm-6 text-center">
+                <div class="card  catagory-card">
+                  <div class="card-body">
+                    <a href="/accounts/animal_list/">
+                        <div class="icon_cate">
+                          <img src="/media/recode.png">
+                        </div>
+                        <p class="">Reports</p>
+                     </a>
+                  </div>
                 </div>
               </div>
-              <div class="col-2">
-                <div class="card mb-3 catagory-card">
-                  <div class="card-body"><a href="/search_cat/?cat_id_fil=Sheep" class="filter_by_catg"><span>Reports</span></a></div>
-                </div>
-              </div><div class="col-2">
-                <div class="card mb-3 catagory-card">
-                  <div class="card-body"><a href="/search_cat/?cat_id_fil=Sheep" class="filter_by_catg"><span>Reports</span></a></div>
-                </div>
-              </div>
+
+
+
+
+
+
+
             </div>
           </div>
         </div>
@@ -151,7 +181,7 @@
     Highcharts.chart('container1', {
   chart: {
     type: 'pie',
-    options3d: {
+    options3d: {  
       enabled: true,
       alpha: 45
     }
@@ -165,7 +195,17 @@
       depth: 45
     }
   },
+   tooltip: {
+        headerFormat: '',
+        pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
+            'Area (square km): <b>{point.y}</b><br/>' +
+            'Population density (people per square km): <b>{point.z}</b><br/>'
+    },
+
   series: [{
+    minPointSize: 10,
+        innerSize: '50%',
+        zMin: 0,
     name: 'Total Expenses',
     data: [
       ['Shopping', 8],
